@@ -7,7 +7,7 @@ async function initDB() {
   connection = new Pool({
     host: 'localhost',
     user: 'postgres',
-    password: 'sara',  // ← change ici
+    password: 'aurelie',  // ← change ici
     database: 'koordybdd',
     port: 5432,
   });

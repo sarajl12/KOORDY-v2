@@ -2,6 +2,7 @@ R_DEF: Internal format may change without notice
 local
 array type_structure_array
 color bg
+color bottom_nav_indicator_bg
 color brand
 color brand_2
 color btn_primary_end
@@ -22,6 +23,12 @@ drawable bg_choice_card
 drawable bg_header
 drawable bg_input
 drawable bg_success_icon
+drawable bottom_nav_colors
+drawable bottom_nav_indicator
+drawable ic_nav_calendar
+drawable ic_nav_chat
+drawable ic_nav_home
+drawable ic_nav_profile
 drawable step_active
 drawable step_inactive
 id action_designAssociation_to_successAssociation
@@ -48,6 +55,7 @@ id btn_save_profile
 id btn_suivant
 id card_creer
 id card_rechercher
+id chatFragment
 id designAssociationFragment
 id et_adresse
 id et_adresse2
@@ -72,6 +80,7 @@ id et_sport
 id et_ville
 id eventsFragment
 id formAssociationFragment
+id header
 id homeAssociationFragment
 id inscriptionAssociationFragment
 id inscriptionFragment
@@ -79,6 +88,7 @@ id iv_asso_avatar
 id layout_edit
 id loginFragment
 id membreFragment
+id nav_divider
 id nav_graph
 id nav_host_fragment
 id newsFragment
@@ -130,6 +140,7 @@ id tv_title
 id tv_type
 id tv_ville
 layout activity_main
+layout fragment_chat
 layout fragment_design_association
 layout fragment_events
 layout fragment_form_association
@@ -178,6 +189,7 @@ string nav_news
 string no_account
 string success_body
 string success_title
+style KoordyBottomNav
 style KoordyButton.Primary
 style KoordyCard
 style StepActive

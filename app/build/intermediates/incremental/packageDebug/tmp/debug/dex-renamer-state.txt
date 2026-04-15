@@ -1,13 +1,13 @@
-#Tue Apr 14 14:10:30 CEST 2026
-base.0=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.2=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
-base.3=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
-base.4=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
-base.5=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\3\\classes.dex
-base.6=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
-base.7=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
-base.8=C\:\\Users\\JL\\AndroidStudioProjects\\KoordyApp\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+#Wed Apr 15 12:17:32 CEST 2026
+base.0=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.2=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
+base.3=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.4=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.5=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\3\\classes.dex
+base.6=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.7=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+base.8=C\:\\Users\\aurel\\AndroidStudioProjects\\KOORDY-v2\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.2=12/classes.dex

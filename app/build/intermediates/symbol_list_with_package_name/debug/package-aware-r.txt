@@ -1402,6 +1402,7 @@ color background_floating_material_light
 color background_material_dark
 color background_material_light
 color bg
+color bottom_nav_indicator_bg
 color brand
 color brand_2
 color bright_foreground_disabled_material_dark
@@ -3037,6 +3038,8 @@ drawable bg_choice_card
 drawable bg_header
 drawable bg_input
 drawable bg_success_icon
+drawable bottom_nav_colors
+drawable bottom_nav_indicator
 drawable btn_checkbox_checked_mtrl
 drawable btn_checkbox_checked_to_unchecked_mtrl_animation
 drawable btn_checkbox_unchecked_mtrl
@@ -3067,6 +3070,10 @@ drawable ic_mtrl_checked_circle
 drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
+drawable ic_nav_calendar
+drawable ic_nav_chat
+drawable ic_nav_home
+drawable ic_nav_profile
 drawable ic_search_black_24
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3281,6 +3288,7 @@ id center_vertical
 id chain
 id chain2
 id chains
+id chatFragment
 id checkbox
 id checked
 id chronometer
@@ -3402,6 +3410,7 @@ id graph_wrap
 id group_divider
 id grouping
 id groups
+id header
 id header_title
 id hide_ime_id
 id hideable
@@ -3506,6 +3515,7 @@ id mtrl_picker_title_text
 id mtrl_view_tag_bottom_padding
 id multiply
 id nav_controller_view_tag
+id nav_divider
 id nav_graph
 id nav_host_fragment
 id nav_host_fragment_container
@@ -3889,6 +3899,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fragment_chat
 layout fragment_design_association
 layout fragment_events
 layout fragment_form_association
@@ -4460,6 +4471,7 @@ style Base_Widget_MaterialComponents_TextView
 style CardView
 style CardView_Dark
 style CardView_Light
+style KoordyBottomNav
 style KoordyButton_Primary
 style KoordyCard
 style MaterialAlertDialog_Material3

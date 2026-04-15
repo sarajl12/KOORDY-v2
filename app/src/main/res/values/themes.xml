@@ -10,6 +10,17 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="bottomNavigationStyle">@style/KoordyBottomNav</item>
+    </style>
+
+    <!-- Style de la bottom navigation bar -->
+    <style name="KoordyBottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconTint">@drawable/bottom_nav_colors</item>
+        <item name="itemTextColor">@drawable/bottom_nav_colors</item>
+        <item name="itemIconSize">24dp</item>
+        <item name="labelVisibilityMode">labeled</item>
+        <item name="android:background">@color/white</item>
+        <item name="elevation">8dp</item>
     </style>
 
     <style name="KoordyCard">

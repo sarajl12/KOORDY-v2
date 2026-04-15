@@ -15,4 +15,5 @@
     <color name="white">#FFFFFF</color>
     <color name="card_border">#E5E7EB</color>
     <color name="input_border">#D1D5DB</color>
+    <color name="bottom_nav_indicator_bg">#1A2D9CF0</color>
 </resources>
