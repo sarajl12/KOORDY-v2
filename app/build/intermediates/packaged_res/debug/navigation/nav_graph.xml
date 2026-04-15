@@ -90,6 +90,11 @@
         android:label="Événements" />
 
     <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.koordy.app.ui.home.CalendarFragment"
+        android:label="Calendrier" />
+
+    <fragment
         android:id="@+id/newsFragment"
         android:name="com.koordy.app.ui.home.NewsFragment"
         android:label="Actualités" />

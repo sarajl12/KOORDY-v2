@@ -7,9 +7,9 @@
         android:title="Accueil" />
 
     <item
-        android:id="@+id/eventsFragment"
-        android:icon="@android:drawable/ic_menu_agenda"
-        android:title="Évènements" />
+        android:id="@+id/calendarFragment"
+        android:icon="@drawable/ic_calendar"
+        android:title="Calendrier" />
 
     <item
         android:id="@+id/newsFragment"

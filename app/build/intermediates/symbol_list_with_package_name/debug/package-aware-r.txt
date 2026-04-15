@@ -3032,6 +3032,8 @@ drawable abc_vector_test
 drawable avd_hide_password
 drawable avd_show_password
 drawable bg_button_primary
+drawable bg_calendar_day_selected
+drawable bg_calendar_today
 drawable bg_card
 drawable bg_choice_card
 drawable bg_header
@@ -3051,12 +3053,15 @@ drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
 drawable ic_arrow_back_black_24
+drawable ic_calendar
 drawable ic_call_answer
 drawable ic_call_answer_low
 drawable ic_call_answer_video
 drawable ic_call_answer_video_low
 drawable ic_call_decline
 drawable ic_call_decline_low
+drawable ic_chevron_left
+drawable ic_chevron_right
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
 drawable ic_keyboard_black_24dp
@@ -3263,11 +3268,14 @@ id btn_go_to_space
 id btn_login
 id btn_logout
 id btn_membre
+id btn_next_month
+id btn_prev_month
 id btn_rechercher
 id btn_save_profile
 id btn_suivant
 id buttonPanel
 id cache_measures
+id calendarFragment
 id callMeasure
 id cancel_button
 id card_creer
@@ -3328,6 +3336,7 @@ id disableIntraAutoTransition
 id disablePostScroll
 id disableScroll
 id disjoint
+id dots_container
 id dragAnticlockwise
 id dragClockwise
 id dragDown
@@ -3573,6 +3582,7 @@ id radio
 id ratio
 id rechercheAssociationFragment
 id rectangles
+id recycler_calendar
 id recycler_conseil
 id recycler_events
 id recycler_news
@@ -3710,6 +3720,7 @@ id tv_conseil_empty
 id tv_contenu
 id tv_date
 id tv_day
+id tv_day_num
 id tv_desc
 id tv_description
 id tv_details
@@ -3719,6 +3730,7 @@ id tv_equipe
 id tv_events_empty
 id tv_lieu
 id tv_month
+id tv_month_label
 id tv_naissance
 id tv_name
 id tv_news_empty
@@ -3729,6 +3741,7 @@ id tv_prenom
 id tv_presences
 id tv_retour
 id tv_role
+id tv_selected_day
 id tv_telephone
 id tv_time
 id tv_title
@@ -3889,6 +3902,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout fragment_calendar
 layout fragment_design_association
 layout fragment_events
 layout fragment_form_association
@@ -3903,6 +3917,7 @@ layout fragment_success_association
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_association_search
+layout item_calendar_day
 layout item_conseil
 layout item_event
 layout item_news

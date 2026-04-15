@@ -3031,6 +3031,8 @@ int drawable abc_vector_test 0x7f080076
 int drawable avd_hide_password 0x7f080077
 int drawable avd_show_password 0x7f080078
 int drawable bg_button_primary 0x7f080079
+int drawable bg_calendar_day_selected 0x7f0800eb
+int drawable bg_calendar_today 0x7f0800ec
 int drawable bg_card 0x7f08007a
 int drawable bg_choice_card 0x7f08007b
 int drawable bg_header 0x7f08007c
@@ -3050,12 +3052,15 @@ int drawable design_ic_visibility_off 0x7f080089
 int drawable design_password_eye 0x7f08008a
 int drawable design_snackbar_background 0x7f08008b
 int drawable ic_arrow_back_black_24 0x7f08008c
+int drawable ic_calendar 0x7f0800ed
 int drawable ic_call_answer 0x7f08008d
 int drawable ic_call_answer_low 0x7f08008e
 int drawable ic_call_answer_video 0x7f08008f
 int drawable ic_call_answer_video_low 0x7f080090
 int drawable ic_call_decline 0x7f080091
 int drawable ic_call_decline_low 0x7f080092
+int drawable ic_chevron_left 0x7f0800ee
+int drawable ic_chevron_right 0x7f0800ef
 int drawable ic_clear_black_24 0x7f080093
 int drawable ic_clock_black_24dp 0x7f080094
 int drawable ic_keyboard_black_24dp 0x7f080095
@@ -3262,11 +3267,14 @@ int id btn_go_to_space 0x7f090072
 int id btn_login 0x7f090073
 int id btn_logout 0x7f090074
 int id btn_membre 0x7f090075
+int id btn_next_month 0x7f090264
+int id btn_prev_month 0x7f090265
 int id btn_rechercher 0x7f090076
 int id btn_save_profile 0x7f090077
 int id btn_suivant 0x7f090078
 int id buttonPanel 0x7f090079
 int id cache_measures 0x7f09007a
+int id calendarFragment 0x7f090266
 int id callMeasure 0x7f09007b
 int id cancel_button 0x7f09007c
 int id card_creer 0x7f09007d
@@ -3327,6 +3335,7 @@ int id disableIntraAutoTransition 0x7f0900b3
 int id disablePostScroll 0x7f0900b4
 int id disableScroll 0x7f0900b5
 int id disjoint 0x7f0900b6
+int id dots_container 0x7f090267
 int id dragAnticlockwise 0x7f0900b7
 int id dragClockwise 0x7f0900b8
 int id dragDown 0x7f0900b9
@@ -3572,6 +3581,7 @@ int id radio 0x7f0901a8
 int id ratio 0x7f0901a9
 int id rechercheAssociationFragment 0x7f0901aa
 int id rectangles 0x7f0901ab
+int id recycler_calendar 0x7f090268
 int id recycler_conseil 0x7f0901ac
 int id recycler_events 0x7f0901ad
 int id recycler_news 0x7f0901ae
@@ -3709,6 +3719,7 @@ int id tv_conseil_empty 0x7f090231
 int id tv_contenu 0x7f090232
 int id tv_date 0x7f090233
 int id tv_day 0x7f090234
+int id tv_day_num 0x7f090269
 int id tv_desc 0x7f090235
 int id tv_description 0x7f090236
 int id tv_details 0x7f090237
@@ -3718,6 +3729,7 @@ int id tv_equipe 0x7f09023a
 int id tv_events_empty 0x7f09023b
 int id tv_lieu 0x7f09023c
 int id tv_month 0x7f09023d
+int id tv_month_label 0x7f09026a
 int id tv_naissance 0x7f09023e
 int id tv_name 0x7f09023f
 int id tv_news_empty 0x7f090240
@@ -3728,6 +3740,7 @@ int id tv_prenom 0x7f090244
 int id tv_presences 0x7f090245
 int id tv_retour 0x7f090246
 int id tv_role 0x7f090247
+int id tv_selected_day 0x7f09026b
 int id tv_telephone 0x7f090248
 int id tv_time 0x7f090249
 int id tv_title 0x7f09024a
@@ -3888,6 +3901,7 @@ int layout design_navigation_menu 0x7f0c0029
 int layout design_navigation_menu_item 0x7f0c002a
 int layout design_text_input_end_icon 0x7f0c002b
 int layout design_text_input_start_icon 0x7f0c002c
+int layout fragment_calendar 0x7f0c007b
 int layout fragment_design_association 0x7f0c002d
 int layout fragment_events 0x7f0c002e
 int layout fragment_form_association 0x7f0c002f
@@ -3902,6 +3916,7 @@ int layout fragment_success_association 0x7f0c0037
 int layout ime_base_split_test_activity 0x7f0c0038
 int layout ime_secondary_split_test_activity 0x7f0c0039
 int layout item_association_search 0x7f0c003a
+int layout item_calendar_day 0x7f0c007c
 int layout item_conseil 0x7f0c003b
 int layout item_event 0x7f0c003c
 int layout item_news 0x7f0c003d
