@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_structure_array">
+        <item>Club</item>
+        <item>Association</item>
+        <item>Académie</item>
+        <item>Autre</item>
+    </string-array>
+    <color name="bg">#FFFFFF</color>
+    <color name="brand">#2D9CF0</color>
+    <color name="brand_2">#A8FF60</color>
+    <color name="btn_primary_end">#0E6CCF</color>
+    <color name="btn_primary_start">#2D9CF0</color>
+    <color name="card_border">#E5E7EB</color>
+    <color name="danger">#EF4444</color>
+    <color name="elev">#FFFFFF</color>
+    <color name="input_border">#D1D5DB</color>
+    <color name="line">#E5E7EB</color>
+    <color name="muted">#6B7280</color>
+    <color name="panel">#F5F5F5</color>
+    <color name="success_green">#22C55E</color>
+    <color name="text">#1A1A2E</color>
+    <color name="white">#FFFFFF</color>
+    <string name="app_name">Koordy</string>
+    <string name="asso_adresse">Adresse</string>
+    <string name="asso_adresse2">Adresse 2 (optionnel)</string>
+    <string name="asso_cp">Code postal</string>
+    <string name="asso_date_creation">Date de création (AAAA-MM-JJ)</string>
+    <string name="asso_description">Description (optionnel)</string>
+    <string name="asso_nom">Nom de l\'association</string>
+    <string name="asso_pays">Pays</string>
+    <string name="asso_sport">Sport</string>
+    <string name="asso_ville">Ville</string>
+    <string name="btn_go_space">Accéder à mon espace</string>
+    <string name="btn_login">Se connecter</string>
+    <string name="btn_retour">← Retour</string>
+    <string name="btn_suivant">Suivant</string>
+    <string name="couleur_1">Couleur primaire (ex: #6CCFFF)</string>
+    <string name="couleur_2">Couleur secondaire (ex: #FFFFFF)</string>
+    <string name="hint_birthday">Date de naissance (AAAA-MM-JJ)</string>
+    <string name="hint_confirm_password">Confirmer le mot de passe</string>
+    <string name="hint_email">Adresse e-mail</string>
+    <string name="hint_nom">Votre nom</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="hint_prenom">Votre prénom</string>
+    <string name="hint_search">Nom de votre association</string>
+    <string name="loading">Chargement…</string>
+    <string name="nav_events">Évènements</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_membre">Profil</string>
+    <string name="nav_news">Actualités</string>
+    <string name="no_account">Pas encore de compte ? Créer un compte</string>
+    <string name="success_body">Votre plateforme Koordy est configurée. Accédez-y dès maintenant.</string>
+    <string name="success_title">Association créée !</string>
+    <style name="KoordyButton.Primary" parent="Widget.MaterialComponents.Button">
+        <item name="android:backgroundTint">@color/btn_primary_start</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">999dp</item>
+        <item name="android:paddingTop">14dp</item>
+        <item name="android:paddingBottom">14dp</item>
+    </style>
+    <style name="KoordyCard">
+        <item name="android:background">@drawable/bg_card</item>
+        <item name="android:padding">16dp</item>
+    </style>
+    <style name="StepActive">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:background">@drawable/step_active</item>
+    </style>
+    <style name="StepInactive">
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">6dp</item>
+        <item name="android:background">@drawable/step_inactive</item>
+    </style>
+    <style name="Theme.KoordyApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/brand</item>
+        <item name="colorPrimaryVariant">@color/btn_primary_end</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/text</item>
+        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:navigationBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

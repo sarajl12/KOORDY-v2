@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingBottom="20dp">
+            <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Mon Profil" android:textColor="@color/text" android:textSize="22sp" android:textStyle="bold" />
+            <Button android:id="@+id/btn_logout" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Déconnexion" android:textColor="@color/danger" android:backgroundTint="@color/panel" android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Profil card -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="18dp" android:layout_marginBottom="16dp">
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:paddingBottom="14dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Informations personnelles" android:textColor="@color/text" android:textSize="15sp" android:textStyle="bold" />
+                <Button android:id="@+id/btn_edit_profile" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Modifier" android:background="@drawable/bg_button_primary" android:textColor="@color/white" android:textSize="12sp" android:padding="8dp" />
+            </LinearLayout>
+
+            <TextView android:id="@+id/tv_nom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_prenom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_email" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_naissance" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_age" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_role" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="13sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_adhesion" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="13sp" />
+
+            <!-- Edit form (hidden by default) -->
+            <LinearLayout android:id="@+id/layout_edit" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:visibility="gone" android:paddingTop="16dp">
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prénom" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                <EditText android:id="@+id/et_edit_prenom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:inputType="textPersonName" android:padding="10dp" android:textColor="@color/text" android:layout_marginBottom="10dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nom" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                <EditText android:id="@+id/et_edit_nom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:inputType="textPersonName" android:padding="10dp" android:textColor="@color/text" android:layout_marginBottom="10dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                <EditText android:id="@+id/et_edit_email" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:inputType="textEmailAddress" android:padding="10dp" android:textColor="@color/text" android:layout_marginBottom="10dp" />
+
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date de naissance" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                <EditText android:id="@+id/et_edit_birth" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:inputType="datetime" android:padding="10dp" android:textColor="@color/text" android:layout_marginBottom="14dp" />
+
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <Button android:id="@+id/btn_save_profile" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:background="@drawable/bg_button_primary" android:text="Enregistrer" android:textColor="@color/white" android:layout_marginEnd="8dp" />
+                    <Button android:id="@+id/btn_cancel_edit" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:backgroundTint="@color/panel" android:text="Annuler" android:textColor="@color/muted" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Association card -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mon Association" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="10dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="16dp" android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/tv_asso_nom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_asso_sport" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="13sp" android:paddingBottom="4dp" />
+            <TextView android:id="@+id/tv_asso_ville" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="13sp" />
+        </LinearLayout>
+
+        <!-- Équipe card -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mon Équipe" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="10dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="16dp" android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/tv_equipe" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Activités -->
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mes Activités" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="10dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_card" android:orientation="vertical" android:padding="16dp" android:layout_marginBottom="32dp">
+            <TextView android:id="@+id/tv_presences" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

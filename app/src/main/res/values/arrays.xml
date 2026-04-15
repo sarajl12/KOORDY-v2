@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type_structure_array">
+        <item>Club</item>
+        <item>Association</item>
+        <item>Académie</item>
+        <item>Autre</item>
+    </string-array>
+</resources>

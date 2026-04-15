@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FFFFFF</color>
+    <color name="panel">#F5F5F5</color>
+    <color name="elev">#FFFFFF</color>
+    <color name="text">#1A1A2E</color>
+    <color name="muted">#6B7280</color>
+    <color name="brand">#2D9CF0</color>
+    <color name="brand_2">#A8FF60</color>
+    <color name="line">#E5E7EB</color>
+    <color name="danger">#EF4444</color>
+    <color name="success_green">#22C55E</color>
+    <color name="btn_primary_start">#2D9CF0</color>
+    <color name="btn_primary_end">#0E6CCF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="card_border">#E5E7EB</color>
+    <color name="input_border">#D1D5DB</color>
+</resources>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <!-- AUTH -->
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.koordy.app.ui.auth.LoginFragment"
+        android:label="Connexion">
+        <action android:id="@+id/action_login_to_inscription"
+            app:destination="@id/inscriptionFragment" />
+        <action android:id="@+id/action_login_to_homeAssociation"
+            app:destination="@id/homeAssociationFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inscriptionFragment"
+        android:name="com.koordy.app.ui.auth.InscriptionFragment"
+        android:label="Inscription">
+        <action android:id="@+id/action_inscription_to_inscriptionAssociation"
+            app:destination="@id/inscriptionAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/inscriptionAssociationFragment"
+        android:name="com.koordy.app.ui.auth.InscriptionAssociationFragment"
+        android:label="Association">
+        <action android:id="@+id/action_inscriptionAssociation_to_formAssociation"
+            app:destination="@id/formAssociationFragment" />
+        <action android:id="@+id/action_inscriptionAssociation_to_rechercheAssociation"
+            app:destination="@id/rechercheAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/formAssociationFragment"
+        android:name="com.koordy.app.ui.auth.FormAssociationFragment"
+        android:label="Formulaire Association">
+        <action android:id="@+id/action_formAssociation_to_designAssociation"
+            app:destination="@id/designAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/designAssociationFragment"
+        android:name="com.koordy.app.ui.auth.DesignAssociationFragment"
+        android:label="Design">
+        <action android:id="@+id/action_designAssociation_to_successAssociation"
+            app:destination="@id/successAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/successAssociationFragment"
+        android:name="com.koordy.app.ui.auth.SuccessAssociationFragment"
+        android:label="Succès">
+        <action android:id="@+id/action_successAssociation_to_homeAssociation"
+            app:destination="@id/homeAssociationFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/rechercheAssociationFragment"
+        android:name="com.koordy.app.ui.auth.RechercheAssociationFragment"
+        android:label="Recherche">
+        <action android:id="@+id/action_rechercheAssociation_to_homeAssociation"
+            app:destination="@id/homeAssociationFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <!-- MAIN APP (bottom nav) -->
+
+    <fragment
+        android:id="@+id/homeAssociationFragment"
+        android:name="com.koordy.app.ui.home.HomeAssociationFragment"
+        android:label="Accueil">
+        <action android:id="@+id/action_homeAssociation_to_membre"
+            app:destination="@id/membreFragment" />
+        <action android:id="@+id/action_homeAssociation_to_rechercheAssociation"
+            app:destination="@id/rechercheAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/eventsFragment"
+        android:name="com.koordy.app.ui.home.EventsFragment"
+        android:label="Événements" />
+
+    <fragment
+        android:id="@+id/newsFragment"
+        android:name="com.koordy.app.ui.home.NewsFragment"
+        android:label="Actualités" />
+
+    <fragment
+        android:id="@+id/membreFragment"
+        android:name="com.koordy.app.ui.membre.MembreFragment"
+        android:label="Profil" />
+
+</navigation>

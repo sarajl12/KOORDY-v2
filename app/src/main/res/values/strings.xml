@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Koordy</string>
+    <string name="nav_home">Accueil</string>
+    <string name="nav_events">Évènements</string>
+    <string name="nav_news">Actualités</string>
+    <string name="nav_membre">Profil</string>
+    <string name="btn_login">Se connecter</string>
+    <string name="btn_suivant">Suivant</string>
+    <string name="btn_retour">← Retour</string>
+    <string name="hint_email">Adresse e-mail</string>
+    <string name="hint_password">Mot de passe</string>
+    <string name="hint_nom">Votre nom</string>
+    <string name="hint_prenom">Votre prénom</string>
+    <string name="hint_birthday">Date de naissance (AAAA-MM-JJ)</string>
+    <string name="hint_confirm_password">Confirmer le mot de passe</string>
+    <string name="hint_search">Nom de votre association</string>
+    <string name="no_account">Pas encore de compte ? Créer un compte</string>
+    <string name="loading">Chargement…</string>
+    <string name="asso_nom">Nom de l\'association</string>
+    <string name="asso_sport">Sport</string>
+    <string name="asso_adresse">Adresse</string>
+    <string name="asso_adresse2">Adresse 2 (optionnel)</string>
+    <string name="asso_cp">Code postal</string>
+    <string name="asso_ville">Ville</string>
+    <string name="asso_pays">Pays</string>
+    <string name="asso_description">Description (optionnel)</string>
+    <string name="asso_date_creation">Date de création (AAAA-MM-JJ)</string>
+    <string name="couleur_1">Couleur primaire (ex: #6CCFFF)</string>
+    <string name="couleur_2">Couleur secondaire (ex: #FFFFFF)</string>
+    <string name="success_title">Association créée !</string>
+    <string name="success_body">Votre plateforme Koordy est configurée. Accédez-y dès maintenant.</string>
+    <string name="btn_go_space">Accéder à mon espace</string>
+</resources>

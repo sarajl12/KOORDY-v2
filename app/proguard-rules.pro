@@ -1,0 +1,3 @@
+-keep class com.koordy.app.models.** { *; }
+-keepattributes Signature
+-keepattributes *Annotation*
