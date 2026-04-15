@@ -78,6 +78,15 @@ interface KoordyApiService {
     @POST("api/evenements")
     suspend fun createEvenement(@Body request: EvenementRequest): Response<GenericResponse>
 
+    @GET("api/membre/{id}/evenements")
+    suspend fun getMembreEvenements(@Path("id") idMembre: Int): Response<List<EvenementAvecStatut>>
+
+    @PATCH("api/evenements/{id}/rsvp")
+    suspend fun respondRsvp(
+        @Path("id") idEvenement: Int,
+        @Body request: RsvpRequest
+    ): Response<GenericResponse>
+
     // ── Actualités ────────────────────────────────────────────────────────────
 
     @POST("api/news")

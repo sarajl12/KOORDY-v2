@@ -111,10 +111,10 @@ class CalendarDayAdapter(
         notifyDataSetChanged()
     }
 
-    private fun eventColor(type: String): Int = when (type.uppercase()) {
-        "MATCH"        -> Color.parseColor("#FF6B6B")
-        "ENTRAINEMENT" -> Color.parseColor("#6CCFFF")
-        "REUNION"      -> Color.parseColor("#A8FF60")
-        else           -> Color.parseColor("#9AA3B2")
+    // eventTypes contient des statuts RSVP : "Accepté", "Refusé", "En attente"
+    private fun eventColor(statut: String): Int = when (statut) {
+        "Accepté"    -> Color.parseColor("#22C55E")
+        "Refusé"     -> Color.parseColor("#EF4444")
+        else         -> Color.parseColor("#2D9CF0") // En attente
     }
 }

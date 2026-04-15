@@ -138,7 +138,25 @@ data class EvenementRequest(
     @SerializedName("lieu_event") val lieuEvent: String,
     @SerializedName("description_evenement") val descriptionEvenement: String,
     @SerializedName("date_debut_event") val dateDebutEvent: String,
-    @SerializedName("date_fin_event") val dateFinEvent: String?
+    @SerializedName("date_fin_event") val dateFinEvent: String?,
+    val participants: List<Int>? = null  // null = inviter tous les membres
+)
+
+data class EvenementAvecStatut(
+    @SerializedName("id_evenement") val idEvenement: Int = 0,
+    @SerializedName("id_association") val idAssociation: Int = 0,
+    @SerializedName("titre_evenement") val titreEvenement: String = "",
+    @SerializedName("type_evenement") val typeEvenement: String = "",
+    @SerializedName("description_evenement") val descriptionEvenement: String = "",
+    @SerializedName("lieu_event") val lieuEvent: String = "",
+    @SerializedName("date_debut_event") val dateDebutEvent: String = "",
+    @SerializedName("date_fin_event") val dateFinEvent: String = "",
+    val statut: String = "En attente"  // "En attente" | "Accepté" | "Refusé"
+)
+
+data class RsvpRequest(
+    @SerializedName("id_membre") val idMembre: Int,
+    val statut: String
 )
 
 // ── Actualité ────────────────────────────────────────────────────────────────

@@ -4,8 +4,8 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_association_search.xml"
     },
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_calendar.xml",
-        "source": "com.koordy.app-main-53:/layout/fragment_calendar.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_calendar.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_calendar.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_news.xml",
@@ -28,6 +28,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_events.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_member_select.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_member_select.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_event.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_event.xml"
     },
@@ -40,6 +44,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_calendar_day.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_calendar_day.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_home_association.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_home_association.xml"
     },
@@ -48,12 +56,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\activity_main.xml"
     },
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/item_calendar_day.xml",
-        "source": "com.koordy.app-main-53:/layout/item_calendar_day.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_event_calendar.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_event_calendar.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_news.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_news.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_create_event.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_event.xml"
+    },
+    {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_create_event.xml",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_create_event.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription.xml",

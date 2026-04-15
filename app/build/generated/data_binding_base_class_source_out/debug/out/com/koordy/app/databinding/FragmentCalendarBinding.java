@@ -5,11 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
@@ -20,13 +21,19 @@ import java.lang.String;
 
 public final class FragmentCalendarBinding implements ViewBinding {
   @NonNull
-  private final NestedScrollView rootView;
+  private final CoordinatorLayout rootView;
 
   @NonNull
   public final ImageButton btnNextMonth;
 
   @NonNull
   public final ImageButton btnPrevMonth;
+
+  @NonNull
+  public final LinearLayout fabCreateEvent;
+
+  @NonNull
+  public final LinearLayout llPendingBanner;
 
   @NonNull
   public final ProgressBar progressBar;
@@ -44,27 +51,35 @@ public final class FragmentCalendarBinding implements ViewBinding {
   public final TextView tvMonthLabel;
 
   @NonNull
+  public final TextView tvPendingText;
+
+  @NonNull
   public final TextView tvSelectedDay;
 
-  private FragmentCalendarBinding(@NonNull NestedScrollView rootView,
+  private FragmentCalendarBinding(@NonNull CoordinatorLayout rootView,
       @NonNull ImageButton btnNextMonth, @NonNull ImageButton btnPrevMonth,
+      @NonNull LinearLayout fabCreateEvent, @NonNull LinearLayout llPendingBanner,
       @NonNull ProgressBar progressBar, @NonNull RecyclerView recyclerCalendar,
       @NonNull RecyclerView recyclerEvents, @NonNull TextView tvEmpty,
-      @NonNull TextView tvMonthLabel, @NonNull TextView tvSelectedDay) {
+      @NonNull TextView tvMonthLabel, @NonNull TextView tvPendingText,
+      @NonNull TextView tvSelectedDay) {
     this.rootView = rootView;
     this.btnNextMonth = btnNextMonth;
     this.btnPrevMonth = btnPrevMonth;
+    this.fabCreateEvent = fabCreateEvent;
+    this.llPendingBanner = llPendingBanner;
     this.progressBar = progressBar;
     this.recyclerCalendar = recyclerCalendar;
     this.recyclerEvents = recyclerEvents;
     this.tvEmpty = tvEmpty;
     this.tvMonthLabel = tvMonthLabel;
+    this.tvPendingText = tvPendingText;
     this.tvSelectedDay = tvSelectedDay;
   }
 
   @Override
   @NonNull
-  public NestedScrollView getRoot() {
+  public CoordinatorLayout getRoot() {
     return rootView;
   }
 
@@ -101,6 +116,18 @@ public final class FragmentCalendarBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.fab_create_event;
+      LinearLayout fabCreateEvent = ViewBindings.findChildViewById(rootView, id);
+      if (fabCreateEvent == null) {
+        break missingId;
+      }
+
+      id = R.id.ll_pending_banner;
+      LinearLayout llPendingBanner = ViewBindings.findChildViewById(rootView, id);
+      if (llPendingBanner == null) {
+        break missingId;
+      }
+
       id = R.id.progress_bar;
       ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
@@ -131,14 +158,21 @@ public final class FragmentCalendarBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_pending_text;
+      TextView tvPendingText = ViewBindings.findChildViewById(rootView, id);
+      if (tvPendingText == null) {
+        break missingId;
+      }
+
       id = R.id.tv_selected_day;
       TextView tvSelectedDay = ViewBindings.findChildViewById(rootView, id);
       if (tvSelectedDay == null) {
         break missingId;
       }
 
-      return new FragmentCalendarBinding((NestedScrollView) rootView, btnNextMonth, btnPrevMonth,
-          progressBar, recyclerCalendar, recyclerEvents, tvEmpty, tvMonthLabel, tvSelectedDay);
+      return new FragmentCalendarBinding((CoordinatorLayout) rootView, btnNextMonth, btnPrevMonth,
+          fabCreateEvent, llPendingBanner, progressBar, recyclerCalendar, recyclerEvents, tvEmpty,
+          tvMonthLabel, tvPendingText, tvSelectedDay);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

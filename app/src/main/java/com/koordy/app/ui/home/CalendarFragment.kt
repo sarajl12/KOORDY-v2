@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.koordy.app.MainActivity
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentCalendarBinding
-import com.koordy.app.models.Evenement
-import com.koordy.app.ui.association.EventsAdapter
+import com.koordy.app.models.EvenementAvecStatut
+import com.koordy.app.models.RsvpRequest
+import com.koordy.app.ui.association.CalendarEventsAdapter
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,16 +25,15 @@ class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
 
-    // État du calendrier
-    private var allEvents: List<Evenement> = emptyList()
+    private var allEvents: List<EvenementAvecStatut> = emptyList()
     private var currentYear  = Calendar.getInstance().get(Calendar.YEAR)
     private var currentMonth = Calendar.getInstance().get(Calendar.MONTH)
     private var selectedDay  = Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
+    private var isAdmin      = false
 
     private lateinit var calendarAdapter: CalendarDayAdapter
-    private lateinit var eventsAdapter: EventsAdapter
+    private lateinit var eventsAdapter: CalendarEventsAdapter
 
-    // Parseur de date ISO utilisé dans tout le projet
     private val sdfIn = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRENCH)
 
     // ── Cycle de vie ──────────────────────────────────────────────────────────
@@ -52,9 +52,13 @@ class CalendarFragment : Fragment() {
         setupCalendarGrid()
         setupEventsRecycler()
         setupMonthNavigation()
+        setupFab()
 
-        val idAsso = (activity as MainActivity).session.idAssociation
-        loadEvents(idAsso)
+        val session  = (activity as MainActivity).session
+        val idMembre = session.idMembre
+        val idAsso   = session.idAssociation
+
+        checkAdminAndLoadEvents(idAsso, idMembre)
     }
 
     override fun onDestroyView() {
@@ -84,7 +88,9 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupEventsRecycler() {
-        eventsAdapter = EventsAdapter(emptyList())
+        eventsAdapter = CalendarEventsAdapter(emptyList()) { idEvenement, statut ->
+            handleRsvp(idEvenement, statut)
+        }
         binding.recyclerEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = eventsAdapter
@@ -97,16 +103,49 @@ class CalendarFragment : Fragment() {
         binding.btnNextMonth.setOnClickListener { navigateMonth(+1) }
     }
 
-    // ── Chargement des données ────────────────────────────────────────────────
+    private fun setupFab() {
+        binding.fabCreateEvent.setOnClickListener {
+            val sheet = CreateEventBottomSheet()
+            sheet.onEventCreated = {
+                val session = (activity as MainActivity).session
+                loadEvents(session.idMembre)
+            }
+            sheet.show(parentFragmentManager, CreateEventBottomSheet.TAG)
+        }
+    }
 
-    private fun loadEvents(idAsso: Int) {
+    // ── Chargement : vérifie admin puis charge les événements ────────────────
+
+    private fun checkAdminAndLoadEvents(idAsso: Int, idMembre: Int) {
+        binding.progressBar.visibility = View.VISIBLE
+
+        lifecycleScope.launch {
+            // 1) Vérifier si admin
+            try {
+                val adminRes = RetrofitClient.api.isAdmin(idAsso, idMembre)
+                if (adminRes.isSuccessful) {
+                    isAdmin = adminRes.body()?.isAdmin ?: false
+                    binding.fabCreateEvent.visibility =
+                        if (isAdmin) View.VISIBLE else View.GONE
+                }
+            } catch (e: Exception) {
+                // Pas bloquant, le FAB reste caché
+            }
+
+            // 2) Charger les événements
+            loadEvents(idMembre)
+        }
+    }
+
+    private fun loadEvents(idMembre: Int) {
         binding.progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.api.getEvents(idAsso)
+                val response = RetrofitClient.api.getMembreEvenements(idMembre)
                 if (response.isSuccessful) {
                     allEvents = response.body() ?: emptyList()
+                    updatePendingBanner()
                 } else {
                     Toast.makeText(requireContext(), "Impossible de charger les événements.", Toast.LENGTH_SHORT).show()
                 }
@@ -119,6 +158,51 @@ class CalendarFragment : Fragment() {
         }
     }
 
+    // ── Bannière invitations en attente ───────────────────────────────────────
+
+    private fun updatePendingBanner() {
+        val pending = allEvents.count { it.statut == "En attente" }
+        if (pending > 0) {
+            binding.llPendingBanner.visibility = View.VISIBLE
+            binding.tvPendingText.text = when (pending) {
+                1 -> "📬  1 invitation en attente de réponse"
+                else -> "📬  $pending invitations en attente de réponse"
+            }
+        } else {
+            binding.llPendingBanner.visibility = View.GONE
+        }
+    }
+
+    // ── RSVP ─────────────────────────────────────────────────────────────────
+
+    private fun handleRsvp(idEvenement: Int, statut: String) {
+        val idMembre = (activity as MainActivity).session.idMembre
+
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.api.respondRsvp(
+                    idEvenement,
+                    RsvpRequest(idMembre = idMembre, statut = statut)
+                )
+                if (response.isSuccessful) {
+                    // Mise à jour locale instantanée
+                    allEvents = allEvents.map { ev ->
+                        if (ev.idEvenement == idEvenement) ev.copy(statut = statut) else ev
+                    }
+                    updatePendingBanner()
+                    refreshCalendar()
+
+                    val msg = if (statut == "Accepté") "Participation confirmée !" else "Invitation déclinée."
+                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(requireContext(), "Erreur lors de la réponse.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(requireContext(), "Erreur de connexion.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     // ── Logique du calendrier ─────────────────────────────────────────────────
 
     private fun navigateMonth(direction: Int) {
@@ -126,14 +210,11 @@ class CalendarFragment : Fragment() {
         if (currentMonth > 11) { currentMonth = 0; currentYear++ }
         if (currentMonth < 0)  { currentMonth = 11; currentYear-- }
 
-        // Sélectionner aujourd'hui si on revient au mois courant, sinon le 1er
         val today = Calendar.getInstance()
         selectedDay = if (currentYear == today.get(Calendar.YEAR)
             && currentMonth == today.get(Calendar.MONTH)) {
             today.get(Calendar.DAY_OF_MONTH)
-        } else {
-            1
-        }
+        } else { 1 }
 
         refreshCalendar()
     }
@@ -151,10 +232,8 @@ class CalendarFragment : Fragment() {
         cal.set(currentYear, currentMonth, 1)
 
         val daysInMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH)
-
-        // Décalage : Calendar.MONDAY = 2, on veut Lundi = 0
-        val rawFirst = cal.get(Calendar.DAY_OF_WEEK)
-        val offset   = (rawFirst - Calendar.MONDAY + 7) % 7
+        val rawFirst    = cal.get(Calendar.DAY_OF_WEEK)
+        val offset      = (rawFirst - Calendar.MONDAY + 7) % 7
 
         val today  = Calendar.getInstance()
         val todayY = today.get(Calendar.YEAR)
@@ -162,18 +241,14 @@ class CalendarFragment : Fragment() {
         val todayD = today.get(Calendar.DAY_OF_MONTH)
 
         val result = mutableListOf<CalendarDay>()
-
-        // Cellules vides avant le 1er du mois
         repeat(offset) { result.add(CalendarDay(0, false, false, emptyList())) }
 
-        // Jours du mois
         for (d in 1..daysInMonth) {
             val isToday = (currentYear == todayY && currentMonth == todayM && d == todayD)
-            val types   = eventsForDay(d).map { it.typeEvenement }
-            result.add(CalendarDay(d, isCurrentMonth = true, isToday = isToday, eventTypes = types))
+            val statuts = eventsForDay(d).map { it.statut }
+            result.add(CalendarDay(d, isCurrentMonth = true, isToday = isToday, eventTypes = statuts))
         }
 
-        // Compléter la dernière ligne (multiple de 7)
         while (result.size % 7 != 0) {
             result.add(CalendarDay(0, false, false, emptyList()))
         }
@@ -181,9 +256,9 @@ class CalendarFragment : Fragment() {
         return result
     }
 
-    // ── Événements du jour sélectionné ───────────────────────────────────────
+    // ── Événements du jour ────────────────────────────────────────────────────
 
-    private fun eventsForDay(day: Int): List<Evenement> {
+    private fun eventsForDay(day: Int): List<EvenementAvecStatut> {
         return allEvents.filter { ev ->
             try {
                 val parsed = sdfIn.parse(ev.dateDebutEvent) ?: return@filter false
@@ -197,8 +272,7 @@ class CalendarFragment : Fragment() {
 
     private fun updateEventsForDay() {
         val events = eventsForDay(selectedDay)
-        eventsAdapter = EventsAdapter(events)
-        binding.recyclerEvents.adapter = eventsAdapter
+        eventsAdapter.update(events)
 
         binding.tvEmpty.visibility =
             if (events.isEmpty()) View.VISIBLE else View.GONE
@@ -212,15 +286,13 @@ class CalendarFragment : Fragment() {
         val cal = Calendar.getInstance()
         cal.set(currentYear, currentMonth, 1)
         val sdf = SimpleDateFormat("MMMM yyyy", Locale.FRENCH)
-        binding.tvMonthLabel.text = sdf.format(cal.time)
-            .replaceFirstChar { it.uppercase() }
+        binding.tvMonthLabel.text = sdf.format(cal.time).replaceFirstChar { it.uppercase() }
     }
 
     private fun updateSelectedDayLabel() {
         val cal = Calendar.getInstance()
         cal.set(currentYear, currentMonth, selectedDay)
         val sdf = SimpleDateFormat("EEEE d MMMM yyyy", Locale.FRENCH)
-        binding.tvSelectedDay.text = sdf.format(cal.time)
-            .replaceFirstChar { it.uppercase() }
+        binding.tvSelectedDay.text = sdf.format(cal.time).replaceFirstChar { it.uppercase() }
     }
 }

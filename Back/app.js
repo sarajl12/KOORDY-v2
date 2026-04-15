@@ -332,7 +332,7 @@ app.get("/api/associations/:id/events", async (req, res) => {
 });
 
 
-// POST /api/evenements  (création + actualité liée)
+// POST /api/evenements  (création + actualité liée + invitations participants)
 app.post("/api/evenements", async (req, res) => {
   const {
     id_association,
@@ -343,6 +343,7 @@ app.post("/api/evenements", async (req, res) => {
     lieu_event,
     date_debut_event,
     date_fin_event,
+    participants, // tableau d'id_membre, ou null pour inviter tous
   } = req.body;
 
   console.log("📩 /api/evenements body =", req.body);
@@ -389,21 +390,37 @@ app.post("/api/evenements", async (req, res) => {
       ]
     );
 
+    // 3) Déterminer la liste des invités
+    let membresIds = [];
+
+    if (Array.isArray(participants) && participants.length > 0) {
+      // Inviter uniquement les membres sélectionnés
+      membresIds = participants.map(Number);
+    } else {
+      // Inviter tous les membres de l'association
+      const allMembres = await client.query(
+        "SELECT id_membre FROM membre_asso WHERE id_association = $1",
+        [Number(id_association)]
+      );
+      membresIds = allMembres.rows.map(r => r.id_membre);
+    }
+
+    // 4) Créer les participations en attente (table participation existante)
+    for (const idMembre of membresIds) {
+      await client.query(
+        `INSERT INTO participation (id_evenement, id_membre, presence)
+         VALUES ($1, $2, 'en attente')
+         ON CONFLICT (id_evenement, id_membre) DO NOTHING`,
+        [id_evenement, idMembre]
+      );
+    }
+
     await client.query("COMMIT");
 
     return res.status(201).json({
       success: true,
       id_evenement,
-      event: {
-        id_evenement,
-        id_association: Number(id_association),
-        titre_evenement,
-        type_evenement,
-        description_evenement: description_evenement || "",
-        lieu_event: lieu_event || "",
-        date_debut_event,
-        date_fin_event: date_fin_event || null,
-      },
+      invites: membresIds.length,
     });
 
   } catch (err) {
@@ -606,6 +623,87 @@ app.get("/api/membre/:id/presences", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error("Erreur GET presences :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// ===============================
+//  ROUTES CALENDRIER / RSVP
+// ===============================
+
+// GET /api/membre/:id/evenements  — tous les événements de l'asso avec statut RSVP du membre
+app.get("/api/membre/:id/evenements", async (req, res) => {
+  const id = req.params.id;
+  try {
+    // Association du membre
+    const assoResult = await db.query(
+      "SELECT id_association FROM membre_asso WHERE id_membre = $1 LIMIT 1",
+      [id]
+    );
+    if (!assoResult.rows.length) return res.json([]);
+
+    const idAsso = assoResult.rows[0].id_association;
+
+    // Événements auxquels le membre est invité, avec statut RSVP mappé en français
+    const result = await db.query(
+      `SELECT e.*,
+              CASE p.presence
+                  WHEN 'present'   THEN 'Accepté'
+                  WHEN 'absent'    THEN 'Refusé'
+                  WHEN 'peut etre' THEN 'Peut-être'
+                  ELSE                  'En attente'
+              END AS statut,
+              p.id_participation
+       FROM evenement e
+       INNER JOIN participation p
+              ON p.id_evenement = e.id_evenement AND p.id_membre = $1
+       WHERE e.id_association = $2
+       ORDER BY e.date_debut_event ASC`,
+      [id, idAsso]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Erreur événements membre :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// PATCH /api/evenements/:id/rsvp  — le membre accepte ou refuse l'invitation
+app.patch("/api/evenements/:id/rsvp", async (req, res) => {
+  const idEvenement = req.params.id;
+  const { id_membre, statut } = req.body;
+
+  if (!id_membre || !statut) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  // Mapping français → valeur enum presence_enum de la BDD
+  const presenceMap = {
+    "Accepté":    "present",
+    "Refusé":     "absent",
+    "Peut-être":  "peut etre",
+    "En attente": "en attente"
+  };
+
+  const presenceVal = presenceMap[statut];
+  if (!presenceVal) {
+    return res.status(400).json({ message: "Statut invalide." });
+  }
+
+  try {
+    await db.query(
+      `INSERT INTO participation (id_evenement, id_membre, presence)
+       VALUES ($1, $2, $3)
+       ON CONFLICT (id_evenement, id_membre)
+       DO UPDATE SET presence = $3`,
+      [idEvenement, id_membre, presenceVal]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur RSVP :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });
