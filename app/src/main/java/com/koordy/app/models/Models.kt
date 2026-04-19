@@ -181,3 +181,64 @@ data class GenericResponse(
     val message: String,
     val success: Boolean = false
 )
+
+// ── Chat ──────────────────────────────────────────────────────────────────────
+
+data class Conversation(
+    @SerializedName("id_conversation") val idConversation: Int = 0,
+    @SerializedName("id_association") val idAssociation: Int = 0,
+    val nom: String? = null,
+    val type: String = "direct",
+    @SerializedName("last_message") val lastMessage: String? = null,
+    @SerializedName("last_message_at") val lastMessageAt: String? = null,
+    @SerializedName("last_message_type") val lastMessageType: String? = null,
+    @SerializedName("last_sender_nom") val lastSenderNom: String? = null,
+    @SerializedName("last_sender_prenom") val lastSenderPrenom: String? = null,
+    @SerializedName("other_id_membre") val otherIdMembre: Int? = null,
+    @SerializedName("other_nom") val otherNom: String? = null,
+    @SerializedName("other_prenom") val otherPrenom: String? = null
+)
+
+data class Message(
+    @SerializedName("id_message") val idMessage: Int = 0,
+    @SerializedName("id_conversation") val idConversation: Int = 0,
+    @SerializedName("id_auteur") val idAuteur: Int = 0,
+    val contenu: String = "",
+    @SerializedName("type_message") val typeMessage: String = "text",
+    @SerializedName("id_evenement") val idEvenement: Int? = null,
+    @SerializedName("created_at") val createdAt: String = "",
+    @SerializedName("nom_auteur") val nomAuteur: String = "",
+    @SerializedName("prenom_auteur") val prenomAuteur: String = "",
+    @SerializedName("titre_evenement") val titreEvenement: String? = null,
+    @SerializedName("date_debut_event") val dateDebutEvent: String? = null,
+    @SerializedName("lieu_event") val lieuEvent: String? = null,
+    @SerializedName("type_evenement") val typeEvenement: String? = null,
+    @SerializedName("statut_rsvp") val statutRsvp: String? = null
+)
+
+data class ConversationRequest(
+    @SerializedName("id_association") val idAssociation: Int,
+    @SerializedName("id_initiateur") val idInitiateur: Int,
+    val type: String = "direct",
+    @SerializedName("id_destinataire") val idDestinataire: Int? = null,
+    val nom: String? = null,
+    val participants: List<Int>? = null
+)
+
+data class ConversationResponse(
+    @SerializedName("id_conversation") val idConversation: Int,
+    val existing: Boolean = false
+)
+
+data class MessageRequest(
+    @SerializedName("id_auteur") val idAuteur: Int,
+    val contenu: String,
+    @SerializedName("type_message") val typeMessage: String = "text",
+    @SerializedName("id_evenement") val idEvenement: Int? = null
+)
+
+data class SendMessageResponse(
+    val success: Boolean = false,
+    @SerializedName("id_message") val idMessage: Int = 0,
+    @SerializedName("created_at") val createdAt: String = ""
+)

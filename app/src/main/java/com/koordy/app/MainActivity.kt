@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         if (session.isLoggedIn()) {
             navGraph.setStartDestination(R.id.homeAssociationFragment)
         } else {
-            navGraph.setStartDestination(R.id.loginFragment)
+            navGraph.setStartDestination(R.id.landingFragment)
         }
         navController.graph = navGraph
 
@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val authScreens = setOf(
+                R.id.landingFragment,
                 R.id.loginFragment,
                 R.id.inscriptionFragment,
                 R.id.inscriptionAssociationFragment,

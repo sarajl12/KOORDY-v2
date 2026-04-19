@@ -417,6 +417,9 @@ app.post("/api/evenements", async (req, res) => {
 
     await client.query("COMMIT");
 
+    // 5) Poster dans le chat général — fire-and-forget, ne bloque pas la réponse
+    postInvitationToGeneralChat(db, id_association, id_auteur, titre_evenement, id_evenement, membresIds);
+
     return res.status(201).json({
       success: true,
       id_evenement,
@@ -431,6 +434,49 @@ app.post("/api/evenements", async (req, res) => {
     client.release();
   }
 });
+
+
+// Helper interne : envoyer l'invitation en message direct à chaque membre invité
+async function postInvitationToGeneralChat(db, id_association, id_auteur, titre_evenement, id_evenement, membresIds) {
+  try {
+    // Envoyer un message direct de l'auteur vers chaque membre invité (sauf l'auteur lui-même)
+    const destinataires = membresIds.filter(id => id !== Number(id_auteur));
+
+    for (const idDest of destinataires) {
+      // Trouver ou créer la conversation directe entre l'auteur et ce membre
+      const existing = await db.query(`
+        SELECT c.id_conversation FROM conversation c
+        JOIN conversation_membre cm1 ON c.id_conversation = cm1.id_conversation AND cm1.id_membre = $1
+        JOIN conversation_membre cm2 ON c.id_conversation = cm2.id_conversation AND cm2.id_membre = $2
+        WHERE c.type = 'direct'
+        LIMIT 1
+      `, [Number(id_auteur), idDest]);
+
+      let idConversation;
+      if (existing.rows.length > 0) {
+        idConversation = existing.rows[0].id_conversation;
+      } else {
+        const newConv = await db.query(
+          `INSERT INTO conversation (id_association, type) VALUES ($1, 'direct') RETURNING id_conversation`,
+          [Number(id_association)]
+        );
+        idConversation = newConv.rows[0].id_conversation;
+        await db.query(
+          `INSERT INTO conversation_membre (id_conversation, id_membre) VALUES ($1, $2), ($1, $3) ON CONFLICT DO NOTHING`,
+          [idConversation, Number(id_auteur), idDest]
+        );
+      }
+
+      // Poster l'invitation dans cette conversation directe
+      await db.query(
+        `INSERT INTO message (id_conversation, id_auteur, contenu, type_message, id_evenement) VALUES ($1, $2, $3, 'invitation', $4)`,
+        [idConversation, Number(id_auteur), titre_evenement, id_evenement]
+      );
+    }
+  } catch (err) {
+    console.warn("⚠️ Envoi invitation chat échoué :", err.message);
+  }
+}
 
 
 // ===============================
@@ -704,6 +750,176 @@ app.patch("/api/evenements/:id/rsvp", async (req, res) => {
     res.json({ success: true });
   } catch (err) {
     console.error("Erreur RSVP :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// ===============================
+//  ROUTES CHAT
+// ===============================
+
+// GET /api/membre/:id/conversations
+app.get("/api/membre/:id/conversations", async (req, res) => {
+  const idMembre = parseInt(req.params.id);
+  try {
+    const result = await db.query(`
+      SELECT
+        c.id_conversation,
+        c.nom,
+        c.type,
+        c.id_association,
+        last_msg.contenu        AS last_message,
+        last_msg.created_at     AS last_message_at,
+        last_msg.type_message   AS last_message_type,
+        auteur.nom_membre       AS last_sender_nom,
+        auteur.prenom_membre    AS last_sender_prenom,
+        other_m.id_membre       AS other_id_membre,
+        other_m.nom_membre      AS other_nom,
+        other_m.prenom_membre   AS other_prenom
+      FROM conversation c
+      JOIN conversation_membre cm ON c.id_conversation = cm.id_conversation AND cm.id_membre = $1
+      LEFT JOIN LATERAL (
+        SELECT contenu, created_at, type_message, id_auteur
+        FROM message
+        WHERE id_conversation = c.id_conversation
+        ORDER BY created_at DESC LIMIT 1
+      ) last_msg ON true
+      LEFT JOIN membre auteur ON last_msg.id_auteur = auteur.id_membre
+      LEFT JOIN conversation_membre cm2
+        ON c.id_conversation = cm2.id_conversation AND cm2.id_membre != $1 AND c.type = 'direct'
+      LEFT JOIN membre other_m ON cm2.id_membre = other_m.id_membre
+      ORDER BY COALESCE(last_msg.created_at, c.created_at) DESC
+    `, [idMembre]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Erreur GET conversations :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// POST /api/conversations  — créer ou récupérer une conversation
+app.post("/api/conversations", async (req, res) => {
+  const { id_association, id_initiateur, type, id_destinataire, nom, participants } = req.body;
+
+  if (!id_association || !id_initiateur || !type) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  const client = await db.connect();
+  try {
+    await client.query("BEGIN");
+
+    if (type === "direct" && id_destinataire) {
+      const existing = await client.query(`
+        SELECT c.id_conversation FROM conversation c
+        JOIN conversation_membre cm1 ON c.id_conversation = cm1.id_conversation AND cm1.id_membre = $1
+        JOIN conversation_membre cm2 ON c.id_conversation = cm2.id_conversation AND cm2.id_membre = $2
+        WHERE c.type = 'direct'
+        LIMIT 1
+      `, [id_initiateur, id_destinataire]);
+
+      if (existing.rows.length > 0) {
+        await client.query("ROLLBACK");
+        return res.json({ id_conversation: existing.rows[0].id_conversation, existing: true });
+      }
+    }
+
+    const convResult = await client.query(
+      `INSERT INTO conversation (id_association, nom, type) VALUES ($1, $2, $3) RETURNING id_conversation`,
+      [id_association, nom || null, type]
+    );
+    const idConversation = convResult.rows[0].id_conversation;
+
+    const membersToAdd = type === "direct"
+      ? [Number(id_initiateur), Number(id_destinataire)]
+      : [Number(id_initiateur), ...(participants || []).map(Number)];
+
+    for (const idM of membersToAdd.filter(Boolean)) {
+      await client.query(
+        `INSERT INTO conversation_membre (id_conversation, id_membre) VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+        [idConversation, idM]
+      );
+    }
+
+    await client.query("COMMIT");
+    res.status(201).json({ id_conversation: idConversation });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error("Erreur création conversation :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  } finally {
+    client.release();
+  }
+});
+
+
+// GET /api/conversations/:id/messages?id_membre=X
+app.get("/api/conversations/:id/messages", async (req, res) => {
+  const idConversation = req.params.id;
+  const idMembre = req.query.id_membre || 0;
+
+  try {
+    const result = await db.query(`
+      SELECT
+        m.id_message,
+        m.id_conversation,
+        m.id_auteur,
+        m.contenu,
+        m.type_message,
+        m.id_evenement,
+        m.created_at,
+        mb.nom_membre       AS nom_auteur,
+        mb.prenom_membre    AS prenom_auteur,
+        e.titre_evenement,
+        e.date_debut_event,
+        e.lieu_event,
+        e.type_evenement,
+        CASE p.presence
+          WHEN 'present'   THEN 'Accepté'
+          WHEN 'absent'    THEN 'Refusé'
+          WHEN 'peut etre' THEN 'Peut-être'
+          ELSE                  'En attente'
+        END AS statut_rsvp
+      FROM message m
+      JOIN membre mb ON m.id_auteur = mb.id_membre
+      LEFT JOIN evenement e ON m.id_evenement = e.id_evenement
+      LEFT JOIN participation p ON p.id_evenement = m.id_evenement AND p.id_membre = $2
+      WHERE m.id_conversation = $1
+      ORDER BY m.created_at ASC
+    `, [idConversation, idMembre]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Erreur GET messages :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// POST /api/conversations/:id/messages
+app.post("/api/conversations/:id/messages", async (req, res) => {
+  const idConversation = req.params.id;
+  const { id_auteur, contenu, type_message, id_evenement } = req.body;
+
+  if (!id_auteur) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  try {
+    const result = await db.query(
+      `INSERT INTO message (id_conversation, id_auteur, contenu, type_message, id_evenement)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id_message, created_at`,
+      [idConversation, id_auteur, contenu || "", type_message || "text", id_evenement || null]
+    );
+    res.status(201).json({
+      success: true,
+      id_message: result.rows[0].id_message,
+      created_at: result.rows[0].created_at,
+    });
+  } catch (err) {
+    console.error("Erreur POST message :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });

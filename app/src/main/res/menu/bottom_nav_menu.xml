@@ -12,9 +12,9 @@
         android:title="Calendrier" />
 
     <item
-        android:id="@+id/newsFragment"
-        android:icon="@android:drawable/ic_menu_info_details"
-        android:title="Actualités" />
+        android:id="@+id/chatFragment"
+        android:icon="@drawable/ic_chat"
+        android:title="Chat" />
 
     <item
         android:id="@+id/membreFragment"

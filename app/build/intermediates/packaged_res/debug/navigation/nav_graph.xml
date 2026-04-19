@@ -2,9 +2,19 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/landingFragment">
 
     <!-- AUTH -->
+
+    <fragment
+        android:id="@+id/landingFragment"
+        android:name="com.koordy.app.ui.auth.LandingFragment"
+        android:label="Accueil">
+        <action android:id="@+id/action_landing_to_login"
+            app:destination="@id/loginFragment" />
+        <action android:id="@+id/action_landing_to_inscription"
+            app:destination="@id/inscriptionFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
@@ -14,7 +24,7 @@
             app:destination="@id/inscriptionFragment" />
         <action android:id="@+id/action_login_to_homeAssociation"
             app:destination="@id/homeAssociationFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/landingFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -58,7 +68,7 @@
         android:label="Succès">
         <action android:id="@+id/action_successAssociation_to_homeAssociation"
             app:destination="@id/homeAssociationFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/landingFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -95,9 +105,22 @@
         android:label="Calendrier" />
 
     <fragment
-        android:id="@+id/newsFragment"
-        android:name="com.koordy.app.ui.home.NewsFragment"
-        android:label="Actualités" />
+        android:id="@+id/chatFragment"
+        android:name="com.koordy.app.ui.home.ChatFragment"
+        android:label="Chat">
+        <action
+            android:id="@+id/action_chat_to_conversation"
+            app:destination="@id/conversationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="com.koordy.app.ui.home.ConversationFragment"
+        android:label="Conversation">
+        <argument android:name="conversationId" app:argType="integer" android:defaultValue="-1" />
+        <argument android:name="conversationName" app:argType="string" android:defaultValue="" />
+        <argument android:name="conversationType" app:argType="string" android:defaultValue="direct" />
+    </fragment>
 
     <fragment
         android:id="@+id/membreFragment"

@@ -97,4 +97,24 @@ interface KoordyApiService {
 
     @PATCH("api/news/{id}/refuse")
     suspend fun refuseNews(@Path("id") id: Int): Response<GenericResponse>
+
+    // ── Chat ──────────────────────────────────────────────────────────────────
+
+    @GET("api/membre/{id}/conversations")
+    suspend fun getConversations(@Path("id") idMembre: Int): Response<List<Conversation>>
+
+    @POST("api/conversations")
+    suspend fun createConversation(@Body request: ConversationRequest): Response<ConversationResponse>
+
+    @GET("api/conversations/{id}/messages")
+    suspend fun getMessages(
+        @Path("id") idConversation: Int,
+        @Query("id_membre") idMembre: Int
+    ): Response<List<Message>>
+
+    @POST("api/conversations/{id}/messages")
+    suspend fun sendMessage(
+        @Path("id") idConversation: Int,
+        @Body request: MessageRequest
+    ): Response<SendMessageResponse>
 }
