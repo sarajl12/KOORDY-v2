@@ -618,6 +618,20 @@
 
             </LinearLayout>
 
+            <!-- ── BOUTON TABLEAU DE BORD (visible uniquement si Président) ── -->
+            <TextView
+                android:id="@+id/btn_president_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_button_primary"
+                android:gravity="center"
+                android:text="Tableau de Bord Président"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"
+                android:visibility="gone" />
+
             <!-- ── BOUTON DÉCONNEXION ── -->
             <TextView
                 android:id="@+id/btn_logout"

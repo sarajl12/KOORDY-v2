@@ -2,6 +2,7 @@ package com.koordy.app.api
 
 import com.koordy.app.models.*
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -106,11 +107,47 @@ interface KoordyApiService {
     @POST("api/news")
     suspend fun createNews(@Body body: Map<String, @JvmSuppressWildcards Any>): Response<GenericResponse>
 
+    // Création actualité avec image (multipart) — nécessite POST /api/news/upload sur le backend
+    @Multipart
+    @POST("api/news/upload")
+    suspend fun createNewsWithImage(
+        @Part("id_association") idAssociation: RequestBody,
+        @Part("id_auteur") idAuteur: RequestBody,
+        @Part("type_actualite") typeActualite: RequestBody,
+        @Part("titre") titre: RequestBody,
+        @Part("contenu") contenu: RequestBody,
+        @Part("statut") statut: RequestBody,
+        @Part image: MultipartBody.Part?
+    ): Response<GenericResponse>
+
     @PATCH("api/news/{id}/approve")
     suspend fun approveNews(@Path("id") id: Int): Response<GenericResponse>
 
     @PATCH("api/news/{id}/refuse")
     suspend fun refuseNews(@Path("id") id: Int): Response<GenericResponse>
+
+    // ── Président ────────────────────────────────────────────────────────────
+
+    @GET("api/associations/{id}/equipes")
+    suspend fun getAssociationEquipes(@Path("id") idAssociation: Int): Response<List<EquipeDetail>>
+
+    @POST("api/equipes")
+    suspend fun createEquipe(@Body request: CreateEquipeRequest): Response<GenericResponse>
+
+    @GET("api/equipes/{id}/membres")
+    suspend fun getEquipeMembres(@Path("id") idEquipe: Int): Response<List<ConseilMembre>>
+
+    @PUT("api/equipes/{id}/membres")
+    suspend fun updateEquipeMembres(
+        @Path("id") idEquipe: Int,
+        @Body request: UpdateEquipeMembresRequest
+    ): Response<GenericResponse>
+
+    @PATCH("api/membre/{id}/role")
+    suspend fun updateMembreRole(
+        @Path("id") idMembre: Int,
+        @Body request: UpdateRoleRequest
+    ): Response<GenericResponse>
 
     // ── Chat ──────────────────────────────────────────────────────────────────
 

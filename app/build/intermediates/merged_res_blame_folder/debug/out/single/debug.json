@@ -4,6 +4,14 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_home_association.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/layout_fragment_president_dashboard.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/fragment_president_dashboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_news_pending.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_news_pending.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_avatar_initial.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_avatar_initial.xml"
     },
@@ -16,16 +24,24 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_member_select.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_equipe_president.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_equipe_president.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_btn_accept.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_btn_accept.xml"
     },
     {
-        "merged": "com.koordy.app-merged_res-51:/layout_fragment_inscription.xml.flat",
-        "source": "com.koordy.app-main-53:/layout/fragment_inscription.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_membre_select.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_membre_select.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_events.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_events.xml"
+    },
+    {
+        "merged": "com.koordy.app-merged_res-51:/layout_bottom_sheet_new_conversation.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_new_conversation.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_recherche_association.xml.flat",
@@ -136,6 +152,14 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_sport_tag.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/layout_bottom_sheet_create_event.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_create_event.xml"
+    },
+    {
+        "merged": "com.koordy.app-merged_res-51:/layout_item_equipe_select.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/item_equipe_select.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_button_primary.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_button_primary.xml"
     },
@@ -144,16 +168,16 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_landing.xml"
     },
     {
-        "merged": "com.koordy.app-merged_res-51:/layout_fragment_form_association.xml.flat",
-        "source": "com.koordy.app-main-53:/layout/fragment_form_association.xml"
-    },
-    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_form_association.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_form_association.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\menu_bottom_nav_menu.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\menu\\bottom_nav_menu.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_bottom_sheet_edit_equipe.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_edit_equipe.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_ic_chat.xml.flat",
@@ -166,6 +190,10 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_conversation.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_membre_president.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_membre_president.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_badge_blue.xml.flat",
@@ -186,6 +214,10 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_bottom_sheet_create_event.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_bottom_sheet_create_equipe.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_equipe.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_bottom_sheet.xml.flat",
@@ -216,12 +248,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_role_badge.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_create_actualite.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_create_actualite.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_calendar_day_selected.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_calendar_day_selected.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_icon_box.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_icon_box.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_bottom_sheet_membre_detail.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_membre_detail.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_design_association.xml.flat",
@@ -270,5 +310,9 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_calendar_day.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_calendar_day.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_president_dashboard.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_president_dashboard.xml"
     }
 ]

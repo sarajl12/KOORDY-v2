@@ -1,11 +1,11 @@
 [
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_form_association.xml",
-        "source": "com.koordy.app-main-53:/layout/fragment_form_association.xml"
-    },
-    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_message_sent.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_sent.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_create_actualite.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_create_actualite.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_calendar.xml",
@@ -20,12 +20,28 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_member_select.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_edit_equipe.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_edit_equipe.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_landing.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_landing.xml"
     },
     {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/item_equipe_select.xml",
+        "source": "com.koordy.app-main-53:/layout/item_equipe_select.xml"
+    },
+    {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_president_dashboard.xml",
+        "source": "com.koordy.app-main-53:/layout/fragment_president_dashboard.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_conseil.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_conseil.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_equipe_president.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_equipe_president.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_home_association.xml",
@@ -34,6 +50,10 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\activity_main.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_new_conversation.xml",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_new_conversation.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_event_calendar.xml",
@@ -50,6 +70,10 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\dialog_unread_messages.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\dialog_unread_messages.xml"
+    },
+    {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_create_event.xml",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_create_event.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription.xml",
@@ -92,12 +116,12 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_conversation.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_login.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_news_pending.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_news_pending.xml"
     },
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_inscription.xml",
-        "source": "com.koordy.app-main-53:/layout/fragment_inscription.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_login.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_calendar_day.xml",
@@ -108,12 +132,32 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_received.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_membre_president.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_membre_president.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_create_equipe.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_equipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_membre_select.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_membre_select.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_membre_detail.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_membre_detail.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_news.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_news.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_conversation.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_conversation.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_president_dashboard.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_president_dashboard.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_design_association.xml",

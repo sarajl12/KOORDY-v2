@@ -117,6 +117,24 @@
     <fragment
         android:id="@+id/membreFragment"
         android:name="com.koordy.app.ui.membre.MembreFragment"
-        android:label="Profil" />
+        android:label="Profil">
+        <action
+            android:id="@+id/action_membre_to_presidentDashboard"
+            app:destination="@id/presidentDashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/presidentDashboardFragment"
+        android:name="com.koordy.app.ui.president.PresidentDashboardFragment"
+        android:label="Tableau de Bord">
+        <action
+            android:id="@+id/action_presidentDashboard_to_createActualite"
+            app:destination="@id/createActualiteFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createActualiteFragment"
+        android:name="com.koordy.app.ui.president.CreateActualiteFragment"
+        android:label="Créer une actualité" />
 
 </navigation>

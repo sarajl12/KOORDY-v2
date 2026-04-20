@@ -37,6 +37,9 @@ public final class FragmentMembreBinding implements ViewBinding {
   public final TextView btnLogout;
 
   @NonNull
+  public final TextView btnPresidentDashboard;
+
+  @NonNull
   public final TextView btnSaveProfile;
 
   @NonNull
@@ -107,7 +110,8 @@ public final class FragmentMembreBinding implements ViewBinding {
 
   private FragmentMembreBinding(@NonNull ScrollView rootView, @NonNull FrameLayout avatarContainer,
       @NonNull TextView btnCancelEdit, @NonNull TextView btnEditProfile,
-      @NonNull TextView btnLogout, @NonNull TextView btnSaveProfile, @NonNull EditText etEditBirth,
+      @NonNull TextView btnLogout, @NonNull TextView btnPresidentDashboard,
+      @NonNull TextView btnSaveProfile, @NonNull EditText etEditBirth,
       @NonNull EditText etEditEmail, @NonNull EditText etEditNom, @NonNull EditText etEditPrenom,
       @NonNull ImageView ivAvatarPhoto, @NonNull LinearLayout layoutEdit,
       @NonNull ProgressBar progressPresences, @NonNull TextView tvAdhesion, @NonNull TextView tvAge,
@@ -121,6 +125,7 @@ public final class FragmentMembreBinding implements ViewBinding {
     this.btnCancelEdit = btnCancelEdit;
     this.btnEditProfile = btnEditProfile;
     this.btnLogout = btnLogout;
+    this.btnPresidentDashboard = btnPresidentDashboard;
     this.btnSaveProfile = btnSaveProfile;
     this.etEditBirth = etEditBirth;
     this.etEditEmail = etEditEmail;
@@ -194,6 +199,12 @@ public final class FragmentMembreBinding implements ViewBinding {
       id = R.id.btn_logout;
       TextView btnLogout = ViewBindings.findChildViewById(rootView, id);
       if (btnLogout == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_president_dashboard;
+      TextView btnPresidentDashboard = ViewBindings.findChildViewById(rootView, id);
+      if (btnPresidentDashboard == null) {
         break missingId;
       }
 
@@ -336,10 +347,10 @@ public final class FragmentMembreBinding implements ViewBinding {
       }
 
       return new FragmentMembreBinding((ScrollView) rootView, avatarContainer, btnCancelEdit,
-          btnEditProfile, btnLogout, btnSaveProfile, etEditBirth, etEditEmail, etEditNom,
-          etEditPrenom, ivAvatarPhoto, layoutEdit, progressPresences, tvAdhesion, tvAge, tvAssoNom,
-          tvAssoSport, tvAssoVille, tvAvatarInitial, tvEmail, tvEquipe, tvFullName, tvNaissance,
-          tvNom, tvPrenom, tvPresences, tvRole, tvTauxPresence);
+          btnEditProfile, btnLogout, btnPresidentDashboard, btnSaveProfile, etEditBirth,
+          etEditEmail, etEditNom, etEditPrenom, ivAvatarPhoto, layoutEdit, progressPresences,
+          tvAdhesion, tvAge, tvAssoNom, tvAssoSport, tvAssoVille, tvAvatarInitial, tvEmail,
+          tvEquipe, tvFullName, tvNaissance, tvNom, tvPrenom, tvPresences, tvRole, tvTauxPresence);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

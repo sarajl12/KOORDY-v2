@@ -53,10 +53,19 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
   public final EditText etTitre;
 
   @NonNull
+  public final ProgressBar progressEquipes;
+
+  @NonNull
   public final ProgressBar progressMembers;
 
   @NonNull
   public final RecyclerView recyclerMembers;
+
+  @NonNull
+  public final RecyclerView rvEquipesSelect;
+
+  @NonNull
+  public final LinearLayout sectionEquipes;
 
   @NonNull
   public final TextView tvDatePicker;
@@ -74,9 +83,11 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
       @NonNull MaterialButton btnCreate, @NonNull Chip chipAutre, @NonNull Chip chipEntrainement,
       @NonNull ChipGroup chipGroupType, @NonNull Chip chipMatch, @NonNull Chip chipReunion,
       @NonNull EditText etDescription, @NonNull EditText etLieu, @NonNull EditText etTitre,
-      @NonNull ProgressBar progressMembers, @NonNull RecyclerView recyclerMembers,
-      @NonNull TextView tvDatePicker, @NonNull TextView tvSelectAll,
-      @NonNull TextView tvSelectedCount, @NonNull TextView tvTimePicker) {
+      @NonNull ProgressBar progressEquipes, @NonNull ProgressBar progressMembers,
+      @NonNull RecyclerView recyclerMembers, @NonNull RecyclerView rvEquipesSelect,
+      @NonNull LinearLayout sectionEquipes, @NonNull TextView tvDatePicker,
+      @NonNull TextView tvSelectAll, @NonNull TextView tvSelectedCount,
+      @NonNull TextView tvTimePicker) {
     this.rootView = rootView;
     this.btnCreate = btnCreate;
     this.chipAutre = chipAutre;
@@ -87,8 +98,11 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
     this.etDescription = etDescription;
     this.etLieu = etLieu;
     this.etTitre = etTitre;
+    this.progressEquipes = progressEquipes;
     this.progressMembers = progressMembers;
     this.recyclerMembers = recyclerMembers;
+    this.rvEquipesSelect = rvEquipesSelect;
+    this.sectionEquipes = sectionEquipes;
     this.tvDatePicker = tvDatePicker;
     this.tvSelectAll = tvSelectAll;
     this.tvSelectedCount = tvSelectedCount;
@@ -176,6 +190,12 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.progress_equipes;
+      ProgressBar progressEquipes = ViewBindings.findChildViewById(rootView, id);
+      if (progressEquipes == null) {
+        break missingId;
+      }
+
       id = R.id.progress_members;
       ProgressBar progressMembers = ViewBindings.findChildViewById(rootView, id);
       if (progressMembers == null) {
@@ -185,6 +205,18 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
       id = R.id.recycler_members;
       RecyclerView recyclerMembers = ViewBindings.findChildViewById(rootView, id);
       if (recyclerMembers == null) {
+        break missingId;
+      }
+
+      id = R.id.rv_equipes_select;
+      RecyclerView rvEquipesSelect = ViewBindings.findChildViewById(rootView, id);
+      if (rvEquipesSelect == null) {
+        break missingId;
+      }
+
+      id = R.id.section_equipes;
+      LinearLayout sectionEquipes = ViewBindings.findChildViewById(rootView, id);
+      if (sectionEquipes == null) {
         break missingId;
       }
 
@@ -214,8 +246,8 @@ public final class BottomSheetCreateEventBinding implements ViewBinding {
 
       return new BottomSheetCreateEventBinding((LinearLayout) rootView, btnCreate, chipAutre,
           chipEntrainement, chipGroupType, chipMatch, chipReunion, etDescription, etLieu, etTitre,
-          progressMembers, recyclerMembers, tvDatePicker, tvSelectAll, tvSelectedCount,
-          tvTimePicker);
+          progressEquipes, progressMembers, recyclerMembers, rvEquipesSelect, sectionEquipes,
+          tvDatePicker, tvSelectAll, tvSelectedCount, tvTimePicker);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

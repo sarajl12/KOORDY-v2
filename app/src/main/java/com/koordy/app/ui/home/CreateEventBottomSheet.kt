@@ -16,6 +16,7 @@ import com.koordy.app.MainActivity
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.BottomSheetCreateEventBinding
 import com.koordy.app.models.EvenementRequest
+import com.koordy.app.ui.association.EquipeSelectAdapter
 import com.koordy.app.ui.association.MemberSelectAdapter
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -27,6 +28,7 @@ class CreateEventBottomSheet : BottomSheetDialogFragment() {
 
     private val selectedMemberIds = mutableSetOf<Int>()
     private lateinit var memberAdapter: MemberSelectAdapter
+    private lateinit var equipeAdapter: EquipeSelectAdapter
 
     private var selectedYear  = 0
     private var selectedMonth = 0
@@ -64,6 +66,7 @@ class CreateEventBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupDateTimePickers()
+        setupEquipeList()
         setupMemberList()
         setupSelectAll()
         setupCreateButton()
@@ -108,6 +111,49 @@ class CreateEventBottomSheet : BottomSheetDialogFragment() {
                 cal.get(Calendar.MINUTE),
                 true
             ).show()
+        }
+    }
+
+    // ── Liste des équipes ─────────────────────────────────────────────────────
+
+    private fun setupEquipeList() {
+        val idAsso = (activity as MainActivity).session.idAssociation
+        equipeAdapter = EquipeSelectAdapter(
+            selectedIds = selectedMemberIds,
+            onFetchMembers = { equipe, callback ->
+                lifecycleScope.launch {
+                    try {
+                        val res = RetrofitClient.api.getEquipeMembres(equipe.idEquipe)
+                        if (res.isSuccessful) callback(res.body() ?: emptyList())
+                    } catch (_: Exception) {}
+                }
+            },
+            onCountChanged = { updateSelectedCount() }
+        )
+        b.rvEquipesSelect.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = equipeAdapter
+            isNestedScrollingEnabled = false
+        }
+        b.progressEquipes.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            try {
+                val res = RetrofitClient.api.getAssociationEquipes(idAsso)
+                if (res.isSuccessful) {
+                    val equipes = res.body() ?: emptyList()
+                    if (equipes.isEmpty()) {
+                        b.sectionEquipes.visibility = View.GONE
+                    } else {
+                        equipeAdapter.update(equipes)
+                    }
+                } else {
+                    b.sectionEquipes.visibility = View.GONE
+                }
+            } catch (_: Exception) {
+                b.sectionEquipes.visibility = View.GONE
+            } finally {
+                b.progressEquipes.visibility = View.GONE
+            }
         }
     }
 

@@ -152,7 +152,8 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
   const id = req.params.id;
   try {
     const result = await db.query(
-      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role, ma.conseil_asso
+      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role,
+              (CASE WHEN ma.conseil_asso THEN 1 ELSE 0 END) AS conseil_asso
        FROM membre_asso ma
        JOIN membre m ON ma.id_membre = m.id_membre
        WHERE ma.id_association = $1 AND ma.conseil_asso = TRUE`,
@@ -171,10 +172,15 @@ app.get("/api/associations/:id/membres", async (req, res) => {
   const id = req.params.id;
   try {
     const result = await db.query(
-      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role
+      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom,
+              ma.role,
+              (CASE WHEN ma.conseil_asso THEN 1 ELSE 0 END) AS conseil_asso,
+              ma.date_adhesion,
+              m.age, m.mail_membre
        FROM membre_asso ma
        JOIN membre m ON ma.id_membre = m.id_membre
-       WHERE ma.id_association = $1`,
+       WHERE ma.id_association = $1
+       ORDER BY ma.date_adhesion ASC`,
       [id]
     );
     res.json(result.rows);
@@ -468,7 +474,11 @@ app.post("/api/evenements", async (req, res) => {
       membresIds = allMembres.rows.map(r => r.id_membre);
     }
 
-    // 4) Créer les participations en attente (table participation existante)
+    // 4) Créer les participations en attente pour tous (y compris le créateur)
+    const auteurIdNum = Number(id_auteur);
+    if (!membresIds.includes(auteurIdNum)) {
+      membresIds.push(auteurIdNum);
+    }
     for (const idMembre of membresIds) {
       await client.query(
         `INSERT INTO participation (id_evenement, id_membre, presence)
@@ -585,11 +595,11 @@ app.get("/api/associations/:id/news", async (req, res) => {
 });
 
 
-// POST /api/news  (membre propose une actualité)
+// POST /api/news  (création d'actualité — statut passé par le client)
 app.post("/api/news", async (req, res) => {
-  const { id_association, id_auteur, titre, contenu, image_principale } = req.body;
+  const { id_association, id_auteur, titre, contenu, image_principale, statut, type_actualite } = req.body;
 
-  if (!id_association || !id_auteur || !titre || !contenu) {
+  if (!id_association || !id_auteur || !titre) {
     return res.status(400).json({ message: "Champs manquants." });
   }
 
@@ -597,8 +607,14 @@ app.post("/api/news", async (req, res) => {
     await db.query(
       `INSERT INTO actualite
          (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation, date_publication)
-       VALUES ($1,$2,'Article',$3,$4,$5,'Pending',NOW(),NOW())`,
-      [id_association, id_auteur, titre, contenu, image_principale || null]
+       VALUES ($1,$2,$3,$4,$5,$6,$7,NOW(),NOW())`,
+      [
+        id_association, id_auteur,
+        type_actualite || "Article",
+        titre, contenu || "",
+        image_principale || null,
+        statut || "Pending"
+      ]
     );
     res.json({ success: true });
   } catch (err) {
@@ -977,11 +993,12 @@ app.get("/api/conversations/:id/messages", async (req, res) => {
         e.date_debut_event,
         e.lieu_event,
         e.type_evenement,
-        CASE p.presence
-          WHEN 'present'   THEN 'Accepté'
-          WHEN 'absent'    THEN 'Refusé'
-          WHEN 'peut etre' THEN 'Peut-être'
-          ELSE                  'En attente'
+        CASE
+          WHEN m.type_message = 'invitation' AND m.id_auteur = $2 THEN 'Envoyée'
+          WHEN p.presence = 'present'   THEN 'Accepté'
+          WHEN p.presence = 'absent'    THEN 'Refusé'
+          WHEN p.presence = 'peut etre' THEN 'Peut-être'
+          ELSE                               'En attente'
         END AS statut_rsvp
       FROM message m
       JOIN membre mb ON m.id_auteur = mb.id_membre
@@ -1021,6 +1038,244 @@ app.post("/api/conversations/:id/messages", async (req, res) => {
     });
   } catch (err) {
     console.error("Erreur POST message :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// ===============================
+//  ROUTES ÉQUIPES
+// ===============================
+
+// GET /api/associations/:id/equipes — liste des équipes avec nb membres
+app.get("/api/associations/:id/equipes", async (req, res) => {
+  const idAsso = parseInt(req.params.id);
+  try {
+    const result = await db.query(
+      `SELECT e.id_equipe, e.nom_equipe, e.description_equipe,
+              COUNT(ma2.id_membre_activite) AS nb_membres
+       FROM equipe e
+       JOIN membre_activite ma2 ON e.id_equipe = ma2.id_equipe
+       JOIN membre_asso masso ON ma2.id_membre_asso = masso.id_membre_asso
+       WHERE masso.id_association = $1
+       GROUP BY e.id_equipe, e.nom_equipe, e.description_equipe
+       ORDER BY e.nom_equipe ASC`,
+      [idAsso]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Erreur GET équipes asso :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// POST /api/equipes — créer une équipe et y ajouter des membres
+app.post("/api/equipes", async (req, res) => {
+  const { id_association, nom_equipe, description, membres } = req.body;
+
+  if (!id_association || !nom_equipe) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  const client = await db.connect();
+  try {
+    await client.query("BEGIN");
+
+    // Créer l'équipe
+    const equipeResult = await client.query(
+      `INSERT INTO equipe (nom_equipe, description_equipe)
+       VALUES ($1, $2)
+       RETURNING id_equipe`,
+      [nom_equipe, description || ""]
+    );
+    const id_equipe = equipeResult.rows[0].id_equipe;
+
+    // Lier les membres sélectionnés
+    if (Array.isArray(membres) && membres.length > 0) {
+      for (const id_membre of membres) {
+        const membreAsso = await client.query(
+          `SELECT id_membre_asso FROM membre_asso
+           WHERE id_association = $1 AND id_membre = $2
+           LIMIT 1`,
+          [id_association, id_membre]
+        );
+        if (membreAsso.rows.length > 0) {
+          await client.query(
+            `INSERT INTO membre_activite (id_membre_asso, id_equipe, role_activite)
+             VALUES ($1, $2, 'Joueur')
+             ON CONFLICT DO NOTHING`,
+            [membreAsso.rows[0].id_membre_asso, id_equipe]
+          );
+        }
+      }
+    }
+
+    await client.query("COMMIT");
+    res.status(201).json({ success: true, id_equipe });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error("Erreur POST équipe :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  } finally {
+    client.release();
+  }
+});
+
+
+// GET /api/equipes/:id/membres — membres d'une équipe
+app.get("/api/equipes/:id/membres", async (req, res) => {
+  const id_equipe = parseInt(req.params.id);
+  try {
+    const result = await db.query(
+      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, masso.role
+       FROM membre_activite ma
+       JOIN membre_asso masso ON ma.id_membre_asso = masso.id_membre_asso
+       JOIN membre m ON masso.id_membre = m.id_membre
+       WHERE ma.id_equipe = $1`,
+      [id_equipe]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Erreur GET membres équipe :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// PUT /api/equipes/:id/membres — mettre à jour les membres d'une équipe
+app.put("/api/equipes/:id/membres", async (req, res) => {
+  const id_equipe = parseInt(req.params.id);
+  const { id_association, membres } = req.body;
+
+  if (!id_association) {
+    return res.status(400).json({ message: "id_association manquant." });
+  }
+
+  const client = await db.connect();
+  try {
+    await client.query("BEGIN");
+
+    // Supprimer les anciennes liaisons membres de cette équipe pour cette association
+    await client.query(
+      `DELETE FROM membre_activite
+       WHERE id_equipe = $1
+         AND id_membre_asso IN (
+           SELECT id_membre_asso FROM membre_asso WHERE id_association = $2
+         )`,
+      [id_equipe, id_association]
+    );
+
+    // Re-lier les membres cochés
+    if (Array.isArray(membres) && membres.length > 0) {
+      for (const id_membre of membres) {
+        const membreAsso = await client.query(
+          `SELECT id_membre_asso FROM membre_asso
+           WHERE id_association = $1 AND id_membre = $2
+           LIMIT 1`,
+          [id_association, id_membre]
+        );
+        if (membreAsso.rows.length > 0) {
+          await client.query(
+            `INSERT INTO membre_activite (id_membre_asso, id_equipe, role_activite)
+             VALUES ($1, $2, 'Joueur')
+             ON CONFLICT DO NOTHING`,
+            [membreAsso.rows[0].id_membre_asso, id_equipe]
+          );
+        }
+      }
+    }
+
+    await client.query("COMMIT");
+    res.json({ success: true });
+  } catch (err) {
+    await client.query("ROLLBACK");
+    console.error("Erreur PUT membres équipe :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  } finally {
+    client.release();
+  }
+});
+
+
+// ===============================
+//  ROUTES PRÉSIDENT
+// ===============================
+
+// PATCH /api/membre/:id/role — modifier le rôle d'un membre dans une association
+app.patch("/api/membre/:id/role", async (req, res) => {
+  const id_membre = parseInt(req.params.id);
+  const { role, id_association } = req.body;
+
+  if (!role || !id_association) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  try {
+    const conseilRoles = ["Président", "Trésorier", "Secrétaire", "Adjoint"];
+    const conseil_asso = conseilRoles.some(r =>
+      r.toLowerCase() === role.toLowerCase()
+    );
+
+    await db.query(
+      `UPDATE membre_asso
+       SET role = $1, conseil_asso = $2
+       WHERE id_membre = $3 AND id_association = $4`,
+      [role, conseil_asso, id_membre, id_association]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur PATCH rôle :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// ===============================
+//  NEWS AVEC IMAGE (Président)
+// ===============================
+
+// Dossier upload actualités
+const newsUploadDir = path.join(__dirname, "uploads", "actualites");
+fs.mkdirSync(newsUploadDir, { recursive: true });
+
+const newsStorage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, newsUploadDir),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname) || ".jpg";
+    cb(null, `actu_${Date.now()}${ext}`);
+  },
+});
+const uploadNews = multer({ storage: newsStorage, limits: { fileSize: 8 * 1024 * 1024 } });
+
+// POST /api/news/upload — créer une actualité avec image (multipart)
+app.post("/api/news/upload", uploadNews.single("image"), async (req, res) => {
+  const { id_association, id_auteur, type_actualite, titre, contenu, statut } = req.body;
+
+  if (!id_association || !id_auteur || !titre) {
+    return res.status(400).json({ message: "Champs manquants." });
+  }
+
+  const image_principale = req.file
+    ? `/uploads/actualites/${req.file.filename}`
+    : null;
+
+  try {
+    await db.query(
+      `INSERT INTO actualite
+         (id_association, id_auteur, type_actualite, titre, contenu, image_principale, statut, date_creation, date_publication)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,NOW(),NOW())`,
+      [
+        id_association, id_auteur,
+        type_actualite || "Article",
+        titre, contenu || "",
+        image_principale,
+        statut || "Approuve"
+      ]
+    );
+    res.status(201).json({ success: true });
+  } catch (err) {
+    console.error("Erreur POST news/upload :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });

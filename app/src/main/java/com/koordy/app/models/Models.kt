@@ -113,7 +113,10 @@ data class ConseilMembre(
     val nom: String = "",
     val prenom: String = "",
     val role: String = "",
-    @SerializedName("conseil_asso") val conseilAsso: Int = 0
+    @SerializedName("conseil_asso") val conseilAsso: Int = 0,
+    val age: Int = 0,
+    @SerializedName("mail_membre") val email: String = "",
+    @SerializedName("date_adhesion") val dateAdhesion: String = ""
 )
 
 data class Equipe(
@@ -251,4 +254,30 @@ data class SendMessageResponse(
     val success: Boolean = false,
     @SerializedName("id_message") val idMessage: Int = 0,
     @SerializedName("created_at") val createdAt: String = ""
+)
+
+// ── Président ─────────────────────────────────────────────────────────────────
+
+data class CreateEquipeRequest(
+    @SerializedName("id_association") val idAssociation: Int,
+    @SerializedName("nom_equipe") val nomEquipe: String,
+    val description: String = "",
+    val membres: List<Int> = emptyList()
+)
+
+data class EquipeDetail(
+    @SerializedName("id_equipe") val idEquipe: Int = 0,
+    @SerializedName("nom_equipe") val nomEquipe: String = "",
+    val description: String = "",
+    @SerializedName("nb_membres") val nbMembres: Int = 0
+)
+
+data class UpdateRoleRequest(
+    val role: String,
+    @SerializedName("id_association") val idAssociation: Int
+)
+
+data class UpdateEquipeMembresRequest(
+    @SerializedName("id_association") val idAssociation: Int,
+    val membres: List<Int>
 )

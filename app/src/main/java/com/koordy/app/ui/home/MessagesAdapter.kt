@@ -112,28 +112,36 @@ class MessagesAdapter(
             val statut = msg.statutRsvp ?: "En attente"
             val idEvenement = msg.idEvenement
 
-            if (statut == "En attente" && idEvenement != null) {
-                b.layoutBoutons.visibility = View.VISIBLE
-                b.tvStatut.visibility = View.GONE
-
-                b.btnAccepter.setOnClickListener {
-                    onRsvp(idEvenement, "Accepté")
-                    updateStatut("Accepté")
+            when {
+                statut == "En attente" && idEvenement != null -> {
+                    b.layoutBoutons.visibility = View.VISIBLE
+                    b.tvStatut.visibility = View.GONE
+                    b.btnAccepter.setOnClickListener {
+                        onRsvp(idEvenement, "Accepté")
+                        updateStatut("Accepté")
+                    }
+                    b.btnRefuser.setOnClickListener {
+                        onRsvp(idEvenement, "Refusé")
+                        updateStatut("Refusé")
+                    }
                 }
-                b.btnRefuser.setOnClickListener {
-                    onRsvp(idEvenement, "Refusé")
-                    updateStatut("Refusé")
+                statut == "Envoyée" -> {
+                    b.layoutBoutons.visibility = View.GONE
+                    b.tvStatut.visibility = View.VISIBLE
+                    b.tvStatut.text = "En attente de réponse…"
+                    b.tvStatut.setTextColor(Color.parseColor("#6B7280"))
                 }
-            } else {
-                b.layoutBoutons.visibility = View.GONE
-                b.tvStatut.visibility = View.VISIBLE
-                val (label, colorRes) = when (statut) {
-                    "Accepté" -> "✓ Accepté" to Color.parseColor("#22C55E")
-                    "Refusé" -> "✗ Décliné" to Color.parseColor("#EF4444")
-                    else -> statut to Color.parseColor("#6B7280")
+                else -> {
+                    b.layoutBoutons.visibility = View.GONE
+                    b.tvStatut.visibility = View.VISIBLE
+                    val (label, colorRes) = when (statut) {
+                        "Accepté" -> "✓ Accepté" to Color.parseColor("#22C55E")
+                        "Refusé" -> "✗ Décliné" to Color.parseColor("#EF4444")
+                        else -> statut to Color.parseColor("#6B7280")
+                    }
+                    b.tvStatut.text = label
+                    b.tvStatut.setTextColor(colorRes)
                 }
-                b.tvStatut.text = label
-                b.tvStatut.setTextColor(colorRes)
             }
         }
 

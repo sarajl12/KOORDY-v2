@@ -19,7 +19,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import androidx.navigation.fragment.findNavController
 import com.koordy.app.MainActivity
+import com.koordy.app.R
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentMembreBinding
 import com.koordy.app.models.MembreUpdateRequest
@@ -81,6 +83,10 @@ class MembreFragment : Fragment() {
         binding.btnCancelEdit.setOnClickListener {
             binding.layoutEdit.visibility = View.GONE
             binding.btnEditProfile.visibility = View.VISIBLE
+        }
+
+        binding.btnPresidentDashboard.setOnClickListener {
+            findNavController().navigate(R.id.action_membre_to_presidentDashboard)
         }
 
         binding.btnLogout.setOnClickListener {
@@ -207,6 +213,11 @@ class MembreFragment : Fragment() {
 
                     binding.tvFullName.text = "${m.prenomMembre} ${m.nomMembre}"
                     binding.tvRole.text = m.roleAsso.ifEmpty { "Membre" }
+
+                    if (m.roleAsso.equals("Président", ignoreCase = true)) {
+                        binding.btnPresidentDashboard.visibility = View.VISIBLE
+                    }
+
                     binding.tvAdhesion.text = if (m.dateAdhesion.isNotEmpty())
                         "Membre depuis le ${formatDateShort(m.dateAdhesion.take(10))}"
                     else ""

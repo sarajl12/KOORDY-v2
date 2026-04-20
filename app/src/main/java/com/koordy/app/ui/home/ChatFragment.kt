@@ -1,6 +1,5 @@
 package com.koordy.app.ui.home
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.koordy.app.R
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentChatBinding
-import com.koordy.app.models.ConversationRequest
 import com.koordy.app.utils.SessionManager
 import kotlinx.coroutines.launch
 
@@ -49,7 +47,7 @@ class ChatFragment : Fragment() {
         binding.rvConversations.layoutManager = LinearLayoutManager(requireContext())
         binding.rvConversations.adapter = adapter
 
-        binding.btnNewChat.setOnClickListener { showNewConversationDialog() }
+        binding.btnNewChat.setOnClickListener { showNewConversationBottomSheet() }
 
         loadConversations()
     }
@@ -83,63 +81,17 @@ class ChatFragment : Fragment() {
         }
     }
 
-    private fun showNewConversationDialog() {
-        val idAssociation = session.idAssociation ?: return
-        val idMembre = session.idMembre ?: return
-
-        lifecycleScope.launch {
-            try {
-                val resp = RetrofitClient.api.getMembres(idAssociation)
-                if (!resp.isSuccessful) return@launch
-                val membres = (resp.body() ?: emptyList())
-                    .filter { it.idMembre != idMembre }
-
-                if (membres.isEmpty()) {
-                    Toast.makeText(requireContext(), "Aucun autre membre dans l'association", Toast.LENGTH_SHORT).show()
-                    return@launch
+    private fun showNewConversationBottomSheet() {
+        NewConversationBottomSheet().apply {
+            onConversationStarted = { idConv, name, type ->
+                val bundle = Bundle().apply {
+                    putInt("conversationId", idConv)
+                    putString("conversationName", name)
+                    putString("conversationType", type)
                 }
-
-                val names = membres.map { "${it.prenom} ${it.nom}" }.toTypedArray()
-
-                AlertDialog.Builder(requireContext())
-                    .setTitle("Nouvelle conversation")
-                    .setItems(names) { _, index ->
-                        val selected = membres[index]
-                        startDirectConversation(idAssociation, idMembre, selected.idMembre, "${selected.prenom} ${selected.nom}")
-                    }
-                    .setNegativeButton("Annuler", null)
-                    .show()
-
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Erreur de connexion", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_chat_to_conversation, bundle)
             }
-        }
-    }
-
-    private fun startDirectConversation(idAssociation: Int, idInitiateur: Int, idDestinataire: Int, name: String) {
-        lifecycleScope.launch {
-            try {
-                val resp = RetrofitClient.api.createConversation(
-                    ConversationRequest(
-                        idAssociation = idAssociation,
-                        idInitiateur = idInitiateur,
-                        type = "direct",
-                        idDestinataire = idDestinataire
-                    )
-                )
-                if (resp.isSuccessful) {
-                    val idConv = resp.body()?.idConversation ?: return@launch
-                    val bundle = Bundle().apply {
-                        putInt("conversationId", idConv)
-                        putString("conversationName", name)
-                        putString("conversationType", "direct")
-                    }
-                    findNavController().navigate(R.id.action_chat_to_conversation, bundle)
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Erreur de connexion", Toast.LENGTH_SHORT).show()
-            }
-        }
+        }.show(childFragmentManager, NewConversationBottomSheet.TAG)
     }
 
     override fun onResume() {

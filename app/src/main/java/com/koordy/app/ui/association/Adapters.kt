@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.koordy.app.R
+import com.koordy.app.databinding.ItemEquipeSelectBinding
 import com.koordy.app.databinding.ItemEventBinding
 import com.koordy.app.databinding.ItemEventCalendarBinding
 import com.koordy.app.databinding.ItemNewsBinding
 import com.koordy.app.databinding.ItemConseilBinding
 import com.koordy.app.models.Actualite
 import com.koordy.app.models.ConseilMembre
+import com.koordy.app.models.EquipeDetail
 import com.koordy.app.models.Evenement
 import com.koordy.app.models.EvenementAvecStatut
 import java.text.SimpleDateFormat
@@ -267,6 +269,63 @@ class MemberSelectAdapter(
     fun allSelected() = items.isNotEmpty() && selectedIds.size == items.size
 
     fun update(newItems: List<ConseilMembre>) {
+        items = newItems
+        notifyDataSetChanged()
+    }
+}
+
+// ── EquipeSelectAdapter  (sélection équipes pour participants événement) ──────
+
+class EquipeSelectAdapter(
+    private val selectedIds: MutableSet<Int>,
+    private val onFetchMembers: (EquipeDetail, (List<ConseilMembre>) -> Unit) -> Unit,
+    private val onCountChanged: () -> Unit
+) : RecyclerView.Adapter<EquipeSelectAdapter.VH>() {
+
+    private var items: List<EquipeDetail> = emptyList()
+    private val equipeMembers = mutableMapOf<Int, List<ConseilMembre>>()
+    private val checkedEquipes = mutableSetOf<Int>()
+
+    inner class VH(val b: ItemEquipeSelectBinding) : RecyclerView.ViewHolder(b.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        VH(ItemEquipeSelectBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun getItemCount() = items.size
+
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val e = items[position]
+        holder.b.tvEquipeName.text = e.nomEquipe
+        holder.b.tvEquipeCount.text = "${e.nbMembres} membre${if (e.nbMembres > 1) "s" else ""}"
+        holder.b.cbEquipeSelected.isChecked = checkedEquipes.contains(e.idEquipe)
+
+        holder.b.root.setOnClickListener {
+            if (checkedEquipes.contains(e.idEquipe)) {
+                checkedEquipes.remove(e.idEquipe)
+                equipeMembers[e.idEquipe]?.forEach { selectedIds.remove(it.idMembre) }
+                holder.b.cbEquipeSelected.isChecked = false
+                onCountChanged()
+            } else {
+                val cached = equipeMembers[e.idEquipe]
+                if (cached != null) {
+                    checkedEquipes.add(e.idEquipe)
+                    cached.forEach { selectedIds.add(it.idMembre) }
+                    holder.b.cbEquipeSelected.isChecked = true
+                    onCountChanged()
+                } else {
+                    onFetchMembers(e) { membres ->
+                        equipeMembers[e.idEquipe] = membres
+                        checkedEquipes.add(e.idEquipe)
+                        membres.forEach { selectedIds.add(it.idMembre) }
+                        notifyItemChanged(position)
+                        onCountChanged()
+                    }
+                }
+            }
+        }
+    }
+
+    fun update(newItems: List<EquipeDetail>) {
         items = newItems
         notifyDataSetChanged()
     }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottom_sheet"
+    android:orientation="vertical"
+    android:paddingBottom="32dp">
+
+    <!-- Handle -->
+    <View
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/line" />
+
+    <!-- Titre -->
+    <TextView
+        android:id="@+id/tv_titre_equipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Modifier l'équipe"
+        android:textColor="@color/text"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cochez les membres à inclure dans cette équipe"
+        android:textColor="@color/muted"
+        android:textSize="12sp"
+        android:paddingHorizontal="20dp"
+        android:layout_marginBottom="12dp" />
+
+    <!-- Loading -->
+    <ProgressBar
+        android:id="@+id/progress_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="16dp"
+        android:visibility="visible" />
+
+    <!-- Liste membres avec cases à cocher -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_membres_equipe"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:nestedScrollingEnabled="true"
+        android:visibility="gone"
+        android:layout_marginBottom="20dp" />
+
+    <!-- Bouton sauvegarder -->
+    <TextView
+        android:id="@+id/btn_sauvegarder"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_button_primary"
+        android:gravity="center"
+        android:text="Sauvegarder"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginHorizontal="20dp" />
+
+</LinearLayout>
