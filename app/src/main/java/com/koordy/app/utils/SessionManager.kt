@@ -28,6 +28,10 @@ class SessionManager(context: Context) {
         get() = prefs.getString(Constants.KEY_PRENOM, "") ?: ""
         set(value) = prefs.edit().putString(Constants.KEY_PRENOM, value).apply()
 
+    var lastOpenedChat: Long
+        get() = prefs.getLong(Constants.KEY_LAST_OPENED_CHAT, 0L)
+        set(value) = prefs.edit().putLong(Constants.KEY_LAST_OPENED_CHAT, value).apply()
+
     fun isLoggedIn() = idMembre != -1
 
     fun clear() = prefs.edit().clear().apply()

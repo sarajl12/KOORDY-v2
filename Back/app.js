@@ -1,16 +1,37 @@
 import cors from "cors";
 import express from "express";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
 import { initDB } from "./connexionBDD.js";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
 const port = 3001;
 
 const db = await initDB();
 
+// Colonne photo_membre si elle n'existe pas encore
+await db.query(`ALTER TABLE membre ADD COLUMN IF NOT EXISTS photo_membre TEXT DEFAULT ''`).catch(() => {});
+
+// Dossier d'upload
+const uploadDir = path.join(__dirname, "uploads", "membres");
+fs.mkdirSync(uploadDir, { recursive: true });
+
+const storage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, uploadDir),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname) || ".jpg";
+    cb(null, `membre_${Date.now()}${ext}`);
+  },
+});
+const upload = multer({ storage, limits: { fileSize: 5 * 1024 * 1024 } });
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 
 
@@ -235,7 +256,7 @@ app.post("/api/association", async (req, res) => {
   if (!id_membre) {
     return res.status(400).json({ message: "id_membre manquant (créateur)." });
   }
-  if (!nom || !type_structure || !sport || !adresse || !date_creation || !code_postal || !ville || !pays) {
+  if (!nom || !type_structure || !adresse || !date_creation || !code_postal || !ville || !pays) {
     return res.status(400).json({ message: "Champs requis manquants." });
   }
 
@@ -282,6 +303,48 @@ app.post("/api/association", async (req, res) => {
     return res.status(500).json({ message: "Erreur serveur" });
   } finally {
     client.release();
+  }
+});
+
+
+// POST /api/association/:id/rejoindre
+app.post("/api/association/:id/rejoindre", async (req, res) => {
+  const id_association = parseInt(req.params.id);
+  const { id_membre } = req.body;
+
+  if (!id_membre) {
+    return res.status(400).json({ message: "id_membre manquant." });
+  }
+
+  try {
+    // Vérifier que l'association existe
+    const assoCheck = await db.query(
+      "SELECT id_association FROM association WHERE id_association = $1",
+      [id_association]
+    );
+    if (!assoCheck.rows.length) {
+      return res.status(404).json({ message: "Association introuvable." });
+    }
+
+    // Vérifier si le membre est déjà dans l'association
+    const existing = await db.query(
+      "SELECT id_membre_asso FROM membre_asso WHERE id_association = $1 AND id_membre = $2",
+      [id_association, id_membre]
+    );
+    if (existing.rows.length) {
+      return res.status(200).json({ message: "Membre déjà dans l'association.", id_association });
+    }
+
+    await db.query(
+      `INSERT INTO membre_asso (id_association, id_membre, role, date_adhesion, conseil_asso)
+       VALUES ($1, $2, 'Membre', CURRENT_DATE, FALSE)`,
+      [id_association, id_membre]
+    );
+
+    return res.status(201).json({ message: "Membre ajouté à l'association.", id_association });
+  } catch (err) {
+    console.error("❌ Erreur rejoindre association :", err);
+    return res.status(500).json({ message: "Erreur serveur" });
   }
 });
 
@@ -436,45 +499,64 @@ app.post("/api/evenements", async (req, res) => {
 });
 
 
+// Helper : trouver ou créer une conversation directe entre deux membres
+async function getOrCreateDirectConv(db, id_association, idA, idB) {
+  const existing = await db.query(`
+    SELECT c.id_conversation FROM conversation c
+    JOIN conversation_membre cm1 ON c.id_conversation = cm1.id_conversation AND cm1.id_membre = $1
+    JOIN conversation_membre cm2 ON c.id_conversation = cm2.id_conversation AND cm2.id_membre = $2
+    WHERE c.type = 'direct'
+    LIMIT 1
+  `, [idA, idB]);
+
+  if (existing.rows.length > 0) return existing.rows[0].id_conversation;
+
+  const newConv = await db.query(
+    `INSERT INTO conversation (id_association, type) VALUES ($1, 'direct') RETURNING id_conversation`,
+    [id_association]
+  );
+  const idConv = newConv.rows[0].id_conversation;
+
+  // Utiliser deux INSERT séparés pour éviter les problèmes ON CONFLICT sans contrainte déclarée
+  await db.query(
+    `INSERT INTO conversation_membre (id_conversation, id_membre)
+     SELECT $1, $2 WHERE NOT EXISTS (
+       SELECT 1 FROM conversation_membre WHERE id_conversation = $1 AND id_membre = $2
+     )`,
+    [idConv, idA]
+  );
+  await db.query(
+    `INSERT INTO conversation_membre (id_conversation, id_membre)
+     SELECT $1, $2 WHERE NOT EXISTS (
+       SELECT 1 FROM conversation_membre WHERE id_conversation = $1 AND id_membre = $2
+     )`,
+    [idConv, idB]
+  );
+
+  return idConv;
+}
+
 // Helper interne : envoyer l'invitation en message direct à chaque membre invité
 async function postInvitationToGeneralChat(db, id_association, id_auteur, titre_evenement, id_evenement, membresIds) {
   try {
-    // Envoyer un message direct de l'auteur vers chaque membre invité (sauf l'auteur lui-même)
-    const destinataires = membresIds.filter(id => id !== Number(id_auteur));
+    const auteurId = Number(id_auteur);
+    // Inclure tous les membres invités (y compris le créateur pour qu'il voie l'invitation)
+    const destinataires = membresIds.map(Number).filter(id => id !== auteurId);
 
     for (const idDest of destinataires) {
-      // Trouver ou créer la conversation directe entre l'auteur et ce membre
-      const existing = await db.query(`
-        SELECT c.id_conversation FROM conversation c
-        JOIN conversation_membre cm1 ON c.id_conversation = cm1.id_conversation AND cm1.id_membre = $1
-        JOIN conversation_membre cm2 ON c.id_conversation = cm2.id_conversation AND cm2.id_membre = $2
-        WHERE c.type = 'direct'
-        LIMIT 1
-      `, [Number(id_auteur), idDest]);
-
-      let idConversation;
-      if (existing.rows.length > 0) {
-        idConversation = existing.rows[0].id_conversation;
-      } else {
-        const newConv = await db.query(
-          `INSERT INTO conversation (id_association, type) VALUES ($1, 'direct') RETURNING id_conversation`,
-          [Number(id_association)]
-        );
-        idConversation = newConv.rows[0].id_conversation;
+      try {
+        const idConv = await getOrCreateDirectConv(db, Number(id_association), auteurId, idDest);
         await db.query(
-          `INSERT INTO conversation_membre (id_conversation, id_membre) VALUES ($1, $2), ($1, $3) ON CONFLICT DO NOTHING`,
-          [idConversation, Number(id_auteur), idDest]
+          `INSERT INTO message (id_conversation, id_auteur, contenu, type_message, id_evenement)
+           VALUES ($1, $2, $3, 'invitation', $4)`,
+          [idConv, auteurId, titre_evenement, id_evenement]
         );
+      } catch (innerErr) {
+        console.warn(`⚠️ Invitation non envoyée à membre ${idDest} :`, innerErr.message);
       }
-
-      // Poster l'invitation dans cette conversation directe
-      await db.query(
-        `INSERT INTO message (id_conversation, id_auteur, contenu, type_message, id_evenement) VALUES ($1, $2, $3, 'invitation', $4)`,
-        [idConversation, Number(id_auteur), titre_evenement, id_evenement]
-      );
     }
   } catch (err) {
-    console.warn("⚠️ Envoi invitation chat échoué :", err.message);
+    console.warn("⚠️ postInvitationToGeneralChat échoué :", err.message);
   }
 }
 
@@ -610,6 +692,25 @@ app.put("/api/membre/:id", async (req, res) => {
     res.json({ message: "Profil mis à jour" });
   } catch (err) {
     console.error("Erreur PUT membre :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// PATCH /api/membre/:id/photo
+app.patch("/api/membre/:id/photo", upload.single("photo"), async (req, res) => {
+  const id = req.params.id;
+  if (!req.file) return res.status(400).json({ message: "Aucun fichier reçu." });
+
+  const photoPath = `/uploads/membres/${req.file.filename}`;
+  try {
+    await db.query(
+      "UPDATE membre SET photo_membre = $1 WHERE id_membre = $2",
+      [photoPath, id]
+    );
+    res.json({ success: true, photo: photoPath });
+  } catch (err) {
+    console.error("Erreur upload photo membre :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });

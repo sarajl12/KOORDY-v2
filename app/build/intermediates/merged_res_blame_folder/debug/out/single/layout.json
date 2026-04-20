@@ -1,5 +1,9 @@
 [
     {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_form_association.xml",
+        "source": "com.koordy.app-main-53:/layout/fragment_form_association.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_message_sent.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_sent.xml"
     },
@@ -32,16 +36,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\activity_main.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_message_invitation.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_invitation.xml"
-    },
-    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_event_calendar.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_event_calendar.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_message_invitation.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_invitation.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_create_event.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_event.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\dialog_unread_messages.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\dialog_unread_messages.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription.xml",
@@ -88,16 +96,16 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
     },
     {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_inscription.xml",
+        "source": "com.koordy.app-main-53:/layout/fragment_inscription.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_calendar_day.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_calendar_day.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_message_received.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_received.xml"
-    },
-    {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_landing.xml",
-        "source": "com.koordy.app-main-53:/layout/fragment_landing.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_news.xml",

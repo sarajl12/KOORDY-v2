@@ -144,6 +144,7 @@ class ChatFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        session.lastOpenedChat = System.currentTimeMillis()
         loadConversations()
     }
 

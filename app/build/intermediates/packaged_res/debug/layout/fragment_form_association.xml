@@ -31,17 +31,9 @@
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nom de votre association *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
             <EditText android:id="@+id/et_nom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/asso_nom" android:inputType="textCapWords" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" android:layout_marginBottom="14dp" />
 
-            <!-- Type + Sport en row -->
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="14dp">
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Type de structure *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
-                    <Spinner android:id="@+id/spinner_type" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="10dp" />
-                </LinearLayout>
-                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="8dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sport *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
-                    <EditText android:id="@+id/et_sport" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/asso_sport" android:inputType="textCapWords" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" />
-                </LinearLayout>
-            </LinearLayout>
+            <!-- Type de structure -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Type de structure *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+            <Spinner android:id="@+id/spinner_type" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:padding="10dp" android:layout_marginBottom="14dp" />
 
             <!-- Adresse -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Adresse 1 *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
@@ -73,7 +65,7 @@
 
             <!-- Date création -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date de création *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
-            <EditText android:id="@+id/et_date_creation" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/asso_date_creation" android:inputType="datetime" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" android:layout_marginBottom="20dp" />
+            <EditText android:id="@+id/et_date_creation" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/asso_date_creation" android:inputType="phone" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" android:layout_marginBottom="20dp" />
 
             <ProgressBar android:id="@+id/progress_bar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:visibility="gone" android:layout_marginBottom="8dp" />
 

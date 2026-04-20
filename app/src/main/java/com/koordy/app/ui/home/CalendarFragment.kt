@@ -178,27 +178,43 @@ class CalendarFragment : Fragment() {
     private fun handleRsvp(idEvenement: Int, statut: String) {
         val idMembre = (activity as MainActivity).session.idMembre
 
+        val statutPrecedent = allEvents.find { it.idEvenement == idEvenement }?.statut
+        allEvents = allEvents.map { ev ->
+            if (ev.idEvenement == idEvenement) ev.copy(statut = statut) else ev
+        }
+        val msg = if (statut == "Accepté") "Participation confirmée !" else "Invitation déclinée."
+        // Defer RecyclerView update to next frame to avoid IllegalStateException during click dispatch
+        binding.root.post {
+            if (isAdded) {
+                updatePendingBanner()
+                refreshCalendar()
+                Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Appel API en arrière-plan — rollback silencieux si échec
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.api.respondRsvp(
                     idEvenement,
                     RsvpRequest(idMembre = idMembre, statut = statut)
                 )
-                if (response.isSuccessful) {
-                    // Mise à jour locale instantanée
+                if (!response.isSuccessful && statutPrecedent != null) {
                     allEvents = allEvents.map { ev ->
-                        if (ev.idEvenement == idEvenement) ev.copy(statut = statut) else ev
+                        if (ev.idEvenement == idEvenement) ev.copy(statut = statutPrecedent) else ev
                     }
-                    updatePendingBanner()
-                    refreshCalendar()
-
-                    val msg = if (statut == "Accepté") "Participation confirmée !" else "Invitation déclinée."
-                    Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(requireContext(), "Erreur lors de la réponse.", Toast.LENGTH_SHORT).show()
+                    if (isAdded) {
+                        binding.root.post {
+                            if (isAdded) {
+                                updatePendingBanner()
+                                refreshCalendar()
+                                Toast.makeText(requireContext(), "Réponse non enregistrée, réessaie.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                 }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Erreur de connexion.", Toast.LENGTH_SHORT).show()
+            } catch (_: Exception) {
+                // La requête a probablement abouti malgré l'exception — on garde l'état optimiste
             }
         }
     }

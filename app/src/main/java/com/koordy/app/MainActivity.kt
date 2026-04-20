@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.inscriptionFragment,
                 R.id.inscriptionAssociationFragment,
                 R.id.formAssociationFragment,
-                R.id.designAssociationFragment,
                 R.id.successAssociationFragment,
                 R.id.rechercheAssociationFragment
             )

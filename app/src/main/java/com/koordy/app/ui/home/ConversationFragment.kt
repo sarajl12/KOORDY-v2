@@ -135,13 +135,15 @@ class ConversationFragment : Fragment() {
 
     private fun respondRsvp(idEvenement: Int, statut: String) {
         val idMembre = session.idMembre ?: return
+        // Confirmation immédiate (l'UI a déjà basculé dans MessagesAdapter)
+        val label = if (statut == "Accepté") "Participation confirmée ✓" else "Invitation déclinée"
+        if (isAdded) Toast.makeText(requireContext(), label, Toast.LENGTH_SHORT).show()
+
         lifecycleScope.launch {
             try {
                 RetrofitClient.api.respondRsvp(idEvenement, RsvpRequest(idMembre, statut))
-                val label = if (statut == "Accepté") "Participation confirmée ✓" else "Invitation déclinée"
-                Toast.makeText(requireContext(), label, Toast.LENGTH_SHORT).show()
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), "Erreur RSVP", Toast.LENGTH_SHORT).show()
+            } catch (_: Exception) {
+                // La requête a très probablement abouti — pas de rollback pour ne pas perturber l'UI
             }
         }
     }

@@ -20,6 +20,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_btn_accept.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/layout_fragment_inscription.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/fragment_inscription.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_events.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_events.xml"
     },
@@ -76,6 +80,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_message_received.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_dialog_rounded.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_dialog_rounded.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_conversation.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_conversation.xml"
     },
@@ -88,6 +96,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_event.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_dialog_unread_messages.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\dialog_unread_messages.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_calendar.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_calendar.xml"
     },
@@ -98,6 +110,10 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_ic_plus.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\ic_plus.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_icon_chat_dialog.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_icon_chat_dialog.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_association_search.xml.flat",
@@ -116,12 +132,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_message_sent.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_sport_tag.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_sport_tag.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_button_primary.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_button_primary.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_landing.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_landing.xml"
+    },
+    {
+        "merged": "com.koordy.app-merged_res-51:/layout_fragment_form_association.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/fragment_form_association.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_form_association.xml.flat",
@@ -144,12 +168,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_conversation.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_badge_blue.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_badge_blue.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_step_active.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\step_active.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_ic_calendar.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\ic_calendar.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_progress_fill.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_progress_fill.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_bottom_sheet_create_event.xml.flat",
@@ -176,8 +208,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_calendar_today.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_avatar_profile.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_avatar_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_role_badge.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_role_badge.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_calendar_day_selected.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_calendar_day_selected.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_icon_box.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_icon_box.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_fragment_design_association.xml.flat",
@@ -196,6 +240,10 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_fab.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_progress_track.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_progress_track.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_ic_chevron_left.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\ic_chevron_left.xml"
     },
@@ -204,16 +252,20 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_input.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_btn_logout.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_btn_logout.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_profile_header.xml.flat",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_profile_header.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\drawable_bg_pending_banner.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\drawable\\bg_pending_banner.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_conseil.xml.flat",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_conseil.xml"
-    },
-    {
-        "merged": "com.koordy.app-merged_res-51:/layout_fragment_landing.xml.flat",
-        "source": "com.koordy.app-main-53:/layout/fragment_landing.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-merged_res-51:\\layout_item_calendar_day.xml.flat",

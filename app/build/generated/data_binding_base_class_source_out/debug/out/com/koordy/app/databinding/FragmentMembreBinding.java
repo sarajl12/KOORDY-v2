@@ -4,9 +4,11 @@ package com.koordy.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -23,16 +25,19 @@ public final class FragmentMembreBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
-  public final Button btnCancelEdit;
+  public final FrameLayout avatarContainer;
 
   @NonNull
-  public final Button btnEditProfile;
+  public final TextView btnCancelEdit;
 
   @NonNull
-  public final Button btnLogout;
+  public final TextView btnEditProfile;
 
   @NonNull
-  public final Button btnSaveProfile;
+  public final TextView btnLogout;
+
+  @NonNull
+  public final TextView btnSaveProfile;
 
   @NonNull
   public final EditText etEditBirth;
@@ -47,7 +52,13 @@ public final class FragmentMembreBinding implements ViewBinding {
   public final EditText etEditPrenom;
 
   @NonNull
+  public final ImageView ivAvatarPhoto;
+
+  @NonNull
   public final LinearLayout layoutEdit;
+
+  @NonNull
+  public final ProgressBar progressPresences;
 
   @NonNull
   public final TextView tvAdhesion;
@@ -65,10 +76,16 @@ public final class FragmentMembreBinding implements ViewBinding {
   public final TextView tvAssoVille;
 
   @NonNull
+  public final TextView tvAvatarInitial;
+
+  @NonNull
   public final TextView tvEmail;
 
   @NonNull
   public final TextView tvEquipe;
+
+  @NonNull
+  public final TextView tvFullName;
 
   @NonNull
   public final TextView tvNaissance;
@@ -85,15 +102,22 @@ public final class FragmentMembreBinding implements ViewBinding {
   @NonNull
   public final TextView tvRole;
 
-  private FragmentMembreBinding(@NonNull ScrollView rootView, @NonNull Button btnCancelEdit,
-      @NonNull Button btnEditProfile, @NonNull Button btnLogout, @NonNull Button btnSaveProfile,
-      @NonNull EditText etEditBirth, @NonNull EditText etEditEmail, @NonNull EditText etEditNom,
-      @NonNull EditText etEditPrenom, @NonNull LinearLayout layoutEdit,
-      @NonNull TextView tvAdhesion, @NonNull TextView tvAge, @NonNull TextView tvAssoNom,
-      @NonNull TextView tvAssoSport, @NonNull TextView tvAssoVille, @NonNull TextView tvEmail,
-      @NonNull TextView tvEquipe, @NonNull TextView tvNaissance, @NonNull TextView tvNom,
-      @NonNull TextView tvPrenom, @NonNull TextView tvPresences, @NonNull TextView tvRole) {
+  @NonNull
+  public final TextView tvTauxPresence;
+
+  private FragmentMembreBinding(@NonNull ScrollView rootView, @NonNull FrameLayout avatarContainer,
+      @NonNull TextView btnCancelEdit, @NonNull TextView btnEditProfile,
+      @NonNull TextView btnLogout, @NonNull TextView btnSaveProfile, @NonNull EditText etEditBirth,
+      @NonNull EditText etEditEmail, @NonNull EditText etEditNom, @NonNull EditText etEditPrenom,
+      @NonNull ImageView ivAvatarPhoto, @NonNull LinearLayout layoutEdit,
+      @NonNull ProgressBar progressPresences, @NonNull TextView tvAdhesion, @NonNull TextView tvAge,
+      @NonNull TextView tvAssoNom, @NonNull TextView tvAssoSport, @NonNull TextView tvAssoVille,
+      @NonNull TextView tvAvatarInitial, @NonNull TextView tvEmail, @NonNull TextView tvEquipe,
+      @NonNull TextView tvFullName, @NonNull TextView tvNaissance, @NonNull TextView tvNom,
+      @NonNull TextView tvPrenom, @NonNull TextView tvPresences, @NonNull TextView tvRole,
+      @NonNull TextView tvTauxPresence) {
     this.rootView = rootView;
+    this.avatarContainer = avatarContainer;
     this.btnCancelEdit = btnCancelEdit;
     this.btnEditProfile = btnEditProfile;
     this.btnLogout = btnLogout;
@@ -102,19 +126,24 @@ public final class FragmentMembreBinding implements ViewBinding {
     this.etEditEmail = etEditEmail;
     this.etEditNom = etEditNom;
     this.etEditPrenom = etEditPrenom;
+    this.ivAvatarPhoto = ivAvatarPhoto;
     this.layoutEdit = layoutEdit;
+    this.progressPresences = progressPresences;
     this.tvAdhesion = tvAdhesion;
     this.tvAge = tvAge;
     this.tvAssoNom = tvAssoNom;
     this.tvAssoSport = tvAssoSport;
     this.tvAssoVille = tvAssoVille;
+    this.tvAvatarInitial = tvAvatarInitial;
     this.tvEmail = tvEmail;
     this.tvEquipe = tvEquipe;
+    this.tvFullName = tvFullName;
     this.tvNaissance = tvNaissance;
     this.tvNom = tvNom;
     this.tvPrenom = tvPrenom;
     this.tvPresences = tvPresences;
     this.tvRole = tvRole;
+    this.tvTauxPresence = tvTauxPresence;
   }
 
   @Override
@@ -144,26 +173,32 @@ public final class FragmentMembreBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.avatar_container;
+      FrameLayout avatarContainer = ViewBindings.findChildViewById(rootView, id);
+      if (avatarContainer == null) {
+        break missingId;
+      }
+
       id = R.id.btn_cancel_edit;
-      Button btnCancelEdit = ViewBindings.findChildViewById(rootView, id);
+      TextView btnCancelEdit = ViewBindings.findChildViewById(rootView, id);
       if (btnCancelEdit == null) {
         break missingId;
       }
 
       id = R.id.btn_edit_profile;
-      Button btnEditProfile = ViewBindings.findChildViewById(rootView, id);
+      TextView btnEditProfile = ViewBindings.findChildViewById(rootView, id);
       if (btnEditProfile == null) {
         break missingId;
       }
 
       id = R.id.btn_logout;
-      Button btnLogout = ViewBindings.findChildViewById(rootView, id);
+      TextView btnLogout = ViewBindings.findChildViewById(rootView, id);
       if (btnLogout == null) {
         break missingId;
       }
 
       id = R.id.btn_save_profile;
-      Button btnSaveProfile = ViewBindings.findChildViewById(rootView, id);
+      TextView btnSaveProfile = ViewBindings.findChildViewById(rootView, id);
       if (btnSaveProfile == null) {
         break missingId;
       }
@@ -192,9 +227,21 @@ public final class FragmentMembreBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.iv_avatar_photo;
+      ImageView ivAvatarPhoto = ViewBindings.findChildViewById(rootView, id);
+      if (ivAvatarPhoto == null) {
+        break missingId;
+      }
+
       id = R.id.layout_edit;
       LinearLayout layoutEdit = ViewBindings.findChildViewById(rootView, id);
       if (layoutEdit == null) {
+        break missingId;
+      }
+
+      id = R.id.progress_presences;
+      ProgressBar progressPresences = ViewBindings.findChildViewById(rootView, id);
+      if (progressPresences == null) {
         break missingId;
       }
 
@@ -228,6 +275,12 @@ public final class FragmentMembreBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_avatar_initial;
+      TextView tvAvatarInitial = ViewBindings.findChildViewById(rootView, id);
+      if (tvAvatarInitial == null) {
+        break missingId;
+      }
+
       id = R.id.tv_email;
       TextView tvEmail = ViewBindings.findChildViewById(rootView, id);
       if (tvEmail == null) {
@@ -237,6 +290,12 @@ public final class FragmentMembreBinding implements ViewBinding {
       id = R.id.tv_equipe;
       TextView tvEquipe = ViewBindings.findChildViewById(rootView, id);
       if (tvEquipe == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_full_name;
+      TextView tvFullName = ViewBindings.findChildViewById(rootView, id);
+      if (tvFullName == null) {
         break missingId;
       }
 
@@ -270,10 +329,17 @@ public final class FragmentMembreBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentMembreBinding((ScrollView) rootView, btnCancelEdit, btnEditProfile,
-          btnLogout, btnSaveProfile, etEditBirth, etEditEmail, etEditNom, etEditPrenom, layoutEdit,
-          tvAdhesion, tvAge, tvAssoNom, tvAssoSport, tvAssoVille, tvEmail, tvEquipe, tvNaissance,
-          tvNom, tvPrenom, tvPresences, tvRole);
+      id = R.id.tv_taux_presence;
+      TextView tvTauxPresence = ViewBindings.findChildViewById(rootView, id);
+      if (tvTauxPresence == null) {
+        break missingId;
+      }
+
+      return new FragmentMembreBinding((ScrollView) rootView, avatarContainer, btnCancelEdit,
+          btnEditProfile, btnLogout, btnSaveProfile, etEditBirth, etEditEmail, etEditNom,
+          etEditPrenom, ivAvatarPhoto, layoutEdit, progressPresences, tvAdhesion, tvAge, tvAssoNom,
+          tvAssoSport, tvAssoVille, tvAvatarInitial, tvEmail, tvEquipe, tvFullName, tvNaissance,
+          tvNom, tvPrenom, tvPresences, tvRole, tvTauxPresence);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

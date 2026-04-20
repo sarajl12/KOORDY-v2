@@ -48,9 +48,6 @@ public final class FragmentFormAssociationBinding implements ViewBinding {
   public final EditText etPays;
 
   @NonNull
-  public final EditText etSport;
-
-  @NonNull
   public final EditText etVille;
 
   @NonNull
@@ -65,8 +62,8 @@ public final class FragmentFormAssociationBinding implements ViewBinding {
   private FragmentFormAssociationBinding(@NonNull ScrollView rootView, @NonNull Button btnSuivant,
       @NonNull EditText etAdresse, @NonNull EditText etAdresse2, @NonNull EditText etCodePostal,
       @NonNull EditText etDateCreation, @NonNull EditText etDescription, @NonNull EditText etNom,
-      @NonNull EditText etPays, @NonNull EditText etSport, @NonNull EditText etVille,
-      @NonNull ProgressBar progressBar, @NonNull Spinner spinnerType, @NonNull TextView tvRetour) {
+      @NonNull EditText etPays, @NonNull EditText etVille, @NonNull ProgressBar progressBar,
+      @NonNull Spinner spinnerType, @NonNull TextView tvRetour) {
     this.rootView = rootView;
     this.btnSuivant = btnSuivant;
     this.etAdresse = etAdresse;
@@ -76,7 +73,6 @@ public final class FragmentFormAssociationBinding implements ViewBinding {
     this.etDescription = etDescription;
     this.etNom = etNom;
     this.etPays = etPays;
-    this.etSport = etSport;
     this.etVille = etVille;
     this.progressBar = progressBar;
     this.spinnerType = spinnerType;
@@ -158,12 +154,6 @@ public final class FragmentFormAssociationBinding implements ViewBinding {
         break missingId;
       }
 
-      id = R.id.et_sport;
-      EditText etSport = ViewBindings.findChildViewById(rootView, id);
-      if (etSport == null) {
-        break missingId;
-      }
-
       id = R.id.et_ville;
       EditText etVille = ViewBindings.findChildViewById(rootView, id);
       if (etVille == null) {
@@ -189,7 +179,7 @@ public final class FragmentFormAssociationBinding implements ViewBinding {
       }
 
       return new FragmentFormAssociationBinding((ScrollView) rootView, btnSuivant, etAdresse,
-          etAdresse2, etCodePostal, etDateCreation, etDescription, etNom, etPays, etSport, etVille,
+          etAdresse2, etCodePostal, etDateCreation, etDescription, etNom, etPays, etVille,
           progressBar, spinnerType, tvRetour);
     }
     String missingId = rootView.getResources().getResourceName(id);

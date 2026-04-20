@@ -13,4 +13,5 @@ object Constants {
     const val KEY_ID_ASSOCIATION = "id_association"
     const val KEY_NOM = "nom_membre"
     const val KEY_PRENOM = "prenom_membre"
+    const val KEY_LAST_OPENED_CHAT = "last_opened_chat"
 }

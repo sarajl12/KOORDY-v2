@@ -71,6 +71,10 @@ data class AssociationResponse(
     @SerializedName("id_association") val idAssociation: Int?
 )
 
+data class JoinAssociationRequest(
+    @SerializedName("id_membre") val idMembre: Int
+)
+
 data class DesignRequest(
     @SerializedName("couleur_1") val couleur1: String,
     @SerializedName("couleur_2") val couleur2: String,
@@ -88,7 +92,13 @@ data class Membre(
     val age: Int = 0,
     @SerializedName("role_asso") val roleAsso: String = "",
     @SerializedName("date_adhesion") val dateAdhesion: String = "",
-    @SerializedName("nom_equipe") val nomEquipe: String = ""
+    @SerializedName("nom_equipe") val nomEquipe: String = "",
+    @SerializedName("photo_membre") val photoMembre: String = ""
+)
+
+data class PhotoUploadResponse(
+    val success: Boolean = false,
+    val photo: String = ""
 )
 
 data class MembreUpdateRequest(
@@ -150,7 +160,7 @@ data class EvenementAvecStatut(
     @SerializedName("description_evenement") val descriptionEvenement: String = "",
     @SerializedName("lieu_event") val lieuEvent: String = "",
     @SerializedName("date_debut_event") val dateDebutEvent: String = "",
-    @SerializedName("date_fin_event") val dateFinEvent: String = "",
+    @SerializedName("date_fin_event") val dateFinEvent: String? = null,
     val statut: String = "En attente"  // "En attente" | "Accepté" | "Refusé"
 )
 

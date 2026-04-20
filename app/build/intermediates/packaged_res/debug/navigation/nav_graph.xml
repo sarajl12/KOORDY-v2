@@ -50,15 +50,7 @@
         android:id="@+id/formAssociationFragment"
         android:name="com.koordy.app.ui.auth.FormAssociationFragment"
         android:label="Formulaire Association">
-        <action android:id="@+id/action_formAssociation_to_designAssociation"
-            app:destination="@id/designAssociationFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/designAssociationFragment"
-        android:name="com.koordy.app.ui.auth.DesignAssociationFragment"
-        android:label="Design">
-        <action android:id="@+id/action_designAssociation_to_successAssociation"
+        <action android:id="@+id/action_formAssociation_to_successAssociation"
             app:destination="@id/successAssociationFragment" />
     </fragment>
 

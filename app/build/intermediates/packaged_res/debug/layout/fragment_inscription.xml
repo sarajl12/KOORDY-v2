@@ -87,7 +87,7 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_input"
     android:hint="JJ/MM/AAAA"
-    android:inputType="number"
+    android:inputType="phone"
     android:maxLength="10"
     android:padding="10dp"
     android:textColor="@color/text"

@@ -1,9 +1,13 @@
 package com.koordy.app.ui.home
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,6 +21,9 @@ import com.koordy.app.ui.association.EventsAdapter
 import com.koordy.app.ui.association.NewsAdapter
 import com.koordy.app.ui.association.ConseilAdapter
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
+import java.util.TimeZone
 
 class HomeAssociationFragment : Fragment() {
 
@@ -45,6 +52,7 @@ class HomeAssociationFragment : Fragment() {
 
         setupRecyclers()
         loadData(idAsso)
+        checkUnreadMessages(session.idMembre, session.lastOpenedChat)
 
         binding.btnMembre.setOnClickListener {
             findNavController().navigate(R.id.action_homeAssociation_to_membre)
@@ -118,6 +126,57 @@ class HomeAssociationFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
             }
         }
+    }
+
+    private fun checkUnreadMessages(idMembre: Int, lastOpenedChat: Long) {
+        if (idMembre == -1) return
+        lifecycleScope.launch {
+            try {
+                val resp = RetrofitClient.api.getConversations(idMembre)
+                if (!resp.isSuccessful) return@launch
+                val conversations = resp.body() ?: return@launch
+
+                val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+                sdf.timeZone = TimeZone.getTimeZone("UTC")
+
+                val unreadCount = conversations.count { conv ->
+                    val msgAt = conv.lastMessageAt ?: return@count false
+                    val msgTime = try { sdf.parse(msgAt)?.time ?: 0L } catch (e: Exception) { 0L }
+                    conv.lastMessage != null && msgTime > lastOpenedChat
+                }
+
+                if (unreadCount > 0) {
+                    showUnreadDialog(unreadCount)
+                }
+            } catch (_: Exception) {}
+        }
+    }
+
+    private fun showUnreadDialog(unreadCount: Int) {
+        val dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_unread_messages)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.window?.setLayout(
+            (resources.displayMetrics.widthPixels * 0.88).toInt(),
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        val badgeText = if (unreadCount == 1) "1 NOUVEAU MESSAGE" else "$unreadCount NOUVEAUX MESSAGES"
+        dialog.findViewById<android.widget.TextView>(R.id.tvBadge).text = badgeText
+
+        val title = if (unreadCount == 1) "Tu as un nouveau message !" else "Tu as $unreadCount nouveaux messages !"
+        dialog.findViewById<android.widget.TextView>(R.id.tvTitle).text = title
+
+        dialog.findViewById<android.widget.TextView>(R.id.btnDismiss).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.findViewById<android.widget.TextView>(R.id.btnGoToChat).setOnClickListener {
+            dialog.dismiss()
+            findNavController().navigate(R.id.chatFragment)
+        }
+
+        dialog.show()
     }
 
     override fun onDestroyView() {

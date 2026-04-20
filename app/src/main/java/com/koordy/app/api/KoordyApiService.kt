@@ -1,6 +1,7 @@
 package com.koordy.app.api
 
 import com.koordy.app.models.*
+import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -53,6 +54,12 @@ interface KoordyApiService {
     @GET("api/association/search")
     suspend fun searchAssociation(@Query("nom") nom: String): Response<List<Association>>
 
+    @POST("api/association/{id}/rejoindre")
+    suspend fun rejoindreAssociation(
+        @Path("id") idAssociation: Int,
+        @Body request: JoinAssociationRequest
+    ): Response<AssociationResponse>
+
     // ── Membre ────────────────────────────────────────────────────────────────
 
     @GET("api/membre/{id}")
@@ -63,6 +70,13 @@ interface KoordyApiService {
         @Path("id") id: Int,
         @Body request: MembreUpdateRequest
     ): Response<GenericResponse>
+
+    @Multipart
+    @PATCH("api/membre/{id}/photo")
+    suspend fun uploadMemberPhoto(
+        @Path("id") id: Int,
+        @Part photo: MultipartBody.Part
+    ): Response<PhotoUploadResponse>
 
     @GET("api/membre/{id}/association")
     suspend fun getMembreAssociation(@Path("id") id: Int): Response<Association>

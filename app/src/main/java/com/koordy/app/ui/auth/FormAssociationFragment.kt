@@ -1,6 +1,8 @@
 package com.koordy.app.ui.auth
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,6 +40,8 @@ class FormAssociationFragment : Fragment() {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerType.adapter = spinnerAdapter
 
+        binding.etDateCreation.addTextChangedListener(dateSlashWatcher())
+
         binding.btnSuivant.setOnClickListener { submitForm() }
         binding.tvRetour.setOnClickListener { findNavController().popBackStack() }
     }
@@ -45,14 +49,14 @@ class FormAssociationFragment : Fragment() {
     private fun submitForm() {
         val nom = binding.etNom.text.toString().trim()
         val typeStructure = binding.spinnerType.selectedItem.toString()
-        val sport = binding.etSport.text.toString().trim()
         val adresse = binding.etAdresse.text.toString().trim()
         val codePostal = binding.etCodePostal.text.toString().trim()
         val ville = binding.etVille.text.toString().trim()
         val pays = binding.etPays.text.toString().trim()
-        val dateCreation = binding.etDateCreation.text.toString().trim()
+        val dateCreationRaw = binding.etDateCreation.text.toString().trim()
+        val dateCreation = parseDate(dateCreationRaw)
 
-        if (nom.isEmpty() || sport.isEmpty() || adresse.isEmpty() || codePostal.isEmpty()
+        if (nom.isEmpty() || adresse.isEmpty() || codePostal.isEmpty()
             || ville.isEmpty() || pays.isEmpty() || dateCreation.isEmpty()
         ) {
             Toast.makeText(requireContext(), "Remplis tous les champs obligatoires.", Toast.LENGTH_SHORT).show()
@@ -76,7 +80,7 @@ class FormAssociationFragment : Fragment() {
                         idMembre = idMembre,
                         nom = nom,
                         typeStructure = typeStructure,
-                        sport = sport,
+                        sport = "",
                         adresse = adresse,
                         adresse2 = binding.etAdresse2.text.toString().trim(),
                         description = binding.etDescription.text.toString().trim(),
@@ -89,7 +93,7 @@ class FormAssociationFragment : Fragment() {
                 if (response.isSuccessful) {
                     val idAsso = response.body()?.idAssociation ?: -1
                     session.idAssociation = idAsso
-                    findNavController().navigate(R.id.action_formAssociation_to_designAssociation)
+                    findNavController().navigate(R.id.action_formAssociation_to_successAssociation)
                 } else {
                     Toast.makeText(requireContext(), "Erreur : ${response.code()}", Toast.LENGTH_SHORT).show()
                 }
@@ -100,6 +104,28 @@ class FormAssociationFragment : Fragment() {
                 binding.progressBar.visibility = View.GONE
             }
         }
+    }
+
+    private fun dateSlashWatcher() = object : TextWatcher {
+        private var previousLength = 0
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { previousLength = s?.length ?: 0 }
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        override fun afterTextChanged(s: Editable?) {
+            if (s == null || s.length < previousLength) return
+            if (s.length == 2 && !s.contains('/')) s.append("/")
+            if (s.length == 5 && s.last() != '/') s.append("/")
+        }
+    }
+
+    private fun parseDate(raw: String): String = when {
+        raw.length == 10 && raw.contains("/") -> {
+            val p = raw.split("/")
+            "${p[2]}-${p[1]}-${p[0]}"
+        }
+        raw.length == 8 && !raw.contains("/") -> {
+            "${raw.substring(4, 8)}-${raw.substring(2, 4)}-${raw.substring(0, 2)}"
+        }
+        else -> raw
     }
 
     override fun onDestroyView() {

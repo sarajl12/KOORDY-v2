@@ -34,8 +34,27 @@ class RechercheAssociationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val adapter = AssociationSearchAdapter { asso ->
-            (activity as MainActivity).session.idAssociation = asso.idAssociation
-            findNavController().navigate(R.id.action_rechercheAssociation_to_homeAssociation)
+            val session = (activity as MainActivity).session
+            val idMembre = session.idMembre
+            binding.progressBar.visibility = View.VISIBLE
+            lifecycleScope.launch {
+                try {
+                    val response = RetrofitClient.api.rejoindreAssociation(
+                        asso.idAssociation,
+                        com.koordy.app.models.JoinAssociationRequest(idMembre)
+                    )
+                    if (response.isSuccessful) {
+                        session.idAssociation = asso.idAssociation
+                        findNavController().navigate(R.id.action_rechercheAssociation_to_homeAssociation)
+                    } else {
+                        Toast.makeText(requireContext(), "Impossible de rejoindre l'association.", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    Toast.makeText(requireContext(), "Erreur réseau.", Toast.LENGTH_SHORT).show()
+                } finally {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
         }
 
         binding.recyclerResults.layoutManager = LinearLayoutManager(requireContext())
