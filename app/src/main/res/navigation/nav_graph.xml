@@ -84,6 +84,28 @@
             app:destination="@id/membreFragment" />
         <action android:id="@+id/action_homeAssociation_to_rechercheAssociation"
             app:destination="@id/rechercheAssociationFragment" />
+        <action android:id="@+id/action_homeAssociation_to_allNews"
+            app:destination="@id/allNewsFragment" />
+        <action android:id="@+id/action_homeAssociation_to_editAssociation"
+            app:destination="@id/editAssociationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/allNewsFragment"
+        android:name="com.koordy.app.ui.home.AllNewsFragment"
+        android:label="Toutes les actualités">
+        <argument android:name="id_association"
+            app:argType="integer"
+            android:defaultValue="-1" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editAssociationFragment"
+        android:name="com.koordy.app.ui.home.EditAssociationFragment"
+        android:label="Modifier l'association">
+        <argument android:name="id_association"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 
     <fragment

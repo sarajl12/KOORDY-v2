@@ -355,6 +355,55 @@ app.post("/api/association/:id/rejoindre", async (req, res) => {
 });
 
 
+// PUT /api/associations/:id/infos  (modifier description, adresse, cp, ville, pays, téléphone)
+app.put("/api/associations/:id/infos", async (req, res) => {
+  const { description, adresse, code_postal, ville, pays, telephone } = req.body;
+  const id = req.params.id;
+  try {
+    await db.query(
+      `UPDATE association
+       SET description = $1, adresse = $2, code_postal = $3, ville = $4, pays = $5, telephone = $6
+       WHERE id_association = $7`,
+      [description || "", adresse || "", code_postal || "", ville || "", pays || "", telephone || "", id]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur PUT infos association :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// PATCH /api/associations/:id/photo  (upload photo de profil de l'asso)
+const assoUploadDir = path.join(__dirname, "uploads", "associations");
+fs.mkdirSync(assoUploadDir, { recursive: true });
+
+const assoStorage = multer.diskStorage({
+  destination: (_req, _file, cb) => cb(null, assoUploadDir),
+  filename: (_req, file, cb) => {
+    const ext = path.extname(file.originalname) || ".jpg";
+    cb(null, `asso_${Date.now()}${ext}`);
+  },
+});
+const uploadAssoPhoto = multer({ storage: assoStorage, limits: { fileSize: 8 * 1024 * 1024 } });
+
+app.patch("/api/associations/:id/photo", uploadAssoPhoto.single("photo"), async (req, res) => {
+  const id = req.params.id;
+  if (!req.file) return res.status(400).json({ message: "Aucun fichier reçu." });
+  const photoPath = `/uploads/associations/${req.file.filename}`;
+  try {
+    await db.query(
+      "UPDATE association SET image = $1 WHERE id_association = $2",
+      [photoPath, id]
+    );
+    res.json({ success: true, photo: photoPath });
+  } catch (err) {
+    console.error("Erreur upload photo association :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
 // PUT /api/association/design/:id
 app.put("/api/association/design/:id", async (req, res) => {
   const { couleur_1, couleur_2, image } = req.body;

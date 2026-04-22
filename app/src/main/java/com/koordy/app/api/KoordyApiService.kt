@@ -46,6 +46,19 @@ interface KoordyApiService {
     @POST("api/association")
     suspend fun createAssociation(@Body request: AssociationRequest): Response<AssociationResponse>
 
+    @PUT("api/associations/{id}/infos")
+    suspend fun updateAssociationInfos(
+        @Path("id") id: Int,
+        @Body request: AssociationInfosRequest
+    ): Response<GenericResponse>
+
+    @Multipart
+    @PATCH("api/associations/{id}/photo")
+    suspend fun uploadAssociationPhoto(
+        @Path("id") id: Int,
+        @Part photo: MultipartBody.Part
+    ): Response<AssociationPhotoResponse>
+
     @PUT("api/association/design/{id}")
     suspend fun updateDesign(
         @Path("id") id: Int,

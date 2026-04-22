@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="6dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/bg"
+        app:strokeColor="@color/line"
+        app:strokeWidth="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Barre colorée en haut -->
+            <View
+                android:id="@+id/vTypeBar"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="@color/brand" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <!-- Header: étiquette invitation -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Invitation à un événement"
+                    android:textColor="@color/muted"
+                    android:textSize="11sp"
+                    android:textAllCaps="true"
+                    android:letterSpacing="0.08"
+                    android:layout_marginBottom="6dp" />
+
+                <!-- Titre événement -->
+                <TextView
+                    android:id="@+id/tvTitre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Type badge -->
+                <TextView
+                    android:id="@+id/tvType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:textColor="@color/brand"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <!-- Date -->
+                <TextView
+                    android:id="@+id/tvDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="4dp" />
+
+                <!-- Lieu -->
+                <TextView
+                    android:id="@+id/tvLieu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/muted"
+                    android:textSize="13sp"
+                    android:layout_marginBottom="12dp"
+                    android:visibility="gone" />
+
+                <!-- Séparateur -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Statut RSVP ou boutons -->
+                <TextView
+                    android:id="@+id/tvStatut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center_horizontal"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layoutBoutons"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnRefuser"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:text="Décliner"
+                        android:textColor="@color/muted"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_card"
+                        style="?attr/borderlessButtonStyle" />
+
+                    <Button
+                        android:id="@+id/btnAccepter"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Participer"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:background="@drawable/bg_button_primary" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/panel">
+
+    <!-- Contenu scrollable -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="100dp">
+
+            <!-- ── Titre de la page ── -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calendrier"
+                android:textColor="@color/text"
+                android:textSize="26sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="16dp"
+                android:text="Mes événements"
+                android:textColor="@color/muted"
+                android:textSize="14sp" />
+
+            <!-- ── Bannière invitations en attente ── -->
+            <LinearLayout
+                android:id="@+id/ll_pending_banner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pending_banner"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/tv_pending_text"
+                    android:textColor="#1E40AF"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Voir ↓"
+                    android:textColor="#1E40AF"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- ── Navigation du mois ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp"
+                android:layout_marginBottom="12dp">
+
+                <ImageButton
+                    android:id="@+id/btn_prev_month"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_chevron_left"
+                    android:contentDescription="Mois précédent" />
+
+                <TextView
+                    android:id="@+id/tv_month_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.05" />
+
+                <ImageButton
+                    android:id="@+id/btn_next_month"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_chevron_right"
+                    android:contentDescription="Mois suivant" />
+
+            </LinearLayout>
+
+            <!-- ── Grille du calendrier ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:paddingTop="12dp"
+                android:paddingBottom="8dp"
+                android:paddingHorizontal="4dp"
+                android:layout_marginBottom="20dp">
+
+                <!-- En-têtes des jours -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="32dp"
+                    android:orientation="horizontal">
+
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="L" android:textColor="@color/brand"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="M" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="M" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="J" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="V" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="S" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+                    <TextView android:layout_width="0dp" android:layout_height="match_parent"
+                        android:layout_weight="1" android:gravity="center"
+                        android:text="D" android:textColor="@color/muted"
+                        android:textSize="12sp" android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@color/line" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_calendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="never" />
+
+            </LinearLayout>
+
+            <!-- ── ProgressBar ── -->
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp" />
+
+            <!-- ── Jour sélectionné ── -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="12dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/bg_calendar_day_selected"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/tv_selected_day"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textColor="@color/text"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- ── Événements du jour ── -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never" />
+
+            <!-- État vide -->
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingVertical="24dp"
+                android:text="Aucun événement ce jour"
+                android:textColor="@color/muted"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- ── FAB Créer un événement (admin seulement) ── -->
+    <LinearLayout
+        android:id="@+id/fab_create_event"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="20dp"
+        android:background="@drawable/bg_button_primary"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="20dp"
+        android:elevation="6dp"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_plus"
+            android:layout_marginEnd="8dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Créer un événement"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

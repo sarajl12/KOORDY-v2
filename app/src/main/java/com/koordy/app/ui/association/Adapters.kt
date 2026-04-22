@@ -5,9 +5,10 @@ import android.graphics.drawable.GradientDrawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.koordy.app.R
+import com.koordy.app.utils.Constants
 import com.koordy.app.databinding.ItemEquipeSelectBinding
 import com.koordy.app.databinding.ItemEventBinding
 import com.koordy.app.databinding.ItemEventCalendarBinding
@@ -86,23 +87,30 @@ class NewsAdapter(private val items: List<Actualite>) :
         val n = items[position]
         val b = holder.binding
 
-        b.tvTitle.text = n.titre
+        b.tvTitle.text   = n.titre
         b.tvContenu.text = n.contenu
 
         val isEvent = n.typeActualite.lowercase() == "evenement"
         b.tvBadge.text = if (isEvent) "Événement" else "Article"
         b.tvBadge.setTextColor(
-            if (isEvent) android.graphics.Color.parseColor("#A8FF60")
-            else android.graphics.Color.parseColor("#6CCFFF")
+            if (isEvent) Color.parseColor("#A8FF60") else Color.parseColor("#6CCFFF")
         )
 
         try {
-            val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH)
-            val d = sdf.parse(n.datePublication.take(10))
+            val sdf    = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH)
             val sdfOut = SimpleDateFormat("dd MMMM yyyy", Locale.FRENCH)
+            val d = sdf.parse(n.datePublication.take(10))
             b.tvDate.text = "Publié le ${sdfOut.format(d!!)}"
-        } catch (e: Exception) {
-            b.tvDate.text = ""
+        } catch (_: Exception) { b.tvDate.text = "" }
+
+        if (!n.imagePrincipale.isNullOrEmpty()) {
+            b.ivNewsImage.visibility = View.VISIBLE
+            Glide.with(b.root.context)
+                .load("${Constants.BASE_URL.trimEnd('/')}${n.imagePrincipale}")
+                .centerCrop()
+                .into(b.ivNewsImage)
+        } else {
+            b.ivNewsImage.visibility = View.GONE
         }
     }
 }

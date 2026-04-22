@@ -4,8 +4,8 @@ package com.koordy.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -24,22 +24,31 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
-  public final Button btnMembre;
+  public final TextView btnEditAsso;
+
+  @NonNull
+  public final TextView btnVoirTout;
+
+  @NonNull
+  public final LinearLayout cardLastNews;
+
+  @NonNull
+  public final LinearLayout cardNextEvent;
 
   @NonNull
   public final ImageView ivAssoAvatar;
+
+  @NonNull
+  public final ImageView ivAssoBanner;
+
+  @NonNull
+  public final ImageView ivNewsImage;
 
   @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
   public final RecyclerView recyclerConseil;
-
-  @NonNull
-  public final RecyclerView recyclerEvents;
-
-  @NonNull
-  public final RecyclerView recyclerNews;
 
   @NonNull
   public final TextView tvAdresse;
@@ -60,10 +69,49 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   public final TextView tvEventsEmpty;
 
   @NonNull
+  public final TextView tvNewsBadge;
+
+  @NonNull
+  public final TextView tvNewsDate;
+
+  @NonNull
   public final TextView tvNewsEmpty;
 
   @NonNull
+  public final TextView tvNewsExcerpt;
+
+  @NonNull
+  public final TextView tvNewsTitle;
+
+  @NonNull
+  public final TextView tvNextEventDay;
+
+  @NonNull
+  public final TextView tvNextEventLieu;
+
+  @NonNull
+  public final TextView tvNextEventMonth;
+
+  @NonNull
+  public final TextView tvNextEventTime;
+
+  @NonNull
+  public final TextView tvNextEventTitle;
+
+  @NonNull
+  public final TextView tvNextEventType;
+
+  @NonNull
   public final TextView tvPays;
+
+  @NonNull
+  public final TextView tvStatEvents;
+
+  @NonNull
+  public final TextView tvStatMembres;
+
+  @NonNull
+  public final TextView tvStatNews;
 
   @NonNull
   public final TextView tvTelephone;
@@ -71,29 +119,52 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   @NonNull
   public final TextView tvVille;
 
-  private FragmentHomeAssociationBinding(@NonNull ScrollView rootView, @NonNull Button btnMembre,
-      @NonNull ImageView ivAssoAvatar, @NonNull ProgressBar progressBar,
-      @NonNull RecyclerView recyclerConseil, @NonNull RecyclerView recyclerEvents,
-      @NonNull RecyclerView recyclerNews, @NonNull TextView tvAdresse, @NonNull TextView tvAssoName,
-      @NonNull TextView tvAssoSubtitle, @NonNull TextView tvConseilEmpty,
-      @NonNull TextView tvDescription, @NonNull TextView tvEventsEmpty,
-      @NonNull TextView tvNewsEmpty, @NonNull TextView tvPays, @NonNull TextView tvTelephone,
-      @NonNull TextView tvVille) {
+  private FragmentHomeAssociationBinding(@NonNull ScrollView rootView,
+      @NonNull TextView btnEditAsso, @NonNull TextView btnVoirTout,
+      @NonNull LinearLayout cardLastNews, @NonNull LinearLayout cardNextEvent,
+      @NonNull ImageView ivAssoAvatar, @NonNull ImageView ivAssoBanner,
+      @NonNull ImageView ivNewsImage, @NonNull ProgressBar progressBar,
+      @NonNull RecyclerView recyclerConseil, @NonNull TextView tvAdresse,
+      @NonNull TextView tvAssoName, @NonNull TextView tvAssoSubtitle,
+      @NonNull TextView tvConseilEmpty, @NonNull TextView tvDescription,
+      @NonNull TextView tvEventsEmpty, @NonNull TextView tvNewsBadge, @NonNull TextView tvNewsDate,
+      @NonNull TextView tvNewsEmpty, @NonNull TextView tvNewsExcerpt, @NonNull TextView tvNewsTitle,
+      @NonNull TextView tvNextEventDay, @NonNull TextView tvNextEventLieu,
+      @NonNull TextView tvNextEventMonth, @NonNull TextView tvNextEventTime,
+      @NonNull TextView tvNextEventTitle, @NonNull TextView tvNextEventType,
+      @NonNull TextView tvPays, @NonNull TextView tvStatEvents, @NonNull TextView tvStatMembres,
+      @NonNull TextView tvStatNews, @NonNull TextView tvTelephone, @NonNull TextView tvVille) {
     this.rootView = rootView;
-    this.btnMembre = btnMembre;
+    this.btnEditAsso = btnEditAsso;
+    this.btnVoirTout = btnVoirTout;
+    this.cardLastNews = cardLastNews;
+    this.cardNextEvent = cardNextEvent;
     this.ivAssoAvatar = ivAssoAvatar;
+    this.ivAssoBanner = ivAssoBanner;
+    this.ivNewsImage = ivNewsImage;
     this.progressBar = progressBar;
     this.recyclerConseil = recyclerConseil;
-    this.recyclerEvents = recyclerEvents;
-    this.recyclerNews = recyclerNews;
     this.tvAdresse = tvAdresse;
     this.tvAssoName = tvAssoName;
     this.tvAssoSubtitle = tvAssoSubtitle;
     this.tvConseilEmpty = tvConseilEmpty;
     this.tvDescription = tvDescription;
     this.tvEventsEmpty = tvEventsEmpty;
+    this.tvNewsBadge = tvNewsBadge;
+    this.tvNewsDate = tvNewsDate;
     this.tvNewsEmpty = tvNewsEmpty;
+    this.tvNewsExcerpt = tvNewsExcerpt;
+    this.tvNewsTitle = tvNewsTitle;
+    this.tvNextEventDay = tvNextEventDay;
+    this.tvNextEventLieu = tvNextEventLieu;
+    this.tvNextEventMonth = tvNextEventMonth;
+    this.tvNextEventTime = tvNextEventTime;
+    this.tvNextEventTitle = tvNextEventTitle;
+    this.tvNextEventType = tvNextEventType;
     this.tvPays = tvPays;
+    this.tvStatEvents = tvStatEvents;
+    this.tvStatMembres = tvStatMembres;
+    this.tvStatNews = tvStatNews;
     this.tvTelephone = tvTelephone;
     this.tvVille = tvVille;
   }
@@ -125,15 +196,45 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.btn_membre;
-      Button btnMembre = ViewBindings.findChildViewById(rootView, id);
-      if (btnMembre == null) {
+      id = R.id.btn_edit_asso;
+      TextView btnEditAsso = ViewBindings.findChildViewById(rootView, id);
+      if (btnEditAsso == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_voir_tout;
+      TextView btnVoirTout = ViewBindings.findChildViewById(rootView, id);
+      if (btnVoirTout == null) {
+        break missingId;
+      }
+
+      id = R.id.card_last_news;
+      LinearLayout cardLastNews = ViewBindings.findChildViewById(rootView, id);
+      if (cardLastNews == null) {
+        break missingId;
+      }
+
+      id = R.id.card_next_event;
+      LinearLayout cardNextEvent = ViewBindings.findChildViewById(rootView, id);
+      if (cardNextEvent == null) {
         break missingId;
       }
 
       id = R.id.iv_asso_avatar;
       ImageView ivAssoAvatar = ViewBindings.findChildViewById(rootView, id);
       if (ivAssoAvatar == null) {
+        break missingId;
+      }
+
+      id = R.id.iv_asso_banner;
+      ImageView ivAssoBanner = ViewBindings.findChildViewById(rootView, id);
+      if (ivAssoBanner == null) {
+        break missingId;
+      }
+
+      id = R.id.iv_news_image;
+      ImageView ivNewsImage = ViewBindings.findChildViewById(rootView, id);
+      if (ivNewsImage == null) {
         break missingId;
       }
 
@@ -146,18 +247,6 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
       id = R.id.recycler_conseil;
       RecyclerView recyclerConseil = ViewBindings.findChildViewById(rootView, id);
       if (recyclerConseil == null) {
-        break missingId;
-      }
-
-      id = R.id.recycler_events;
-      RecyclerView recyclerEvents = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerEvents == null) {
-        break missingId;
-      }
-
-      id = R.id.recycler_news;
-      RecyclerView recyclerNews = ViewBindings.findChildViewById(rootView, id);
-      if (recyclerNews == null) {
         break missingId;
       }
 
@@ -197,15 +286,93 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.tv_news_badge;
+      TextView tvNewsBadge = ViewBindings.findChildViewById(rootView, id);
+      if (tvNewsBadge == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_news_date;
+      TextView tvNewsDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvNewsDate == null) {
+        break missingId;
+      }
+
       id = R.id.tv_news_empty;
       TextView tvNewsEmpty = ViewBindings.findChildViewById(rootView, id);
       if (tvNewsEmpty == null) {
         break missingId;
       }
 
+      id = R.id.tv_news_excerpt;
+      TextView tvNewsExcerpt = ViewBindings.findChildViewById(rootView, id);
+      if (tvNewsExcerpt == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_news_title;
+      TextView tvNewsTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvNewsTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_day;
+      TextView tvNextEventDay = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventDay == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_lieu;
+      TextView tvNextEventLieu = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventLieu == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_month;
+      TextView tvNextEventMonth = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventMonth == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_time;
+      TextView tvNextEventTime = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventTime == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_title;
+      TextView tvNextEventTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventTitle == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_next_event_type;
+      TextView tvNextEventType = ViewBindings.findChildViewById(rootView, id);
+      if (tvNextEventType == null) {
+        break missingId;
+      }
+
       id = R.id.tv_pays;
       TextView tvPays = ViewBindings.findChildViewById(rootView, id);
       if (tvPays == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_stat_events;
+      TextView tvStatEvents = ViewBindings.findChildViewById(rootView, id);
+      if (tvStatEvents == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_stat_membres;
+      TextView tvStatMembres = ViewBindings.findChildViewById(rootView, id);
+      if (tvStatMembres == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_stat_news;
+      TextView tvStatNews = ViewBindings.findChildViewById(rootView, id);
+      if (tvStatNews == null) {
         break missingId;
       }
 
@@ -221,10 +388,12 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHomeAssociationBinding((ScrollView) rootView, btnMembre, ivAssoAvatar,
-          progressBar, recyclerConseil, recyclerEvents, recyclerNews, tvAdresse, tvAssoName,
-          tvAssoSubtitle, tvConseilEmpty, tvDescription, tvEventsEmpty, tvNewsEmpty, tvPays,
-          tvTelephone, tvVille);
+      return new FragmentHomeAssociationBinding((ScrollView) rootView, btnEditAsso, btnVoirTout,
+          cardLastNews, cardNextEvent, ivAssoAvatar, ivAssoBanner, ivNewsImage, progressBar,
+          recyclerConseil, tvAdresse, tvAssoName, tvAssoSubtitle, tvConseilEmpty, tvDescription,
+          tvEventsEmpty, tvNewsBadge, tvNewsDate, tvNewsEmpty, tvNewsExcerpt, tvNewsTitle,
+          tvNextEventDay, tvNextEventLieu, tvNextEventMonth, tvNextEventTime, tvNextEventTitle,
+          tvNextEventType, tvPays, tvStatEvents, tvStatMembres, tvStatNews, tvTelephone, tvVille);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -1,5 +1,7 @@
 package com.koordy.app.ui.president
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -93,7 +95,7 @@ class CreateActualiteFragment : Fragment() {
                     val imagePart = MultipartBody.Part.createFormData(
                         "image",
                         imageFile.name,
-                        imageFile.asRequestBody("image/*".toMediaTypeOrNull())
+                        imageFile.asRequestBody("image/jpeg".toMediaTypeOrNull())
                     )
                     val res = RetrofitClient.api.createNewsWithImage(
                         idAssociation = idAssociation.toString().toRequestBody("text/plain".toMediaTypeOrNull()),
@@ -147,10 +149,33 @@ class CreateActualiteFragment : Fragment() {
     private fun copyUriToTempFile(uri: Uri): File? {
         return try {
             val context = requireContext()
-            val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+            val cr = context.contentResolver
+
+            // First pass: read dimensions only (no memory allocation)
+            val boundsOpts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            cr.openInputStream(uri)?.use { BitmapFactory.decodeStream(it, null, boundsOpts) }
+
+            // Compute inSampleSize to cap longest side at 1280px
+            var inSampleSize = 1
+            var w = boundsOpts.outWidth
+            var h = boundsOpts.outHeight
+            while (w > 1280 || h > 1280) {
+                inSampleSize *= 2
+                w /= 2
+                h /= 2
+            }
+
+            // Second pass: decode at reduced resolution
+            val decodeOpts = BitmapFactory.Options().apply { this.inSampleSize = inSampleSize }
+            val bitmap = cr.openInputStream(uri)?.use {
+                BitmapFactory.decodeStream(it, null, decodeOpts)
+            } ?: return null
+
             val tempFile = File.createTempFile("actu_img_", ".jpg", context.cacheDir)
-            FileOutputStream(tempFile).use { out -> inputStream.copyTo(out) }
-            inputStream.close()
+            FileOutputStream(tempFile).use { out ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 82, out)
+            }
+            bitmap.recycle()
             tempFile
         } catch (_: Exception) { null }
     }

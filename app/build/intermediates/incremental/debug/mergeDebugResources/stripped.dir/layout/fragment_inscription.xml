@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Header Koordy -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Koordy"
+            android:textColor="@color/text"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingBottom="16dp" />
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Créez votre compte Koordy"
+            android:textColor="@color/text"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Inscription 100% gratuite."
+            android:textColor="@color/muted"
+            android:textSize="14sp"
+            android:layout_gravity="center_horizontal"
+            android:paddingBottom="20dp" />
+
+        <!-- Steps (2/5 actives) -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp">
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_active" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_active" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" />
+        </LinearLayout>
+
+        <!-- Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+            <!-- Nom / Prénom -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="16dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Nom *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                    <EditText android:id="@+id/et_nom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/hint_nom" android:inputType="textPersonName" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Prénom *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                    <EditText android:id="@+id/et_prenom" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/hint_prenom" android:inputType="textPersonName" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Email -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Email *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+            <EditText android:id="@+id/et_email" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/hint_email" android:inputType="textEmailAddress" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" android:layout_marginBottom="16dp" />
+
+            <!-- Birthday -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Date de naissance *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+            <EditText
+    android:id="@+id/et_birthday"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_input"
+    android:hint="JJ/MM/AAAA"
+    android:inputType="phone"
+    android:maxLength="10"
+    android:padding="10dp"
+    android:textColor="@color/text"
+    android:textColorHint="@color/muted"
+    android:layout_marginBottom="16dp" />
+    
+            <!-- Password -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="16dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginEnd="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Mot de passe *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                    <EditText android:id="@+id/et_password" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/hint_password" android:inputType="textPassword" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" />
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="8dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Confirmer *" android:textColor="@color/text" android:textSize="13sp" android:paddingBottom="4dp" />
+                    <EditText android:id="@+id/et_password_confirm" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_input" android:hint="@string/hint_confirm_password" android:inputType="textPassword" android:padding="10dp" android:textColor="@color/text" android:textColorHint="@color/muted" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ProgressBar android:id="@+id/progress_bar" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_horizontal" android:visibility="gone" android:layout_marginBottom="8dp" />
+
+            <Button android:id="@+id/btn_suivant" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@drawable/bg_button_primary" android:text="@string/btn_suivant" android:textColor="@color/white" android:textSize="16sp" android:textStyle="bold" android:padding="14dp" android:layout_marginBottom="12dp" />
+
+            <TextView android:id="@+id/tv_retour" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/btn_retour" android:textColor="@color/muted" android:textSize="14sp" android:layout_gravity="center_horizontal" android:padding="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

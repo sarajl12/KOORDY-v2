@@ -4,15 +4,63 @@
     android:layout_height="wrap_content"
     android:background="@drawable/bg_card"
     android:orientation="vertical"
-    android:padding="16dp"
     android:layout_marginBottom="12dp">
 
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="8dp">
-        <TextView android:id="@+id/tv_badge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textSize="11sp" android:textStyle="bold" android:layout_marginEnd="8dp" />
-        <TextView android:id="@+id/tv_date" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="11sp" />
+    <!-- Optional news image -->
+    <ImageView
+        android:id="@+id/iv_news_image"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone" />
+
+    <!-- Text body -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="6dp">
+
+            <TextView
+                android:id="@+id/tv_badge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/muted"
+                android:textSize="11sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:paddingBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tv_contenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/muted"
+            android:textSize="13sp"
+            android:maxLines="3"
+            android:ellipsize="end" />
     </LinearLayout>
-
-    <TextView android:id="@+id/tv_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:textColor="@color/text" android:textSize="15sp" android:textStyle="bold" android:paddingBottom="6dp" />
-
-    <TextView android:id="@+id/tv_contenu" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/muted" android:textSize="13sp" android:maxLines="3" android:ellipsize="end" />
 </LinearLayout>

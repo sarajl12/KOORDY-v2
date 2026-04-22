@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -17,9 +18,10 @@ import com.koordy.app.MainActivity
 import com.koordy.app.R
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentHomeAssociationBinding
-import com.koordy.app.ui.association.EventsAdapter
-import com.koordy.app.ui.association.NewsAdapter
+import com.koordy.app.models.Actualite
+import com.koordy.app.models.Evenement
 import com.koordy.app.ui.association.ConseilAdapter
+import com.koordy.app.utils.Constants
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -29,6 +31,9 @@ class HomeAssociationFragment : Fragment() {
 
     private var _binding: FragmentHomeAssociationBinding? = null
     private val binding get() = _binding!!
+
+    private val sdfEvent = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRENCH)
+        .also { it.timeZone = TimeZone.getTimeZone("UTC") }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,86 +50,160 @@ class HomeAssociationFragment : Fragment() {
         val idAsso = session.idAssociation
 
         if (idAsso == -1) {
-            // Pas d'association → page de recherche
             findNavController().navigate(R.id.action_homeAssociation_to_rechercheAssociation)
             return
         }
 
-        setupRecyclers()
-        loadData(idAsso)
-        checkUnreadMessages(session.idMembre, session.lastOpenedChat)
-
-        binding.btnMembre.setOnClickListener {
-            findNavController().navigate(R.id.action_homeAssociation_to_membre)
-        }
-    }
-
-    private fun setupRecyclers() {
         binding.recyclerConseil.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.recyclerEvents.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerNews.layoutManager = LinearLayoutManager(requireContext())
+
+        // Click listeners posés ici, toujours actifs peu importe ce que fait le réseau
+        binding.btnVoirTout.setOnClickListener { navigateToAllNews(idAsso) }
+        binding.cardLastNews.setOnClickListener { navigateToAllNews(idAsso) }
+        binding.btnEditAsso.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_homeAssociation_to_editAssociation,
+                bundleOf("id_association" to idAsso)
+            )
+        }
+
+        loadData(idAsso, session.idMembre)
+        checkUnreadMessages(session.idMembre, session.lastOpenedChat)
     }
 
-    private fun loadData(idAsso: Int) {
+    private fun navigateToAllNews(idAsso: Int) {
+        findNavController().navigate(
+            R.id.action_homeAssociation_to_allNews,
+            bundleOf("id_association" to idAsso)
+        )
+    }
+
+    private fun loadData(idAsso: Int, idMembre: Int) {
         binding.progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
-            try {
-                // Charge tout en parallèle
-                val assoDeferred = RetrofitClient.api.getAssociation(idAsso)
-                val conseilDeferred = RetrofitClient.api.getConseil(idAsso)
-                val eventsDeferred = RetrofitClient.api.getEvents(idAsso)
-                val newsDeferred = RetrofitClient.api.getNews(idAsso)
+            // Chaque appel est indépendant — une erreur réseau n'en bloque pas un autre
+            val assoResp    = runCatching { RetrofitClient.api.getAssociation(idAsso) }.getOrNull()
+            val conseilResp = runCatching { RetrofitClient.api.getConseil(idAsso) }.getOrNull()
+            val membresResp = runCatching { RetrofitClient.api.getMembres(idAsso) }.getOrNull()
+            val eventsResp  = runCatching { RetrofitClient.api.getEvents(idAsso) }.getOrNull()
+            val newsResp    = runCatching { RetrofitClient.api.getNews(idAsso) }.getOrNull()
+            val adminResp   = if (idMembre != -1)
+                runCatching { RetrofitClient.api.isAdmin(idAsso, idMembre) }.getOrNull()
+            else null
 
-                // Association hero
-                if (assoDeferred.isSuccessful) {
-                    val asso = assoDeferred.body()!!
-                    binding.tvAssoName.text = asso.nom
-                    binding.tvAssoSubtitle.text = "${asso.ville} · ${asso.sport}"
-                    binding.tvDescription.text = asso.description.ifEmpty { "Aucune description disponible." }
-                    binding.tvAdresse.text = asso.adresse
-                    binding.tvVille.text = "${asso.codePostal} ${asso.ville}"
-                    binding.tvPays.text = asso.pays
-                    binding.tvTelephone.text = asso.telephone.ifEmpty { "—" }
+            // ── Association hero ──────────────────────────────────────────
+            val asso = assoResp?.takeIf { it.isSuccessful }?.body()
+            if (asso != null) {
+                binding.tvAssoName.text     = asso.nom
+                binding.tvAssoSubtitle.text = "${asso.ville} · ${asso.sport}"
+                binding.tvDescription.text  = asso.description.ifEmpty { "Aucune description disponible." }
+                binding.tvAdresse.text      = asso.adresse.ifEmpty { "—" }
+                binding.tvVille.text        = "${asso.codePostal} ${asso.ville}".trim()
+                binding.tvPays.text         = asso.pays.ifEmpty { "—" }
+                binding.tvTelephone.text    = asso.telephone.ifEmpty { "—" }
 
-                    if (asso.image.isNotEmpty()) {
-                        Glide.with(this@HomeAssociationFragment)
-                            .load("${com.koordy.app.utils.Constants.BASE_URL}${asso.image}")
-                            .placeholder(R.drawable.bg_card)
-                            .into(binding.ivAssoAvatar)
-                    }
+                if (asso.image.isNotEmpty()) {
+                    Glide.with(this@HomeAssociationFragment)
+                        .load("${Constants.BASE_URL.trimEnd('/')}${asso.image}")
+                        .circleCrop()
+                        .placeholder(R.drawable.bg_avatar_round)
+                        .into(binding.ivAssoAvatar)
                 }
-
-                // Conseil
-                if (conseilDeferred.isSuccessful) {
-                    val conseil = conseilDeferred.body() ?: emptyList()
-                    binding.recyclerConseil.adapter = ConseilAdapter(conseil)
-                    binding.tvConseilEmpty.visibility =
-                        if (conseil.isEmpty()) View.VISIBLE else View.GONE
-                }
-
-                // Events
-                if (eventsDeferred.isSuccessful) {
-                    val events = eventsDeferred.body() ?: emptyList()
-                    binding.recyclerEvents.adapter = EventsAdapter(events)
-                    binding.tvEventsEmpty.visibility =
-                        if (events.isEmpty()) View.VISIBLE else View.GONE
-                }
-
-                // News
-                if (newsDeferred.isSuccessful) {
-                    val news = newsDeferred.body() ?: emptyList()
-                    binding.recyclerNews.adapter = NewsAdapter(news)
-                    binding.tvNewsEmpty.visibility =
-                        if (news.isEmpty()) View.VISIBLE else View.GONE
-                }
-
-            } catch (e: Exception) {
-                // chargement silencieux
-            } finally {
-                binding.progressBar.visibility = View.GONE
             }
+
+            // ── Bouton modifier (Président uniquement) ────────────────────
+            val isPresident = adminResp?.takeIf { it.isSuccessful }?.body()?.isAdmin == true
+            binding.btnEditAsso.visibility = if (isPresident) View.VISIBLE else View.GONE
+
+            // ── Stats ─────────────────────────────────────────────────────
+            val membres = membresResp?.takeIf { it.isSuccessful }?.body() ?: emptyList()
+            binding.tvStatMembres.text = membres.size.toString()
+
+            // ── Conseil ───────────────────────────────────────────────────
+            val conseil = conseilResp?.takeIf { it.isSuccessful }?.body() ?: emptyList()
+            binding.recyclerConseil.adapter = ConseilAdapter(conseil)
+            binding.tvConseilEmpty.visibility = if (conseil.isEmpty()) View.VISIBLE else View.GONE
+
+            // ── Prochain événement ────────────────────────────────────────
+            val events = eventsResp?.takeIf { it.isSuccessful }?.body() ?: emptyList()
+            val now = System.currentTimeMillis()
+            val upcoming = events.filter { ev ->
+                runCatching { (sdfEvent.parse(ev.dateDebutEvent)?.time ?: 0L) >= now }.getOrDefault(false)
+            }
+            binding.tvStatEvents.text = upcoming.size.toString()
+            bindNextEvent(upcoming.firstOrNull())
+
+            // ── Dernière actualité ────────────────────────────────────────
+            val news = newsResp?.takeIf { it.isSuccessful }?.body() ?: emptyList()
+            binding.tvStatNews.text = news.size.toString()
+            bindLastNews(news.firstOrNull())
+
+            binding.progressBar.visibility = View.GONE
+        }
+    }
+
+    private fun bindNextEvent(event: Evenement?) {
+        if (event == null) {
+            binding.cardNextEvent.visibility = View.GONE
+            binding.tvEventsEmpty.visibility = View.VISIBLE
+            return
+        }
+        binding.cardNextEvent.visibility = View.VISIBLE
+        binding.tvEventsEmpty.visibility = View.GONE
+
+        runCatching {
+            val d = sdfEvent.parse(event.dateDebutEvent)!!
+            binding.tvNextEventDay.text   = SimpleDateFormat("dd", Locale.FRENCH).format(d)
+            binding.tvNextEventMonth.text = SimpleDateFormat("MMM", Locale.FRENCH).format(d)
+            val heure = SimpleDateFormat("HH:mm", Locale.FRENCH).also {
+                it.timeZone = TimeZone.getTimeZone("Europe/Paris")
+            }.format(d)
+            binding.tvNextEventTime.text = "🕐 $heure"
+        }.onFailure {
+            binding.tvNextEventDay.text   = "--"
+            binding.tvNextEventMonth.text = "---"
+            binding.tvNextEventTime.text  = ""
+        }
+
+        binding.tvNextEventTitle.text = event.titreEvenement
+        binding.tvNextEventLieu.text  = if (event.lieuEvent.isNotBlank()) "📍 ${event.lieuEvent}" else ""
+        binding.tvNextEventType.text  = event.typeEvenement
+    }
+
+    private fun bindLastNews(news: Actualite?) {
+        if (news == null) {
+            binding.cardLastNews.visibility = View.GONE
+            binding.btnVoirTout.visibility  = View.GONE
+            binding.tvNewsEmpty.visibility  = View.VISIBLE
+            return
+        }
+        binding.cardLastNews.visibility = View.VISIBLE
+        binding.btnVoirTout.visibility  = View.VISIBLE
+        binding.tvNewsEmpty.visibility  = View.GONE
+
+        val isEvent = news.typeActualite.lowercase() == "evenement"
+        binding.tvNewsBadge.text = if (isEvent) "Événement" else "Article"
+        binding.tvNewsBadge.setTextColor(
+            if (isEvent) Color.parseColor("#A8FF60") else Color.parseColor("#6CCFFF")
+        )
+
+        runCatching {
+            val d = SimpleDateFormat("yyyy-MM-dd", Locale.FRENCH).parse(news.datePublication.take(10))
+            binding.tvNewsDate.text = "Publié le ${SimpleDateFormat("dd MMMM yyyy", Locale.FRENCH).format(d!!)}"
+        }.onFailure { binding.tvNewsDate.text = "" }
+
+        binding.tvNewsTitle.text   = news.titre
+        binding.tvNewsExcerpt.text = news.contenu
+
+        if (!news.imagePrincipale.isNullOrEmpty()) {
+            binding.ivNewsImage.visibility = View.VISIBLE
+            Glide.with(this)
+                .load("${Constants.BASE_URL.trimEnd('/')}${news.imagePrincipale}")
+                .centerCrop()
+                .into(binding.ivNewsImage)
+        } else {
+            binding.ivNewsImage.visibility = View.GONE
         }
     }
 
@@ -137,17 +216,15 @@ class HomeAssociationFragment : Fragment() {
                 val conversations = resp.body() ?: return@launch
 
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-                sdf.timeZone = TimeZone.getTimeZone("UTC")
+                    .also { it.timeZone = TimeZone.getTimeZone("UTC") }
 
                 val unreadCount = conversations.count { conv ->
                     val msgAt = conv.lastMessageAt ?: return@count false
-                    val msgTime = try { sdf.parse(msgAt)?.time ?: 0L } catch (e: Exception) { 0L }
+                    val msgTime = runCatching { sdf.parse(msgAt)?.time ?: 0L }.getOrDefault(0L)
                     conv.lastMessage != null && msgTime > lastOpenedChat
                 }
 
-                if (unreadCount > 0) {
-                    showUnreadDialog(unreadCount)
-                }
+                if (unreadCount > 0) showUnreadDialog(unreadCount)
             } catch (_: Exception) {}
         }
     }
@@ -162,20 +239,16 @@ class HomeAssociationFragment : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        val badgeText = if (unreadCount == 1) "1 NOUVEAU MESSAGE" else "$unreadCount NOUVEAUX MESSAGES"
-        dialog.findViewById<android.widget.TextView>(R.id.tvBadge).text = badgeText
+        dialog.findViewById<android.widget.TextView>(R.id.tvBadge).text =
+            if (unreadCount == 1) "1 NOUVEAU MESSAGE" else "$unreadCount NOUVEAUX MESSAGES"
+        dialog.findViewById<android.widget.TextView>(R.id.tvTitle).text =
+            if (unreadCount == 1) "Tu as un nouveau message !" else "Tu as $unreadCount nouveaux messages !"
 
-        val title = if (unreadCount == 1) "Tu as un nouveau message !" else "Tu as $unreadCount nouveaux messages !"
-        dialog.findViewById<android.widget.TextView>(R.id.tvTitle).text = title
-
-        dialog.findViewById<android.widget.TextView>(R.id.btnDismiss).setOnClickListener {
-            dialog.dismiss()
-        }
+        dialog.findViewById<android.widget.TextView>(R.id.btnDismiss).setOnClickListener { dialog.dismiss() }
         dialog.findViewById<android.widget.TextView>(R.id.btnGoToChat).setOnClickListener {
             dialog.dismiss()
             findNavController().navigate(R.id.chatFragment)
         }
-
         dialog.show()
     }
 

@@ -180,14 +180,29 @@ data class Actualite(
     @SerializedName("type_actualite") val typeActualite: String = "",
     val titre: String = "",
     val contenu: String = "",
-    @SerializedName("image_principale") val imagePrincipale: String = "",
+    @SerializedName("image_principale") val imagePrincipale: String? = null,
     @SerializedName("date_publication") val datePublication: String = "",
     val statut: String = "",
     @SerializedName("event_date") val eventDate: String = ""
 )
 
 data class IsAdminResponse(
-    val isAdmin: Boolean
+    val isAdmin: Boolean,
+    val role: String = ""
+)
+
+data class AssociationInfosRequest(
+    val description: String,
+    val adresse: String,
+    @SerializedName("code_postal") val codePostal: String,
+    val ville: String,
+    val pays: String,
+    val telephone: String
+)
+
+data class AssociationPhotoResponse(
+    val success: Boolean = false,
+    val photo: String = ""
 )
 
 data class GenericResponse(
