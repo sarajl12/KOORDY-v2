@@ -35,6 +35,10 @@ import java.util.TimeZone
 
 class HomeAssociationFragment : Fragment() {
 
+    companion object {
+        private var hasShownUnreadThisSession = false
+    }
+
     private var _binding: FragmentHomeAssociationBinding? = null
     private val binding get() = _binding!!
 
@@ -472,7 +476,10 @@ class HomeAssociationFragment : Fragment() {
                     conv.lastMessage != null && msgTime > lastOpenedChat
                 }
 
-                if (unreadCount > 0) showUnreadDialog(unreadCount)
+                if (unreadCount > 0 && !hasShownUnreadThisSession) {
+                    hasShownUnreadThisSession = true
+                    showUnreadDialog(unreadCount)
+                }
             } catch (_: Exception) {}
         }
     }

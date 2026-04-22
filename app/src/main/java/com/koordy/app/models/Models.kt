@@ -116,7 +116,8 @@ data class ConseilMembre(
     @SerializedName("conseil_asso") val conseilAsso: Int = 0,
     val age: Int = 0,
     @SerializedName("mail_membre") val email: String = "",
-    @SerializedName("date_adhesion") val dateAdhesion: String = ""
+    @SerializedName("date_adhesion") val dateAdhesion: String = "",
+    @SerializedName("photo_membre") val photoMembre: String = ""
 )
 
 data class Equipe(
@@ -224,7 +225,8 @@ data class Conversation(
     @SerializedName("last_sender_prenom") val lastSenderPrenom: String? = null,
     @SerializedName("other_id_membre") val otherIdMembre: Int? = null,
     @SerializedName("other_nom") val otherNom: String? = null,
-    @SerializedName("other_prenom") val otherPrenom: String? = null
+    @SerializedName("other_prenom") val otherPrenom: String? = null,
+    @SerializedName("other_photo_membre") val otherPhotoMembre: String? = null
 )
 
 data class Message(

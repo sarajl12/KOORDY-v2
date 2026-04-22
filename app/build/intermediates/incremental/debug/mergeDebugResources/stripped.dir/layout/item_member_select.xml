@@ -7,16 +7,29 @@
     android:paddingVertical="10dp"
     android:paddingHorizontal="4dp">
 
-    <!-- Avatar initial -->
-    <TextView
-        android:id="@+id/tv_avatar"
+    <!-- Avatar container -->
+    <FrameLayout
         android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:background="@drawable/bg_avatar_initial" />
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/tv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:background="@drawable/bg_avatar_initial" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop" />
+
+    </FrameLayout>
 
     <!-- Nom + rôle -->
     <LinearLayout

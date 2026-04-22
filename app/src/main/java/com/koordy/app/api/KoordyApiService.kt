@@ -176,6 +176,9 @@ interface KoordyApiService {
         @Query("id_membre") idMembre: Int
     ): Response<List<Message>>
 
+    @DELETE("api/conversations/{id}")
+    suspend fun deleteConversation(@Path("id") idConversation: Int): Response<GenericResponse>
+
     @POST("api/conversations/{id}/messages")
     suspend fun sendMessage(
         @Path("id") idConversation: Int,

@@ -8,27 +8,19 @@
     android:background="@drawable/bg_dialog_rounded"
     android:paddingBottom="24dp">
 
-    <!-- Bande bleue haut avec icône centrée -->
+    <!-- Logo en haut -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#F0F8FF">
 
-        <!-- Cercle gradient -->
-        <FrameLayout
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_gravity="center"
-            android:background="@drawable/bg_icon_chat_dialog"
-            android:elevation="4dp">
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_chat"
-                android:tint="@color/white" />
-        </FrameLayout>
+            android:src="@drawable/logo"
+            android:scaleType="fitCenter"
+            android:elevation="4dp" />
 
     </FrameLayout>
 

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -24,6 +25,9 @@ public final class ItemMemberSelectBinding implements ViewBinding {
   public final CheckBox cbSelected;
 
   @NonNull
+  public final ImageView ivAvatar;
+
+  @NonNull
   public final TextView tvAvatar;
 
   @NonNull
@@ -33,9 +37,11 @@ public final class ItemMemberSelectBinding implements ViewBinding {
   public final TextView tvMemberRole;
 
   private ItemMemberSelectBinding(@NonNull LinearLayout rootView, @NonNull CheckBox cbSelected,
-      @NonNull TextView tvAvatar, @NonNull TextView tvMemberName, @NonNull TextView tvMemberRole) {
+      @NonNull ImageView ivAvatar, @NonNull TextView tvAvatar, @NonNull TextView tvMemberName,
+      @NonNull TextView tvMemberRole) {
     this.rootView = rootView;
     this.cbSelected = cbSelected;
+    this.ivAvatar = ivAvatar;
     this.tvAvatar = tvAvatar;
     this.tvMemberName = tvMemberName;
     this.tvMemberRole = tvMemberRole;
@@ -74,6 +80,12 @@ public final class ItemMemberSelectBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.iv_avatar;
+      ImageView ivAvatar = ViewBindings.findChildViewById(rootView, id);
+      if (ivAvatar == null) {
+        break missingId;
+      }
+
       id = R.id.tv_avatar;
       TextView tvAvatar = ViewBindings.findChildViewById(rootView, id);
       if (tvAvatar == null) {
@@ -92,7 +104,7 @@ public final class ItemMemberSelectBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemMemberSelectBinding((LinearLayout) rootView, cbSelected, tvAvatar,
+      return new ItemMemberSelectBinding((LinearLayout) rootView, cbSelected, ivAvatar, tvAvatar,
           tvMemberName, tvMemberRole);
     }
     String missingId = rootView.getResources().getResourceName(id);

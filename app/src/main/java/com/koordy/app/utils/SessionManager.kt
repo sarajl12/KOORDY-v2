@@ -32,6 +32,18 @@ class SessionManager(context: Context) {
         get() = prefs.getLong(Constants.KEY_LAST_OPENED_CHAT, 0L)
         set(value) = prefs.edit().putLong(Constants.KEY_LAST_OPENED_CHAT, value).apply()
 
+    fun getPinnedConversations(): Set<Int> =
+        (prefs.getStringSet("pinned_convs", emptySet()) ?: emptySet()).map { it.toInt() }.toSet()
+
+    fun setPinnedConversations(ids: Set<Int>) =
+        prefs.edit().putStringSet("pinned_convs", ids.map { it.toString() }.toSet()).apply()
+
+    fun getMutedConversations(): Set<Int> =
+        (prefs.getStringSet("muted_convs", emptySet()) ?: emptySet()).map { it.toInt() }.toSet()
+
+    fun setMutedConversations(ids: Set<Int>) =
+        prefs.edit().putStringSet("muted_convs", ids.map { it.toString() }.toSet()).apply()
+
     fun isLoggedIn() = idMembre != -1
 
     fun clear() = prefs.edit().clear().apply()

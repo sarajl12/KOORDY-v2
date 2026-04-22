@@ -153,7 +153,8 @@ app.get("/api/associations/:id/conseil", async (req, res) => {
   try {
     const result = await db.query(
       `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, ma.role,
-              (CASE WHEN ma.conseil_asso THEN 1 ELSE 0 END) AS conseil_asso
+              (CASE WHEN ma.conseil_asso THEN 1 ELSE 0 END) AS conseil_asso,
+              m.photo_membre
        FROM membre_asso ma
        JOIN membre m ON ma.id_membre = m.id_membre
        WHERE ma.id_association = $1 AND ma.conseil_asso = TRUE`,
@@ -176,7 +177,7 @@ app.get("/api/associations/:id/membres", async (req, res) => {
               ma.role,
               (CASE WHEN ma.conseil_asso THEN 1 ELSE 0 END) AS conseil_asso,
               ma.date_adhesion,
-              m.age, m.mail_membre
+              m.age, m.mail_membre, m.photo_membre
        FROM membre_asso ma
        JOIN membre m ON ma.id_membre = m.id_membre
        WHERE ma.id_association = $1
@@ -942,7 +943,8 @@ app.get("/api/membre/:id/conversations", async (req, res) => {
         auteur.prenom_membre    AS last_sender_prenom,
         other_m.id_membre       AS other_id_membre,
         other_m.nom_membre      AS other_nom,
-        other_m.prenom_membre   AS other_prenom
+        other_m.prenom_membre   AS other_prenom,
+        other_m.photo_membre    AS other_photo_membre
       FROM conversation c
       JOIN conversation_membre cm ON c.id_conversation = cm.id_conversation AND cm.id_membre = $1
       LEFT JOIN LATERAL (
@@ -985,6 +987,19 @@ app.post("/api/conversations", async (req, res) => {
         WHERE c.type = 'direct'
         LIMIT 1
       `, [id_initiateur, id_destinataire]);
+
+      if (existing.rows.length > 0) {
+        await client.query("ROLLBACK");
+        return res.json({ id_conversation: existing.rows[0].id_conversation, existing: true });
+      }
+    }
+
+    if (type === "group" && nom) {
+      const existing = await client.query(`
+        SELECT id_conversation FROM conversation
+        WHERE id_association = $1 AND nom = $2 AND type = 'group'
+        LIMIT 1
+      `, [id_association, nom]);
 
       if (existing.rows.length > 0) {
         await client.query("ROLLBACK");
@@ -1059,6 +1074,21 @@ app.get("/api/conversations/:id/messages", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     console.error("Erreur GET messages :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// DELETE /api/conversations/:id
+app.delete("/api/conversations/:id", async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    await db.query(`DELETE FROM message WHERE id_conversation = $1`, [id]);
+    await db.query(`DELETE FROM conversation_membre WHERE id_conversation = $1`, [id]);
+    await db.query(`DELETE FROM conversation WHERE id_conversation = $1`, [id]);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur DELETE conversation :", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 });

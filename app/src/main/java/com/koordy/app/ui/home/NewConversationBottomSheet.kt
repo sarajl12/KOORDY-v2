@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,6 +22,7 @@ import com.koordy.app.databinding.ItemMemberSelectBinding
 import com.koordy.app.models.ConseilMembre
 import com.koordy.app.models.ConversationRequest
 import com.koordy.app.models.EquipeDetail
+import com.koordy.app.utils.Constants
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
@@ -237,11 +239,23 @@ class NewConversationBottomSheet : BottomSheetDialogFragment() {
 
         override fun onBindViewHolder(holder: VH, position: Int) {
             val m = items[position]
-            holder.b.tvAvatar.text = m.prenom.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
-            holder.b.tvMemberName.text = "${m.prenom} ${m.nom}"
-            holder.b.tvMemberRole.text = m.role.ifBlank { "Membre" }
-            holder.b.cbSelected.visibility = View.GONE
-            holder.b.root.setOnClickListener { onClick(m) }
+            val b = holder.b
+            if (m.photoMembre.isNotEmpty()) {
+                b.ivAvatar.visibility = View.VISIBLE
+                b.tvAvatar.visibility = View.GONE
+                Glide.with(b.root.context)
+                    .load("${Constants.BASE_URL.trimEnd('/')}${m.photoMembre}")
+                    .circleCrop()
+                    .into(b.ivAvatar)
+            } else {
+                b.ivAvatar.visibility = View.GONE
+                b.tvAvatar.visibility = View.VISIBLE
+                b.tvAvatar.text = m.prenom.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
+            }
+            b.tvMemberName.text = "${m.prenom} ${m.nom}"
+            b.tvMemberRole.text = m.role.ifBlank { "Membre" }
+            b.cbSelected.visibility = View.GONE
+            b.root.setOnClickListener { onClick(m) }
         }
 
         fun update(newItems: List<ConseilMembre>) {

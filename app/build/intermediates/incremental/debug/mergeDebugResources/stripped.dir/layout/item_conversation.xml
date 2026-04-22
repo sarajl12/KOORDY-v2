@@ -8,19 +8,60 @@
     android:paddingHorizontal="16dp"
     android:paddingVertical="12dp">
 
-    <!-- Avatar -->
-    <TextView
-        android:id="@+id/tvAvatar"
-        android:layout_width="46dp"
-        android:layout_height="46dp"
-        android:background="@drawable/bg_avatar_initial"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:textStyle="bold"
+    <!-- Avatar container -->
+    <FrameLayout
+        android:id="@+id/avatarContainer"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tvAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_avatar_initial"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:visibility="gone"
+            android:scaleType="centerCrop"/>
+
+        <!-- Badge mute : petit cercle en bas à droite de l'avatar -->
+        <FrameLayout
+            android:id="@+id/muteBadge"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_gravity="bottom|end"
+            android:background="@drawable/bg_icon_option"
+            android:visibility="gone">
+            <ImageView
+                android:layout_width="12dp"
+                android:layout_height="12dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_bell_off"
+                android:tint="@color/muted"/>
+        </FrameLayout>
+
+    </FrameLayout>
+
+    <!-- Icône pin : petite épingle dorée en haut à droite de la ligne -->
+    <ImageView
+        android:id="@+id/ivPinBadge"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/ic_pin"
+        android:tint="#F59E0B"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/avatarContainer"/>
 
     <!-- Name -->
     <TextView
@@ -34,9 +75,9 @@
         android:textStyle="bold"
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintStart_toEndOf="@id/tvAvatar"
+        app:layout_constraintStart_toEndOf="@id/avatarContainer"
         app:layout_constraintEnd_toStartOf="@id/tvTime"
-        app:layout_constraintTop_toTopOf="@id/tvAvatar" />
+        app:layout_constraintTop_toTopOf="@id/avatarContainer"/>
 
     <!-- Time -->
     <TextView
@@ -45,9 +86,10 @@
         android:layout_height="wrap_content"
         android:textColor="@color/muted"
         android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/ivPinBadge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tvName"
-        app:layout_constraintBaseline_toBaselineOf="@id/tvName" />
+        app:layout_constraintBaseline_toBaselineOf="@id/tvName"/>
 
     <!-- Last message -->
     <TextView
@@ -55,14 +97,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:textColor="@color/muted"
         android:textSize="13sp"
         android:maxLines="1"
         android:ellipsize="end"
-        app:layout_constraintStart_toEndOf="@id/tvAvatar"
+        app:layout_constraintStart_toEndOf="@id/avatarContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvName" />
+        app:layout_constraintTop_toBottomOf="@id/tvName"/>
 
     <!-- Divider -->
     <View
@@ -70,8 +112,8 @@
         android:layout_height="1dp"
         android:background="@color/line"
         android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@id/tvAvatar"
+        app:layout_constraintStart_toEndOf="@id/avatarContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvLastMessage" />
+        app:layout_constraintTop_toBottomOf="@id/tvLastMessage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

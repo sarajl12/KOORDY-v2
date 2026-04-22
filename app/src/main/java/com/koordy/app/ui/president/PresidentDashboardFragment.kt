@@ -214,6 +214,7 @@ class PresidentDashboardFragment : Fragment() {
         var selected = roles.indexOfFirst { it.equals(membre.role, ignoreCase = true) }.coerceAtLeast(0)
 
         AlertDialog.Builder(requireContext())
+            .setIcon(R.drawable.logo)
             .setTitle("Rôle de ${membre.prenom} ${membre.nom}")
             .setSingleChoiceItems(roles, selected) { _, which -> selected = which }
             .setPositiveButton("Confirmer") { _, _ ->
@@ -252,6 +253,7 @@ class PresidentDashboardFragment : Fragment() {
         }
 
         AlertDialog.Builder(requireContext())
+            .setIcon(R.drawable.logo)
             .setTitle("Envoyer une annonce")
             .setMessage("L'annonce sera envoyée à tous les membres de l'association.")
             .setView(container)

@@ -112,6 +112,24 @@ class CalendarFragment : Fragment() {
             }
             sheet.show(parentFragmentManager, CreateEventBottomSheet.TAG)
         }
+
+        binding.llPendingBanner.setOnClickListener { navigateToFirstPending() }
+    }
+
+    private fun navigateToFirstPending() {
+        val firstPending = allEvents
+            .filter { it.statut == "En attente" }
+            .minByOrNull { it.dateDebutEvent }
+            ?: return
+
+        try {
+            val parsed = sdfIn.parse(firstPending.dateDebutEvent) ?: return
+            val cal = Calendar.getInstance().apply { time = parsed }
+            currentYear  = cal.get(Calendar.YEAR)
+            currentMonth = cal.get(Calendar.MONTH)
+            selectedDay  = cal.get(Calendar.DAY_OF_MONTH)
+            refreshCalendar()
+        } catch (_: Exception) {}
     }
 
     // ── Chargement : vérifie admin puis charge les événements ────────────────

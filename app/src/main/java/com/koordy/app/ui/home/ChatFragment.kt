@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.koordy.app.R
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentChatBinding
+import com.koordy.app.models.Conversation
 import com.koordy.app.utils.SessionManager
 import kotlinx.coroutines.launch
 
@@ -35,14 +36,10 @@ class ChatFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         session = SessionManager(requireContext())
 
-        adapter = ConversationsAdapter { conversation ->
-            val bundle = Bundle().apply {
-                putInt("conversationId", conversation.idConversation)
-                putString("conversationName", getConversationDisplayName(conversation))
-                putString("conversationType", conversation.type)
-            }
-            findNavController().navigate(R.id.action_chat_to_conversation, bundle)
-        }
+        adapter = ConversationsAdapter(
+            onClick = { conv -> openConversation(conv) },
+            onLongClick = { conv -> showOptions(conv) }
+        )
 
         binding.rvConversations.layoutManager = LinearLayoutManager(requireContext())
         binding.rvConversations.adapter = adapter
@@ -52,16 +49,45 @@ class ChatFragment : Fragment() {
         loadConversations()
     }
 
-    private fun getConversationDisplayName(conversation: com.koordy.app.models.Conversation): String {
-        return when {
-            conversation.type == "group" -> conversation.nom ?: "Groupe"
-            conversation.otherNom != null -> "${conversation.otherPrenom} ${conversation.otherNom}"
+    // ── Navigation vers la conversation ──────────────────────────────────────
+
+    private fun openConversation(conv: Conversation) {
+        val name = when {
+            conv.type == "group" -> conv.nom ?: "Groupe"
+            conv.otherNom != null -> "${conv.otherPrenom} ${conv.otherNom}"
             else -> "Conversation"
         }
+        val bundle = Bundle().apply {
+            putInt("conversationId", conv.idConversation)
+            putString("conversationName", name)
+            putString("conversationType", conv.type)
+        }
+        findNavController().navigate(R.id.action_chat_to_conversation, bundle)
     }
 
+    // ── Bottom sheet options (long press) ─────────────────────────────────────
+
+    private fun showOptions(conv: Conversation) {
+        val sheet = ConversationOptionsBottomSheet.newInstance(conv)
+        sheet.onPinToggled = { _, _ ->
+            adapter.updateStates(session.getPinnedConversations(), session.getMutedConversations())
+        }
+        sheet.onMuteToggled = { _, _ ->
+            adapter.updateStates(session.getPinnedConversations(), session.getMutedConversations())
+        }
+        sheet.onDeleted = { _ ->
+            adapter.updateStates(session.getPinnedConversations(), session.getMutedConversations())
+            loadConversations()
+            Toast.makeText(requireContext(), "Conversation supprimée", Toast.LENGTH_SHORT).show()
+        }
+        sheet.show(childFragmentManager, ConversationOptionsBottomSheet.TAG)
+    }
+
+    // ── Chargement ────────────────────────────────────────────────────────────
+
     private fun loadConversations() {
-        val idMembre = session.idMembre ?: return
+        val idMembre = session.idMembre
+        if (idMembre == -1) return
         binding.progressBar.visibility = View.VISIBLE
 
         lifecycleScope.launch {
@@ -69,17 +95,23 @@ class ChatFragment : Fragment() {
                 val resp = RetrofitClient.api.getConversations(idMembre)
                 if (resp.isSuccessful) {
                     val list = resp.body() ?: emptyList()
-                    adapter.setItems(list)
-                    binding.layoutEmpty.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+                    adapter.setData(
+                        list,
+                        session.getPinnedConversations(),
+                        session.getMutedConversations()
+                    )
+                    binding.layoutEmpty.visibility  = if (list.isEmpty()) View.VISIBLE else View.GONE
                     binding.rvConversations.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
                 }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 Toast.makeText(requireContext(), "Erreur de connexion", Toast.LENGTH_SHORT).show()
             } finally {
                 binding.progressBar.visibility = View.GONE
             }
         }
     }
+
+    // ── Nouvelle conversation ──────────────────────────────────────────────────
 
     private fun showNewConversationBottomSheet() {
         NewConversationBottomSheet().apply {

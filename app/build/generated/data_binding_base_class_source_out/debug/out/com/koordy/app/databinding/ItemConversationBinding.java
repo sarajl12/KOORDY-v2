@@ -4,6 +4,8 @@ package com.koordy.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +22,18 @@ public final class ItemConversationBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final FrameLayout avatarContainer;
+
+  @NonNull
+  public final ImageView ivAvatar;
+
+  @NonNull
+  public final ImageView ivPinBadge;
+
+  @NonNull
+  public final FrameLayout muteBadge;
+
+  @NonNull
   public final TextView tvAvatar;
 
   @NonNull
@@ -31,9 +45,15 @@ public final class ItemConversationBinding implements ViewBinding {
   @NonNull
   public final TextView tvTime;
 
-  private ItemConversationBinding(@NonNull ConstraintLayout rootView, @NonNull TextView tvAvatar,
+  private ItemConversationBinding(@NonNull ConstraintLayout rootView,
+      @NonNull FrameLayout avatarContainer, @NonNull ImageView ivAvatar,
+      @NonNull ImageView ivPinBadge, @NonNull FrameLayout muteBadge, @NonNull TextView tvAvatar,
       @NonNull TextView tvLastMessage, @NonNull TextView tvName, @NonNull TextView tvTime) {
     this.rootView = rootView;
+    this.avatarContainer = avatarContainer;
+    this.ivAvatar = ivAvatar;
+    this.ivPinBadge = ivPinBadge;
+    this.muteBadge = muteBadge;
     this.tvAvatar = tvAvatar;
     this.tvLastMessage = tvLastMessage;
     this.tvName = tvName;
@@ -67,6 +87,30 @@ public final class ItemConversationBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.avatarContainer;
+      FrameLayout avatarContainer = ViewBindings.findChildViewById(rootView, id);
+      if (avatarContainer == null) {
+        break missingId;
+      }
+
+      id = R.id.ivAvatar;
+      ImageView ivAvatar = ViewBindings.findChildViewById(rootView, id);
+      if (ivAvatar == null) {
+        break missingId;
+      }
+
+      id = R.id.ivPinBadge;
+      ImageView ivPinBadge = ViewBindings.findChildViewById(rootView, id);
+      if (ivPinBadge == null) {
+        break missingId;
+      }
+
+      id = R.id.muteBadge;
+      FrameLayout muteBadge = ViewBindings.findChildViewById(rootView, id);
+      if (muteBadge == null) {
+        break missingId;
+      }
+
       id = R.id.tvAvatar;
       TextView tvAvatar = ViewBindings.findChildViewById(rootView, id);
       if (tvAvatar == null) {
@@ -91,8 +135,8 @@ public final class ItemConversationBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemConversationBinding((ConstraintLayout) rootView, tvAvatar, tvLastMessage,
-          tvName, tvTime);
+      return new ItemConversationBinding((ConstraintLayout) rootView, avatarContainer, ivAvatar,
+          ivPinBadge, muteBadge, tvAvatar, tvLastMessage, tvName, tvTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

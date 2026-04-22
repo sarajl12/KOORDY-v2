@@ -72,6 +72,10 @@
         "source": "com.koordy.app-main-53:/layout/bottom_sheet_new_conversation.xml"
     },
     {
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_conversation_options.xml",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_conversation_options.xml"
+    },
+    {
         "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_create_actualite.xml",
         "source": "com.koordy.app-main-53:/layout/fragment_create_actualite.xml"
     },

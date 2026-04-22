@@ -250,8 +250,18 @@ class MemberSelectAdapter(
         val m = items[position]
         val b = holder.b
 
-        val initiale = "${m.prenom.firstOrNull() ?: ""}".uppercase()
-        b.tvAvatar.text = initiale
+        if (m.photoMembre.isNotEmpty()) {
+            b.ivAvatar.visibility = View.VISIBLE
+            b.tvAvatar.visibility = View.GONE
+            Glide.with(b.root.context)
+                .load("${Constants.BASE_URL.trimEnd('/')}${m.photoMembre}")
+                .circleCrop()
+                .into(b.ivAvatar)
+        } else {
+            b.ivAvatar.visibility = View.GONE
+            b.tvAvatar.visibility = View.VISIBLE
+            b.tvAvatar.text = "${m.prenom.firstOrNull() ?: ""}".uppercase()
+        }
         b.tvMemberName.text = "${m.prenom} ${m.nom}"
         b.tvMemberRole.text = m.role.ifBlank { "Membre" }
         b.cbSelected.isChecked = selectedIds.contains(m.idMembre)
@@ -422,7 +432,20 @@ class ConseilAdapter(private val items: List<ConseilMembre>) :
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         val m = items[position]
-        holder.binding.tvName.text = "${m.prenom} ${m.nom}"
-        holder.binding.tvRole.text = m.role
+        val b = holder.binding
+        b.tvName.text = "${m.prenom} ${m.nom}"
+        b.tvRole.text = m.role
+        if (m.photoMembre.isNotEmpty()) {
+            b.ivAvatar.visibility = View.VISIBLE
+            b.tvAvatarInitial.visibility = View.GONE
+            Glide.with(b.root.context)
+                .load("${Constants.BASE_URL.trimEnd('/')}${m.photoMembre}")
+                .circleCrop()
+                .into(b.ivAvatar)
+        } else {
+            b.ivAvatar.visibility = View.GONE
+            b.tvAvatarInitial.visibility = View.VISIBLE
+            b.tvAvatarInitial.text = m.prenom.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
+        }
     }
 }
