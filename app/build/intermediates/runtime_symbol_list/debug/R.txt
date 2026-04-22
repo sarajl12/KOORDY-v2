@@ -3377,6 +3377,7 @@ int id callMeasure 0x7f0900a8
 int id cancel_button 0x7f0900a9
 int id card_checklist 0x7f0900aa
 int id card_creer 0x7f0900ab
+int id card_equipe 0x7f090333
 int id card_last_news 0x7f0900ac
 int id card_next_event 0x7f0900ad
 int id card_rechercher 0x7f0900ae
@@ -3564,6 +3565,7 @@ int id is_pooling_container_tag 0x7f090163
 int id italic 0x7f090164
 int id item_touch_helper_previous_elevation 0x7f090165
 int id ivAvatar 0x7f090166
+int id ivAvatarHeader 0x7f090332
 int id ivHeaderAvatar 0x7f090167
 int id ivLogo 0x7f090168
 int id ivPinBadge 0x7f090169
@@ -3761,6 +3763,7 @@ int id rv_equipes_select 0x7f090228
 int id rv_membres 0x7f090229
 int id rv_membres_equipe 0x7f09022a
 int id rv_membres_select 0x7f09022b
+int id rv_sheet_membres 0x7f090334
 int id save_non_transition_alpha 0x7f09022c
 int id save_overlay_view 0x7f09022d
 int id sawtooth 0x7f09022e
@@ -3983,6 +3986,9 @@ int id tv_role 0x7f090306
 int id tv_select_all 0x7f090307
 int id tv_selected_count 0x7f090308
 int id tv_selected_day 0x7f090309
+int id tv_sheet_empty 0x7f090335
+int id tv_sheet_equipe_nom 0x7f090336
+int id tv_sheet_membres_count 0x7f090337
 int id tv_stat_events 0x7f09030a
 int id tv_stat_membres 0x7f09030b
 int id tv_stat_news 0x7f09030c
@@ -4143,6 +4149,7 @@ int layout bottom_sheet_conversation_options 0x7f0c001d
 int layout bottom_sheet_create_equipe 0x7f0c001e
 int layout bottom_sheet_create_event 0x7f0c001f
 int layout bottom_sheet_edit_equipe 0x7f0c0020
+int layout bottom_sheet_equipe 0x7f0c0098
 int layout bottom_sheet_membre_detail 0x7f0c0021
 int layout bottom_sheet_new_conversation 0x7f0c0022
 int layout custom_dialog 0x7f0c0023
@@ -4194,6 +4201,7 @@ int layout item_equipe_select 0x7f0c0050
 int layout item_event 0x7f0c0051
 int layout item_event_calendar 0x7f0c0052
 int layout item_member_select 0x7f0c0053
+int layout item_membre_equipe 0x7f0c0099
 int layout item_membre_president 0x7f0c0054
 int layout item_membre_select 0x7f0c0055
 int layout item_message_invitation 0x7f0c0056

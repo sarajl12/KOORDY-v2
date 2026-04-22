@@ -75,7 +75,8 @@ class NewsFragment : Fragment() {
             try {
                 val res = RetrofitClient.api.getNews(idAsso)
                 if (res.isSuccessful) {
-                    val news = res.body() ?: emptyList()
+                    val news = (res.body() ?: emptyList())
+                        .filter { it.typeActualite.lowercase() != "evenement" }
                     b.recyclerNews.adapter = NewsAdapter(news)
                     b.tvEmpty.visibility = if (news.isEmpty()) View.VISIBLE else View.GONE
                 }

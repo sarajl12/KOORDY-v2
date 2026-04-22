@@ -102,7 +102,7 @@
                 android:id="@+id/btnInscription"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="J'inscris mon asso !"
+                android:text="J'inscris mon association !"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textAllCaps="false"

@@ -61,6 +61,7 @@ class ChatFragment : Fragment() {
             putInt("conversationId", conv.idConversation)
             putString("conversationName", name)
             putString("conversationType", conv.type)
+            putString("conversationPhoto", if (conv.type == "direct") conv.otherPhotoMembre else null)
         }
         findNavController().navigate(R.id.action_chat_to_conversation, bundle)
     }

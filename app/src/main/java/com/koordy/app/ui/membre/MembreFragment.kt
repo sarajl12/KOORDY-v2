@@ -278,9 +278,16 @@ class MembreFragment : Fragment() {
                 val res = RetrofitClient.api.getMembreEquipes(id)
                 if (res.isSuccessful) {
                     val equipes = res.body() ?: emptyList()
-                    binding.tvEquipe.text = if (equipes.isNotEmpty())
-                        "${equipes[0].nomEquipe}  ·  ${equipes[0].role}"
-                    else "Aucune équipe"
+                    if (equipes.isNotEmpty()) {
+                        binding.tvEquipe.text = equipes[0].nomEquipe
+                        binding.cardEquipe.setOnClickListener {
+                            val equipe = equipes[0]
+                            EquipeBottomSheet.newInstance(equipe.idEquipe, equipe.nomEquipe)
+                                .show(childFragmentManager, "equipe_sheet")
+                        }
+                    } else {
+                        binding.tvEquipe.text = "Aucune équipe"
+                    }
                 }
             } catch (_: Exception) {}
         }

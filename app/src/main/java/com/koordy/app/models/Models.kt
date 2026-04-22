@@ -121,6 +121,7 @@ data class ConseilMembre(
 )
 
 data class Equipe(
+    @SerializedName("id_equipe") val idEquipe: Int = 0,
     @SerializedName("nom_equipe") val nomEquipe: String = "",
     val role: String = ""
 )

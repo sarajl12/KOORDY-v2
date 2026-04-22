@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -43,6 +44,9 @@ public final class FragmentConversationBinding implements ViewBinding {
   public final LinearLayout inputBar;
 
   @NonNull
+  public final ImageView ivAvatarHeader;
+
+  @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
@@ -60,9 +64,9 @@ public final class FragmentConversationBinding implements ViewBinding {
   private FragmentConversationBinding(@NonNull ConstraintLayout rootView,
       @NonNull ImageButton btnBack, @NonNull ImageButton btnSend, @NonNull View dividerHeader,
       @NonNull EditText etMessage, @NonNull LinearLayout header, @NonNull LinearLayout inputBar,
-      @NonNull ProgressBar progressBar, @NonNull RecyclerView rvMessages,
-      @NonNull TextView tvAvatarHeader, @NonNull TextView tvConvName,
-      @NonNull TextView tvConvType) {
+      @NonNull ImageView ivAvatarHeader, @NonNull ProgressBar progressBar,
+      @NonNull RecyclerView rvMessages, @NonNull TextView tvAvatarHeader,
+      @NonNull TextView tvConvName, @NonNull TextView tvConvType) {
     this.rootView = rootView;
     this.btnBack = btnBack;
     this.btnSend = btnSend;
@@ -70,6 +74,7 @@ public final class FragmentConversationBinding implements ViewBinding {
     this.etMessage = etMessage;
     this.header = header;
     this.inputBar = inputBar;
+    this.ivAvatarHeader = ivAvatarHeader;
     this.progressBar = progressBar;
     this.rvMessages = rvMessages;
     this.tvAvatarHeader = tvAvatarHeader;
@@ -140,6 +145,12 @@ public final class FragmentConversationBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.ivAvatarHeader;
+      ImageView ivAvatarHeader = ViewBindings.findChildViewById(rootView, id);
+      if (ivAvatarHeader == null) {
+        break missingId;
+      }
+
       id = R.id.progressBar;
       ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
@@ -171,8 +182,8 @@ public final class FragmentConversationBinding implements ViewBinding {
       }
 
       return new FragmentConversationBinding((ConstraintLayout) rootView, btnBack, btnSend,
-          dividerHeader, etMessage, header, inputBar, progressBar, rvMessages, tvAvatarHeader,
-          tvConvName, tvConvType);
+          dividerHeader, etMessage, header, inputBar, ivAvatarHeader, progressBar, rvMessages,
+          tvAvatarHeader, tvConvName, tvConvType);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -807,7 +807,7 @@ app.get("/api/membre/:id/equipes", async (req, res) => {
   const id = req.params.id;
   try {
     const result = await db.query(
-      `SELECT e.nom_equipe, a.role_activite AS role
+      `SELECT e.id_equipe, e.nom_equipe, a.role_activite AS role
        FROM membre_activite a
        JOIN equipe e ON a.id_equipe = e.id_equipe
        JOIN membre_asso ma ON ma.id_membre_asso = a.id_membre_asso
@@ -1207,7 +1207,8 @@ app.get("/api/equipes/:id/membres", async (req, res) => {
   const id_equipe = parseInt(req.params.id);
   try {
     const result = await db.query(
-      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom, masso.role
+      `SELECT m.id_membre, m.nom_membre AS nom, m.prenom_membre AS prenom,
+              masso.role, COALESCE(m.photo_membre, '') AS photo_membre
        FROM membre_activite ma
        JOIN membre_asso masso ON ma.id_membre_asso = masso.id_membre_asso
        JOIN membre m ON masso.id_membre = m.id_membre
@@ -1459,8 +1460,17 @@ app.post("/api/checklists/:id/items", async (req, res) => {
 app.patch("/api/checklists/:id/items/:idItem/toggle", async (req, res) => {
   const idChecklist = parseInt(req.params.id);
   const idItem = parseInt(req.params.idItem);
-  const { nom_membre } = req.body;
+  const { id_membre, nom_membre } = req.body;
   try {
+    let memberName = (nom_membre || "").trim();
+    if (!memberName && id_membre) {
+      const mRes = await db.query(
+        `SELECT prenom_membre || ' ' || nom_membre AS full_name FROM membre WHERE id_membre = $1`,
+        [id_membre]
+      );
+      memberName = (mRes.rows[0]?.full_name || "").trim();
+    }
+
     const current = await db.query(
       `SELECT is_checked FROM checklist_item WHERE id_item = $1 AND id_checklist = $2`,
       [idItem, idChecklist]
@@ -1473,7 +1483,7 @@ app.patch("/api/checklists/:id/items/:idItem/toggle", async (req, res) => {
            checked_by_nom = $2,
            checked_at = CASE WHEN $1 = true THEN NOW() ELSE NULL END
        WHERE id_item = $3 AND id_checklist = $4`,
-      [newChecked, newChecked ? (nom_membre || "") : null, idItem, idChecklist]
+      [newChecked, newChecked ? (memberName || null) : null, idItem, idChecklist]
     );
     res.json({ success: true, is_checked: newChecked });
   } catch (err) {

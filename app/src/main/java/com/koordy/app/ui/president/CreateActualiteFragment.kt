@@ -2,7 +2,9 @@ package com.koordy.app.ui.president
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.net.Uri
+import androidx.exifinterface.media.ExifInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -165,11 +167,29 @@ class CreateActualiteFragment : Fragment() {
                 h /= 2
             }
 
+            // Lire l'orientation EXIF avant de décoder le bitmap
+            val rotation = cr.openInputStream(uri)?.use { stream ->
+                val exif = ExifInterface(stream)
+                when (exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)) {
+                    ExifInterface.ORIENTATION_ROTATE_90  -> 90f
+                    ExifInterface.ORIENTATION_ROTATE_180 -> 180f
+                    ExifInterface.ORIENTATION_ROTATE_270 -> 270f
+                    else -> 0f
+                }
+            } ?: 0f
+
             // Second pass: decode at reduced resolution
             val decodeOpts = BitmapFactory.Options().apply { this.inSampleSize = inSampleSize }
-            val bitmap = cr.openInputStream(uri)?.use {
+            val decoded = cr.openInputStream(uri)?.use {
                 BitmapFactory.decodeStream(it, null, decodeOpts)
             } ?: return null
+
+            // Appliquer la rotation si nécessaire
+            val bitmap = if (rotation != 0f) {
+                val matrix = Matrix().apply { postRotate(rotation) }
+                Bitmap.createBitmap(decoded, 0, 0, decoded.width, decoded.height, matrix, true)
+                    .also { if (it !== decoded) decoded.recycle() }
+            } else decoded
 
             val tempFile = File.createTempFile("actu_img_", ".jpg", context.cacheDir)
             FileOutputStream(tempFile).use { out ->

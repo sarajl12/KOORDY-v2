@@ -10,11 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.koordy.app.api.RetrofitClient
 import com.koordy.app.databinding.FragmentConversationBinding
 import com.koordy.app.models.Message
 import com.koordy.app.models.MessageRequest
 import com.koordy.app.models.RsvpRequest
+import com.koordy.app.utils.Constants
 import com.koordy.app.utils.SessionManager
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -32,6 +35,7 @@ class ConversationFragment : Fragment() {
     private var conversationId: Int = -1
     private var conversationName: String = ""
     private var conversationType: String = "direct"
+    private var conversationPhoto: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +52,7 @@ class ConversationFragment : Fragment() {
         conversationId = arguments?.getInt("conversationId") ?: -1
         conversationName = arguments?.getString("conversationName") ?: "Conversation"
         conversationType = arguments?.getString("conversationType") ?: "direct"
+        conversationPhoto = arguments?.getString("conversationPhoto")
 
         val idMembre = session.idMembre ?: return
 
@@ -64,10 +69,22 @@ class ConversationFragment : Fragment() {
         // Header
         binding.tvConvName.text = conversationName
         binding.tvConvType.text = if (conversationType == "group") "Groupe" else "Message privé"
-        binding.tvAvatarHeader.text = when {
+        val initial = when {
             conversationType == "group" -> "#"
             conversationName.isNotEmpty() -> conversationName.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
             else -> "?"
+        }
+        if (!conversationPhoto.isNullOrEmpty()) {
+            binding.ivAvatarHeader.visibility = View.VISIBLE
+            binding.tvAvatarHeader.visibility = View.GONE
+            Glide.with(this)
+                .load("${Constants.BASE_URL.trimEnd('/')}$conversationPhoto")
+                .transform(CircleCrop())
+                .into(binding.ivAvatarHeader)
+        } else {
+            binding.ivAvatarHeader.visibility = View.GONE
+            binding.tvAvatarHeader.visibility = View.VISIBLE
+            binding.tvAvatarHeader.text = initial
         }
 
         binding.btnBack.setOnClickListener { findNavController().popBackStack() }

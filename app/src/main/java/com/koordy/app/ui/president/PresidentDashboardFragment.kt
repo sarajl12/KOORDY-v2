@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.koordy.app.MainActivity
 import com.koordy.app.R
 import com.koordy.app.api.RetrofitClient
@@ -20,6 +22,7 @@ import com.koordy.app.databinding.FragmentPresidentDashboardBinding
 import com.koordy.app.databinding.ItemEquipePresidentBinding
 import com.koordy.app.databinding.ItemMembrePresidentBinding
 import com.koordy.app.models.*
+import com.koordy.app.utils.Constants
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -311,11 +314,22 @@ class PresidentDashboardFragment : Fragment() {
 
         override fun onBindViewHolder(holder: VH, position: Int) {
             val m = items[position]
-            holder.b.tvInitiale.text = m.prenom.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
             holder.b.tvNom.text = "${m.prenom} ${m.nom}"
             holder.b.tvRole.text = m.role.ifEmpty { "Membre" }
             holder.b.root.setOnClickListener { onItemClick(m) }
             holder.b.btnChangeRole.setOnClickListener { onRoleClick(m) }
+            if (m.photoMembre.isNotEmpty()) {
+                holder.b.ivAvatar.visibility = View.VISIBLE
+                holder.b.tvInitiale.visibility = View.GONE
+                Glide.with(holder.b.root.context)
+                    .load("${Constants.BASE_URL.trimEnd('/')}${m.photoMembre}")
+                    .transform(CircleCrop())
+                    .into(holder.b.ivAvatar)
+            } else {
+                holder.b.ivAvatar.visibility = View.GONE
+                holder.b.tvInitiale.visibility = View.VISIBLE
+                holder.b.tvInitiale.text = m.prenom.firstOrNull()?.uppercaseChar()?.toString() ?: "?"
+            }
         }
 
         override fun getItemCount() = items.size

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingVertical="10dp"
+    android:paddingHorizontal="4dp">
+
+    <!-- Avatar -->
+    <FrameLayout
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="14dp">
+
+        <TextView
+            android:id="@+id/tv_initiale"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:background="@drawable/bg_avatar_initial"
+            android:gravity="center"
+            android:textColor="@color/brand"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:contentDescription="Photo" />
+    </FrameLayout>
+
+    <!-- Nom -->
+    <TextView
+        android:id="@+id/tv_nom"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:textColor="@color/text"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

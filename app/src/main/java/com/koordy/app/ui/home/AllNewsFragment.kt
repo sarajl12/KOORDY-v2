@@ -46,7 +46,8 @@ class AllNewsFragment : Fragment() {
                 binding.loadingOverlay.visibility = View.VISIBLE
                 val resp = RetrofitClient.api.getNews(idAsso)
                 if (resp.isSuccessful) {
-                    val news = resp.body() ?: emptyList()
+                    val news = (resp.body() ?: emptyList())
+                        .filter { it.typeActualite.lowercase() != "evenement" }
                     binding.recyclerAllNews.adapter = NewsAdapter(news)
                     binding.tvEmpty.visibility =
                         if (news.isEmpty()) View.VISIBLE else View.GONE

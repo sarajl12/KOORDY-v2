@@ -39,7 +39,7 @@
 
             <View android:layout_width="match_parent" android:layout_height="100dp" android:background="#1A3A5C" android:layout_marginBottom="12dp" />
 
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Créer une nouvelle plateforme" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="6dp" />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Créer une nouvelle association" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="6dp" />
 
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Démarrez la création d'un espace Koordy dédié à votre association. Inscription 100% gratuite." android:textColor="@color/muted" android:textSize="14sp" />
         </LinearLayout>

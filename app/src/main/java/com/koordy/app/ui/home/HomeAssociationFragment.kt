@@ -158,7 +158,8 @@ class HomeAssociationFragment : Fragment() {
             binding.tvStatEvents.text = upcoming.size.toString()
             bindNextEvent(upcoming.firstOrNull())
 
-            val news = newsResp?.takeIf { it.isSuccessful }?.body() ?: emptyList()
+            val news = (newsResp?.takeIf { it.isSuccessful }?.body() ?: emptyList())
+                .filter { it.typeActualite.lowercase() != "evenement" }
             binding.tvStatNews.text = news.size.toString()
             bindLastNews(news.firstOrNull())
 

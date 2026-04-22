@@ -136,6 +136,7 @@ id btn_voir_tout
 id calendarFragment
 id card_checklist
 id card_creer
+id card_equipe
 id card_last_news
 id card_next_event
 id card_rechercher
@@ -194,6 +195,7 @@ id inputBar
 id inscriptionAssociationFragment
 id inscriptionFragment
 id ivAvatar
+id ivAvatarHeader
 id ivHeaderAvatar
 id ivLogo
 id ivPinBadge
@@ -247,6 +249,7 @@ id rv_equipes_select
 id rv_membres
 id rv_membres_equipe
 id rv_membres_select
+id rv_sheet_membres
 id section_equipes
 id spinner_type
 id successAssociationFragment
@@ -357,6 +360,9 @@ id tv_role
 id tv_select_all
 id tv_selected_count
 id tv_selected_day
+id tv_sheet_empty
+id tv_sheet_equipe_nom
+id tv_sheet_membres_count
 id tv_stat_events
 id tv_stat_membres
 id tv_stat_news
@@ -379,6 +385,7 @@ layout bottom_sheet_conversation_options
 layout bottom_sheet_create_equipe
 layout bottom_sheet_create_event
 layout bottom_sheet_edit_equipe
+layout bottom_sheet_equipe
 layout bottom_sheet_membre_detail
 layout bottom_sheet_new_conversation
 layout dialog_add_checklist_item
@@ -412,6 +419,7 @@ layout item_equipe_select
 layout item_event
 layout item_event_calendar
 layout item_member_select
+layout item_membre_equipe
 layout item_membre_president
 layout item_membre_select
 layout item_message_invitation

@@ -43,6 +43,9 @@ public final class FragmentMembreBinding implements ViewBinding {
   public final TextView btnSaveProfile;
 
   @NonNull
+  public final LinearLayout cardEquipe;
+
+  @NonNull
   public final EditText etEditBirth;
 
   @NonNull
@@ -111,11 +114,12 @@ public final class FragmentMembreBinding implements ViewBinding {
   private FragmentMembreBinding(@NonNull ScrollView rootView, @NonNull FrameLayout avatarContainer,
       @NonNull TextView btnCancelEdit, @NonNull TextView btnEditProfile,
       @NonNull TextView btnLogout, @NonNull TextView btnPresidentDashboard,
-      @NonNull TextView btnSaveProfile, @NonNull EditText etEditBirth,
-      @NonNull EditText etEditEmail, @NonNull EditText etEditNom, @NonNull EditText etEditPrenom,
-      @NonNull ImageView ivAvatarPhoto, @NonNull LinearLayout layoutEdit,
-      @NonNull ProgressBar progressPresences, @NonNull TextView tvAdhesion, @NonNull TextView tvAge,
-      @NonNull TextView tvAssoNom, @NonNull TextView tvAssoSport, @NonNull TextView tvAssoVille,
+      @NonNull TextView btnSaveProfile, @NonNull LinearLayout cardEquipe,
+      @NonNull EditText etEditBirth, @NonNull EditText etEditEmail, @NonNull EditText etEditNom,
+      @NonNull EditText etEditPrenom, @NonNull ImageView ivAvatarPhoto,
+      @NonNull LinearLayout layoutEdit, @NonNull ProgressBar progressPresences,
+      @NonNull TextView tvAdhesion, @NonNull TextView tvAge, @NonNull TextView tvAssoNom,
+      @NonNull TextView tvAssoSport, @NonNull TextView tvAssoVille,
       @NonNull TextView tvAvatarInitial, @NonNull TextView tvEmail, @NonNull TextView tvEquipe,
       @NonNull TextView tvFullName, @NonNull TextView tvNaissance, @NonNull TextView tvNom,
       @NonNull TextView tvPrenom, @NonNull TextView tvPresences, @NonNull TextView tvRole,
@@ -127,6 +131,7 @@ public final class FragmentMembreBinding implements ViewBinding {
     this.btnLogout = btnLogout;
     this.btnPresidentDashboard = btnPresidentDashboard;
     this.btnSaveProfile = btnSaveProfile;
+    this.cardEquipe = cardEquipe;
     this.etEditBirth = etEditBirth;
     this.etEditEmail = etEditEmail;
     this.etEditNom = etEditNom;
@@ -211,6 +216,12 @@ public final class FragmentMembreBinding implements ViewBinding {
       id = R.id.btn_save_profile;
       TextView btnSaveProfile = ViewBindings.findChildViewById(rootView, id);
       if (btnSaveProfile == null) {
+        break missingId;
+      }
+
+      id = R.id.card_equipe;
+      LinearLayout cardEquipe = ViewBindings.findChildViewById(rootView, id);
+      if (cardEquipe == null) {
         break missingId;
       }
 
@@ -347,7 +358,7 @@ public final class FragmentMembreBinding implements ViewBinding {
       }
 
       return new FragmentMembreBinding((ScrollView) rootView, avatarContainer, btnCancelEdit,
-          btnEditProfile, btnLogout, btnPresidentDashboard, btnSaveProfile, etEditBirth,
+          btnEditProfile, btnLogout, btnPresidentDashboard, btnSaveProfile, cardEquipe, etEditBirth,
           etEditEmail, etEditNom, etEditPrenom, ivAvatarPhoto, layoutEdit, progressPresences,
           tvAdhesion, tvAge, tvAssoNom, tvAssoSport, tvAssoVille, tvAvatarInitial, tvEmail,
           tvEquipe, tvFullName, tvNaissance, tvNom, tvPrenom, tvPresences, tvRole, tvTauxPresence);

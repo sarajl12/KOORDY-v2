@@ -536,6 +536,7 @@
 
             <!-- ── CARD ÉQUIPE ── -->
             <LinearLayout
+                android:id="@+id/card_equipe"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_card"
@@ -544,7 +545,10 @@
                 android:paddingHorizontal="18dp"
                 android:paddingVertical="16dp"
                 android:layout_marginBottom="14dp"
-                android:elevation="2dp">
+                android:elevation="2dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
                 <TextView
                     android:layout_width="44dp"
@@ -579,6 +583,13 @@
                         android:textSize="14sp"
                         android:textStyle="bold" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/muted"
+                    android:textSize="22sp" />
             </LinearLayout>
 
             <!-- ── CARD PRÉSENCES ── -->
