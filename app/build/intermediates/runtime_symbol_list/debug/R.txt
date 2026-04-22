@@ -3114,6 +3114,7 @@ int drawable ic_chevron_left 0x7f0800b8
 int drawable ic_chevron_right 0x7f0800b9
 int drawable ic_clear_black_24 0x7f0800ba
 int drawable ic_clock_black_24dp 0x7f0800bb
+int drawable ic_home 0x7f080117
 int drawable ic_keyboard_black_24dp 0x7f0800bc
 int drawable ic_m3_chip_check 0x7f0800bd
 int drawable ic_m3_chip_checked_circle 0x7f0800be
@@ -3124,6 +3125,7 @@ int drawable ic_mtrl_chip_checked_circle 0x7f0800c2
 int drawable ic_mtrl_chip_close_circle 0x7f0800c3
 int drawable ic_pin 0x7f0800c4
 int drawable ic_plus 0x7f0800c5
+int drawable ic_profile 0x7f080118
 int drawable ic_search_black_24 0x7f0800c6
 int drawable ic_trash 0x7f0800c7
 int drawable indeterminate_static 0x7f0800c8
@@ -3347,14 +3349,17 @@ int id btn_creer_actualite 0x7f09008a
 int id btn_creer_equipe 0x7f09008b
 int id btn_edit_asso 0x7f09008c
 int id btn_edit_profile 0x7f09008d
+int id btn_envoyer_chat 0x7f090338
 int id btn_go_home 0x7f09008e
 int id btn_go_to_space 0x7f09008f
 int id btn_login 0x7f090090
 int id btn_logout 0x7f090091
+int id btn_modifier 0x7f090339
 int id btn_modifier_equipe 0x7f090092
 int id btn_new_checklist 0x7f090093
 int id btn_next_checklist 0x7f090094
 int id btn_next_month 0x7f090095
+int id btn_options 0x7f09033a
 int id btn_president_dashboard 0x7f090096
 int id btn_prev_checklist 0x7f090097
 int id btn_prev_month 0x7f090098
@@ -3364,6 +3369,7 @@ int id btn_refuse 0x7f09009b
 int id btn_refuser 0x7f09009c
 int id btn_sauvegarder 0x7f09009d
 int id btn_save 0x7f09009e
+int id btn_save_edit 0x7f09033b
 int id btn_save_profile 0x7f09009f
 int id btn_select_date 0x7f0900a0
 int id btn_send_annonce 0x7f0900a1
@@ -3398,7 +3404,12 @@ int id chatFragment 0x7f0900bc
 int id checkbox 0x7f0900bd
 int id checked 0x7f0900be
 int id chip_autre 0x7f0900bf
+int id chip_edit_autre 0x7f09033c
+int id chip_edit_entrainement 0x7f09033d
+int id chip_edit_match 0x7f09033e
+int id chip_edit_reunion 0x7f09033f
 int id chip_entrainement 0x7f0900c0
+int id chip_group_edit_type 0x7f090340
 int id chip_group_type 0x7f0900c1
 int id chip_match 0x7f0900c2
 int id chip_reunion 0x7f0900c3
@@ -3485,9 +3496,12 @@ int id et_contenu 0x7f090113
 int id et_date_creation 0x7f090114
 int id et_description 0x7f090115
 int id et_edit_birth 0x7f090116
+int id et_edit_description 0x7f090341
 int id et_edit_email 0x7f090117
+int id et_edit_lieu 0x7f090342
 int id et_edit_nom 0x7f090118
 int id et_edit_prenom 0x7f090119
+int id et_edit_titre 0x7f090343
 int id et_email 0x7f09011a
 int id et_lieu 0x7f09011b
 int id et_lieu_evenement 0x7f09011c
@@ -3763,6 +3777,7 @@ int id rv_equipes_select 0x7f090228
 int id rv_membres 0x7f090229
 int id rv_membres_equipe 0x7f09022a
 int id rv_membres_select 0x7f09022b
+int id rv_membres_send 0x7f090344
 int id rv_sheet_membres 0x7f090334
 int id save_non_transition_alpha 0x7f09022c
 int id save_overlay_view 0x7f09022d
@@ -3785,6 +3800,7 @@ int id search_plate 0x7f09023d
 int id search_src_text 0x7f09023e
 int id search_voice_btn 0x7f09023f
 int id section_equipes 0x7f090240
+int id section_membres 0x7f090345
 int id select_dialog_listview 0x7f090241
 int id selected 0x7f090242
 int id selection_type 0x7f090243
@@ -3940,6 +3956,8 @@ int id tv_detail_initiale 0x7f0902d8
 int id tv_detail_nom 0x7f0902d9
 int id tv_detail_role 0x7f0902da
 int id tv_details 0x7f0902db
+int id tv_edit_date 0x7f090346
+int id tv_edit_heure 0x7f090347
 int id tv_email 0x7f0902dc
 int id tv_empty 0x7f0902dd
 int id tv_equipe 0x7f0902de
@@ -3956,6 +3974,7 @@ int id tv_lieu 0x7f0902e8
 int id tv_member_name 0x7f0902e9
 int id tv_member_role 0x7f0902ea
 int id tv_membres_count 0x7f0902eb
+int id tv_membres_empty 0x7f090348
 int id tv_month 0x7f0902ec
 int id tv_month_label 0x7f0902ed
 int id tv_naissance 0x7f0902ee
@@ -3977,6 +3996,10 @@ int id tv_no_account 0x7f0902fd
 int id tv_no_equipes 0x7f0902fe
 int id tv_no_membres 0x7f0902ff
 int id tv_nom 0x7f090300
+int id tv_opts_date 0x7f090349
+int id tv_opts_lieu 0x7f09034a
+int id tv_opts_title 0x7f09034b
+int id tv_opts_type 0x7f09034c
 int id tv_pays 0x7f090301
 int id tv_pending_text 0x7f090302
 int id tv_prenom 0x7f090303
@@ -4149,7 +4172,9 @@ int layout bottom_sheet_conversation_options 0x7f0c001d
 int layout bottom_sheet_create_equipe 0x7f0c001e
 int layout bottom_sheet_create_event 0x7f0c001f
 int layout bottom_sheet_edit_equipe 0x7f0c0020
+int layout bottom_sheet_edit_event 0x7f0c009a
 int layout bottom_sheet_equipe 0x7f0c0098
+int layout bottom_sheet_event_options 0x7f0c009b
 int layout bottom_sheet_membre_detail 0x7f0c0021
 int layout bottom_sheet_new_conversation 0x7f0c0022
 int layout custom_dialog 0x7f0c0023

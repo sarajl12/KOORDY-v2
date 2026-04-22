@@ -122,7 +122,8 @@ class NewsAdapter(private val items: List<Actualite>) :
 
 class CalendarEventsAdapter(
     private var items: List<EvenementAvecStatut>,
-    private val onRsvp: (idEvenement: Int, statut: String) -> Unit
+    private val onRsvp: (idEvenement: Int, statut: String) -> Unit,
+    private val onOptions: ((EvenementAvecStatut) -> Unit)? = null
 ) : RecyclerView.Adapter<CalendarEventsAdapter.VH>() {
 
     private val sdfIn    = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRENCH)
@@ -172,6 +173,13 @@ class CalendarEventsAdapter(
             b.tvDesc.visibility = View.VISIBLE
         } else {
             b.tvDesc.visibility = View.GONE
+        }
+
+        if (onOptions != null) {
+            b.btnOptions.visibility = View.VISIBLE
+            b.btnOptions.setOnClickListener { onOptions?.invoke(ev) }
+        } else {
+            b.btnOptions.visibility = View.GONE
         }
 
         // ── Barre colorée statut ──────────────────────────────────────────────

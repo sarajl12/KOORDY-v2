@@ -129,7 +129,9 @@ class ChatFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        session.lastOpenedChat = System.currentTimeMillis()
+        val now = System.currentTimeMillis()
+        session.lastOpenedChat = now
+        session.lastShownUnreadDialog = now
         loadConversations()
     }
 

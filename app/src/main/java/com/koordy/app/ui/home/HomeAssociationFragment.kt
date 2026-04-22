@@ -35,10 +35,6 @@ import java.util.TimeZone
 
 class HomeAssociationFragment : Fragment() {
 
-    companion object {
-        private var hasShownUnreadThisSession = false
-    }
-
     private var _binding: FragmentHomeAssociationBinding? = null
     private val binding get() = _binding!!
 
@@ -97,7 +93,11 @@ class HomeAssociationFragment : Fragment() {
         }
 
         loadData(idAsso, session.idMembre)
-        checkUnreadMessages(session.idMembre, session.lastOpenedChat)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::session.isInitialized) checkUnreadMessages(session.idMembre)
     }
 
     private fun navigateToAllNews(idAsso: Int) {
@@ -460,7 +460,7 @@ class HomeAssociationFragment : Fragment() {
 
     // ── Messages non lus ──────────────────────────────────────────────────────
 
-    private fun checkUnreadMessages(idMembre: Int, lastOpenedChat: Long) {
+    private fun checkUnreadMessages(idMembre: Int) {
         if (idMembre == -1) return
         lifecycleScope.launch {
             try {
@@ -471,21 +471,43 @@ class HomeAssociationFragment : Fragment() {
                 val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
                     .also { it.timeZone = TimeZone.getTimeZone("UTC") }
 
-                val unreadCount = conversations.count { conv ->
-                    val msgAt = conv.lastMessageAt ?: return@count false
+                val lastShown = session.lastShownUnreadDialog
+                var maxMsgTime = 0L
+                var msgCount = 0
+                var invCount = 0
+
+                conversations.forEach { conv ->
+                    val msgAt = conv.lastMessageAt ?: return@forEach
                     val msgTime = runCatching { sdf.parse(msgAt)?.time ?: 0L }.getOrDefault(0L)
-                    conv.lastMessage != null && msgTime > lastOpenedChat
+                    if (conv.lastMessage != null && msgTime > session.lastOpenedChat
+                            && conv.lastSenderId != idMembre) {
+                        if (conv.lastMessageType == "invitation") invCount++ else msgCount++
+                        if (msgTime > maxMsgTime) maxMsgTime = msgTime
+                    }
                 }
 
-                if (unreadCount > 0 && !hasShownUnreadThisSession) {
-                    hasShownUnreadThisSession = true
-                    showUnreadDialog(unreadCount)
+                val total = msgCount + invCount
+                if (total > 0 && maxMsgTime > lastShown) {
+                    session.lastShownUnreadDialog = System.currentTimeMillis()
+                    showUnreadDialog(msgCount, invCount)
                 }
             } catch (_: Exception) {}
         }
     }
 
-    private fun showUnreadDialog(unreadCount: Int) {
+    private fun showUnreadDialog(msgCount: Int, invCount: Int) {
+        val total = msgCount + invCount
+        val badge = buildString {
+            if (msgCount > 0) append("$msgCount MESSAGE${if (msgCount > 1) "S" else ""}")
+            if (msgCount > 0 && invCount > 0) append("  •  ")
+            if (invCount > 0) append("$invCount INVITATION${if (invCount > 1) "S" else ""}")
+        }
+        val title = when {
+            msgCount > 0 && invCount > 0 -> "Tu as $total nouveaux messages et invitations !"
+            msgCount > 0 -> if (msgCount == 1) "Tu as un nouveau message !" else "Tu as $msgCount nouveaux messages !"
+            else          -> if (invCount == 1) "Tu as une nouvelle invitation !" else "Tu as $invCount nouvelles invitations !"
+        }
+
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setContentView(R.layout.dialog_unread_messages)
@@ -495,10 +517,8 @@ class HomeAssociationFragment : Fragment() {
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        dialog.findViewById<TextView>(R.id.tvBadge).text =
-            if (unreadCount == 1) "1 NOUVEAU MESSAGE" else "$unreadCount NOUVEAUX MESSAGES"
-        dialog.findViewById<TextView>(R.id.tvTitle).text =
-            if (unreadCount == 1) "Tu as un nouveau message !" else "Tu as $unreadCount nouveaux messages !"
+        dialog.findViewById<TextView>(R.id.tvBadge).text = badge
+        dialog.findViewById<TextView>(R.id.tvTitle).text = title
 
         dialog.findViewById<TextView>(R.id.btnDismiss).setOnClickListener { dialog.dismiss() }
         dialog.findViewById<TextView>(R.id.btnGoToChat).setOnClickListener {

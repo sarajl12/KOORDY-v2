@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingBottom="32dp">
+
+        <!-- Handle -->
+        <View
+            android:layout_width="40dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="18dp"
+            android:background="#E0E0E0" />
+
+        <!-- Titre -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modifier l'événement"
+            android:textColor="@color/text"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp" />
+
+        <!-- Titre de l'événement -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Titre *"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/et_edit_titre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Type -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type *"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_edit_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:singleSelection="true"
+            xmlns:app="http://schemas.android.com/apk/res-auto">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_edit_match"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Match"
+                style="@style/Widget.MaterialComponents.Chip.Choice" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_edit_entrainement"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entraînement"
+                style="@style/Widget.MaterialComponents.Chip.Choice" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_edit_reunion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Réunion"
+                style="@style/Widget.MaterialComponents.Chip.Choice" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_edit_autre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Autre"
+                style="@style/Widget.MaterialComponents.Chip.Choice" />
+        </com.google.android.material.chip.ChipGroup>
+
+        <!-- Date -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date *"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tv_edit_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:text="Choisir une date"
+            android:textColor="@color/muted"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Heure -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heure *"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <TextView
+            android:id="@+id/tv_edit_heure"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:text="Choisir une heure"
+            android:textColor="@color/muted"
+            android:textSize="14sp"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Lieu -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lieu"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/et_edit_lieu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:inputType="text"
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textColor="@color/muted"
+            android:textSize="11sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.06"
+            android:layout_marginBottom="6dp" />
+
+        <EditText
+            android:id="@+id/et_edit_description"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@drawable/bg_input"
+            android:padding="12dp"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:textSize="14sp"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Bouton Enregistrer -->
+        <Button
+            android:id="@+id/btn_save_edit"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Enregistrer les modifications"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:backgroundTint="#1976D2"
+            android:stateListAnimator="@null"
+            android:elevation="0dp" />
+
+    </LinearLayout>
+</ScrollView>

@@ -106,6 +106,12 @@ interface KoordyApiService {
     @POST("api/evenements")
     suspend fun createEvenement(@Body request: EvenementRequest): Response<GenericResponse>
 
+    @PUT("api/evenements/{id}")
+    suspend fun updateEvenement(
+        @Path("id") idEvenement: Int,
+        @Body request: EvenementUpdateRequest
+    ): Response<GenericResponse>
+
     @GET("api/membre/{id}/evenements")
     suspend fun getMembreEvenements(@Path("id") idMembre: Int): Response<List<EvenementAvecStatut>>
 

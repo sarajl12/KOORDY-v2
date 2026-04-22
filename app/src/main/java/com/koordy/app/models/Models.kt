@@ -157,6 +157,15 @@ data class EvenementRequest(
     val participants: List<Int>? = null  // null = inviter tous les membres
 )
 
+data class EvenementUpdateRequest(
+    @SerializedName("titre_evenement") val titreEvenement: String,
+    @SerializedName("type_evenement") val typeEvenement: String,
+    @SerializedName("lieu_event") val lieuEvent: String,
+    @SerializedName("description_evenement") val descriptionEvenement: String,
+    @SerializedName("date_debut_event") val dateDebutEvent: String,
+    @SerializedName("date_fin_event") val dateFinEvent: String?
+)
+
 data class EvenementAvecStatut(
     @SerializedName("id_evenement") val idEvenement: Int = 0,
     @SerializedName("id_association") val idAssociation: Int = 0,
@@ -166,8 +175,8 @@ data class EvenementAvecStatut(
     @SerializedName("lieu_event") val lieuEvent: String = "",
     @SerializedName("date_debut_event") val dateDebutEvent: String = "",
     @SerializedName("date_fin_event") val dateFinEvent: String? = null,
-    val statut: String = "En attente"  // "En attente" | "Accepté" | "Refusé"
-)
+    val statut: String = "En attente"
+) : java.io.Serializable
 
 data class RsvpRequest(
     @SerializedName("id_membre") val idMembre: Int,
@@ -222,6 +231,7 @@ data class Conversation(
     @SerializedName("last_message") val lastMessage: String? = null,
     @SerializedName("last_message_at") val lastMessageAt: String? = null,
     @SerializedName("last_message_type") val lastMessageType: String? = null,
+    @SerializedName("last_sender_id") val lastSenderId: Int? = null,
     @SerializedName("last_sender_nom") val lastSenderNom: String? = null,
     @SerializedName("last_sender_prenom") val lastSenderPrenom: String? = null,
     @SerializedName("other_id_membre") val otherIdMembre: Int? = null,

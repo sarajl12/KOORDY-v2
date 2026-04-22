@@ -12,28 +12,32 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_edit_equipe.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\dialog_add_checklist_item.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\dialog_add_checklist_item.xml"
-    },
-    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_equipe_select.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_equipe_select.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\dialog_add_checklist_item.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\dialog_add_checklist_item.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_conversation_options.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_conversation_options.xml"
     },
     {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_event_options.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_event_options.xml"
+    },
+    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_equipe_president.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_equipe_president.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_inscription.xml"
-    },
-    {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_all_news.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_all_news.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_inscription.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_inscription_association.xml",
@@ -60,12 +64,16 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_conversation.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_login.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
+        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_edit_event.xml",
+        "source": "com.koordy.app-main-53:/layout/bottom_sheet_edit_event.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_checklist_item.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_checklist_item.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_login.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_login.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_calendar_day.xml",
@@ -92,8 +100,8 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_chat.xml"
     },
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/fragment_membre.xml",
-        "source": "com.koordy.app-main-53:/layout/fragment_membre.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_equipe.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_equipe.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_calendar.xml",
@@ -148,12 +156,16 @@
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\fragment_membre.xml"
     },
     {
-        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_association_search.xml",
-        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_association_search.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_edit_event.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_edit_event.xml"
     },
     {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/item_membre_equipe.xml",
-        "source": "com.koordy.app-main-53:/layout/item_membre_equipe.xml"
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_membre_equipe.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_membre_equipe.xml"
+    },
+    {
+        "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_association_search.xml",
+        "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\item_association_search.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\fragment_success_association.xml",
@@ -178,10 +190,6 @@
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\bottom_sheet_create_equipe.xml",
         "source": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-main-53:\\layout\\bottom_sheet_create_equipe.xml"
-    },
-    {
-        "merged": "com.koordy.app-mergeDebugResources-50:/layout/bottom_sheet_equipe.xml",
-        "source": "com.koordy.app-main-53:/layout/bottom_sheet_equipe.xml"
     },
     {
         "merged": "C:\\Users\\JL\\.gradle\\daemon\\8.4\\com.koordy.app-mergeDebugResources-50:\\layout\\item_membre_select.xml",

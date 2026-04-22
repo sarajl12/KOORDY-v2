@@ -88,9 +88,20 @@ class CalendarFragment : Fragment() {
     }
 
     private fun setupEventsRecycler() {
-        eventsAdapter = CalendarEventsAdapter(emptyList()) { idEvenement, statut ->
-            handleRsvp(idEvenement, statut)
-        }
+        eventsAdapter = CalendarEventsAdapter(
+            items = emptyList(),
+            onRsvp = { idEvenement, statut -> handleRsvp(idEvenement, statut) },
+            onOptions = { ev ->
+                EventOptionsBottomSheet.newInstance(ev)
+                    .also { sheet ->
+                        sheet.onEventUpdated = {
+                            val session = (activity as MainActivity).session
+                            loadEvents(session.idMembre)
+                        }
+                    }
+                    .show(childFragmentManager, "event_options")
+            }
+        )
         binding.recyclerEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = eventsAdapter

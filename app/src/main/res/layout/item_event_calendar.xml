@@ -110,6 +110,19 @@
 
             </LinearLayout>
 
+            <!-- Bouton options ⋮ -->
+            <TextView
+                android:id="@+id/btn_options"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:gravity="center"
+                android:text="⋮"
+                android:textSize="18sp"
+                android:textColor="@color/muted"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:focusable="true" />
+
         </LinearLayout>
 
         <!-- Lieu -->

@@ -3115,6 +3115,7 @@ drawable ic_chevron_left
 drawable ic_chevron_right
 drawable ic_clear_black_24
 drawable ic_clock_black_24dp
+drawable ic_home
 drawable ic_keyboard_black_24dp
 drawable ic_m3_chip_check
 drawable ic_m3_chip_checked_circle
@@ -3125,6 +3126,7 @@ drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_pin
 drawable ic_plus
+drawable ic_profile
 drawable ic_search_black_24
 drawable ic_trash
 drawable indeterminate_static
@@ -3348,14 +3350,17 @@ id btn_creer_actualite
 id btn_creer_equipe
 id btn_edit_asso
 id btn_edit_profile
+id btn_envoyer_chat
 id btn_go_home
 id btn_go_to_space
 id btn_login
 id btn_logout
+id btn_modifier
 id btn_modifier_equipe
 id btn_new_checklist
 id btn_next_checklist
 id btn_next_month
+id btn_options
 id btn_president_dashboard
 id btn_prev_checklist
 id btn_prev_month
@@ -3365,6 +3370,7 @@ id btn_refuse
 id btn_refuser
 id btn_sauvegarder
 id btn_save
+id btn_save_edit
 id btn_save_profile
 id btn_select_date
 id btn_send_annonce
@@ -3399,7 +3405,12 @@ id chatFragment
 id checkbox
 id checked
 id chip_autre
+id chip_edit_autre
+id chip_edit_entrainement
+id chip_edit_match
+id chip_edit_reunion
 id chip_entrainement
+id chip_group_edit_type
 id chip_group_type
 id chip_match
 id chip_reunion
@@ -3486,9 +3497,12 @@ id et_contenu
 id et_date_creation
 id et_description
 id et_edit_birth
+id et_edit_description
 id et_edit_email
+id et_edit_lieu
 id et_edit_nom
 id et_edit_prenom
+id et_edit_titre
 id et_email
 id et_lieu
 id et_lieu_evenement
@@ -3764,6 +3778,7 @@ id rv_equipes_select
 id rv_membres
 id rv_membres_equipe
 id rv_membres_select
+id rv_membres_send
 id rv_sheet_membres
 id save_non_transition_alpha
 id save_overlay_view
@@ -3786,6 +3801,7 @@ id search_plate
 id search_src_text
 id search_voice_btn
 id section_equipes
+id section_membres
 id select_dialog_listview
 id selected
 id selection_type
@@ -3941,6 +3957,8 @@ id tv_detail_initiale
 id tv_detail_nom
 id tv_detail_role
 id tv_details
+id tv_edit_date
+id tv_edit_heure
 id tv_email
 id tv_empty
 id tv_equipe
@@ -3957,6 +3975,7 @@ id tv_lieu
 id tv_member_name
 id tv_member_role
 id tv_membres_count
+id tv_membres_empty
 id tv_month
 id tv_month_label
 id tv_naissance
@@ -3978,6 +3997,10 @@ id tv_no_account
 id tv_no_equipes
 id tv_no_membres
 id tv_nom
+id tv_opts_date
+id tv_opts_lieu
+id tv_opts_title
+id tv_opts_type
 id tv_pays
 id tv_pending_text
 id tv_prenom
@@ -4150,7 +4173,9 @@ layout bottom_sheet_conversation_options
 layout bottom_sheet_create_equipe
 layout bottom_sheet_create_event
 layout bottom_sheet_edit_equipe
+layout bottom_sheet_edit_event
 layout bottom_sheet_equipe
+layout bottom_sheet_event_options
 layout bottom_sheet_membre_detail
 layout bottom_sheet_new_conversation
 layout custom_dialog

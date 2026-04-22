@@ -32,6 +32,10 @@ class SessionManager(context: Context) {
         get() = prefs.getLong(Constants.KEY_LAST_OPENED_CHAT, 0L)
         set(value) = prefs.edit().putLong(Constants.KEY_LAST_OPENED_CHAT, value).apply()
 
+    var lastShownUnreadDialog: Long
+        get() = prefs.getLong(Constants.KEY_LAST_SHOWN_NOTIF, 0L)
+        set(value) = prefs.edit().putLong(Constants.KEY_LAST_SHOWN_NOTIF, value).apply()
+
     fun getPinnedConversations(): Set<Int> =
         (prefs.getStringSet("pinned_convs", emptySet()) ?: emptySet()).map { it.toInt() }.toSet()
 

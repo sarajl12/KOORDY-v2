@@ -884,6 +884,29 @@ app.get("/api/membre/:id/evenements", async (req, res) => {
 });
 
 
+// PUT /api/evenements/:id — modifier un événement
+app.put("/api/evenements/:id", async (req, res) => {
+  const idEvenement = parseInt(req.params.id);
+  const { titre_evenement, type_evenement, lieu_event, description_evenement, date_debut_event, date_fin_event } = req.body;
+  if (!titre_evenement || !type_evenement || !date_debut_event) {
+    return res.status(400).json({ message: "Champs obligatoires manquants." });
+  }
+  try {
+    const result = await db.query(
+      `UPDATE evenement
+       SET titre_evenement = $1, type_evenement = $2, lieu_event = $3,
+           description_evenement = $4, date_debut_event = $5, date_fin_event = $6
+       WHERE id_evenement = $7`,
+      [titre_evenement, type_evenement, lieu_event || "", description_evenement || "", date_debut_event, date_fin_event || null, idEvenement]
+    );
+    if (result.rowCount === 0) return res.status(404).json({ message: "Événement non trouvé." });
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur PUT evenement :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
 // PATCH /api/evenements/:id/rsvp  — le membre accepte ou refuse l'invitation
 app.patch("/api/evenements/:id/rsvp", async (req, res) => {
   const idEvenement = req.params.id;
@@ -939,6 +962,7 @@ app.get("/api/membre/:id/conversations", async (req, res) => {
         last_msg.contenu        AS last_message,
         last_msg.created_at     AS last_message_at,
         last_msg.type_message   AS last_message_type,
+        last_msg.id_auteur      AS last_sender_id,
         auteur.nom_membre       AS last_sender_nom,
         auteur.prenom_membre    AS last_sender_prenom,
         other_m.id_membre       AS other_id_membre,

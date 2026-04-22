@@ -24,6 +24,9 @@ public final class ItemEventCalendarBinding implements ViewBinding {
   public final Button btnAccept;
 
   @NonNull
+  public final TextView btnOptions;
+
+  @NonNull
   public final Button btnRefuse;
 
   @NonNull
@@ -66,13 +69,14 @@ public final class ItemEventCalendarBinding implements ViewBinding {
   public final View viewStatutDot;
 
   private ItemEventCalendarBinding(@NonNull LinearLayout rootView, @NonNull Button btnAccept,
-      @NonNull Button btnRefuse, @NonNull LinearLayout llRsvpButtons,
+      @NonNull TextView btnOptions, @NonNull Button btnRefuse, @NonNull LinearLayout llRsvpButtons,
       @NonNull LinearLayout llStatut, @NonNull TextView tvDay, @NonNull TextView tvDesc,
       @NonNull TextView tvLieu, @NonNull TextView tvMonth, @NonNull TextView tvStatut,
       @NonNull TextView tvTime, @NonNull TextView tvTitle, @NonNull TextView tvType,
       @NonNull View viewRsvpSep, @NonNull View viewStatusBar, @NonNull View viewStatutDot) {
     this.rootView = rootView;
     this.btnAccept = btnAccept;
+    this.btnOptions = btnOptions;
     this.btnRefuse = btnRefuse;
     this.llRsvpButtons = llRsvpButtons;
     this.llStatut = llStatut;
@@ -119,6 +123,12 @@ public final class ItemEventCalendarBinding implements ViewBinding {
       id = R.id.btn_accept;
       Button btnAccept = ViewBindings.findChildViewById(rootView, id);
       if (btnAccept == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_options;
+      TextView btnOptions = ViewBindings.findChildViewById(rootView, id);
+      if (btnOptions == null) {
         break missingId;
       }
 
@@ -206,7 +216,7 @@ public final class ItemEventCalendarBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ItemEventCalendarBinding((LinearLayout) rootView, btnAccept, btnRefuse,
+      return new ItemEventCalendarBinding((LinearLayout) rootView, btnAccept, btnOptions, btnRefuse,
           llRsvpButtons, llStatut, tvDay, tvDesc, tvLieu, tvMonth, tvStatut, tvTime, tvTitle,
           tvType, viewRsvpSep, viewStatusBar, viewStatutDot);
     }
