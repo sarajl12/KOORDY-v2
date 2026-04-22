@@ -290,6 +290,207 @@
                 android:visibility="gone" />
         </LinearLayout>
 
+        <!-- ═════════════════ À NE PAS OUBLIER ═════════════════ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="4dp">
+
+            <!-- Section header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingBottom="12dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📋 À ne pas oublier"
+                        android:textColor="@color/text"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Matériel à apporter pour vos événements"
+                        android:textColor="@color/muted"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/btn_new_checklist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+ Nouvelle"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/bg_button_primary"
+                    android:paddingHorizontal="14dp"
+                    android:paddingVertical="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- Empty state -->
+            <TextView
+                android:id="@+id/tv_checklist_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aucune checklist · Créez-en une pour préparer votre prochain événement !"
+                android:textColor="@color/muted"
+                android:textSize="14sp"
+                android:visibility="gone" />
+
+            <!-- Checklist card -->
+            <LinearLayout
+                android:id="@+id/card_checklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <!-- Event info header (dark) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_checklist_header"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingBottom="14dp">
+
+                    <TextView
+                        android:id="@+id/tv_checklist_event_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp">
+
+                        <TextView
+                            android:id="@+id/tv_checklist_date"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#BBFFFFFF"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tv_checklist_lieu"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:textColor="#BBFFFFFF"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_checklist_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#88FFFFFF"
+                        android:textSize="11sp"
+                        android:layout_marginTop="6dp" />
+                </LinearLayout>
+
+                <!-- Items list (LinearLayout pour éviter le bug RecyclerView dans ScrollView) -->
+                <LinearLayout
+                    android:id="@+id/ll_checklist_items"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="12dp"
+                    android:paddingTop="6dp"
+                    android:paddingBottom="4dp" />
+
+                <!-- Divider -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line"
+                    android:layout_marginHorizontal="16dp" />
+
+                <!-- Add item button -->
+                <TextView
+                    android:id="@+id/btn_add_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="+ Ajouter un élément"
+                    android:textColor="#2D9CF0"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:padding="14dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+
+            <!-- Navigation entre checklists -->
+            <LinearLayout
+                android:id="@+id/ll_checklist_nav"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/btn_prev_checklist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="← Préc."
+                    android:textColor="#2D9CF0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+                <TextView
+                    android:id="@+id/tv_checklist_count"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/btn_next_checklist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Suiv. →"
+                    android:textColor="#2D9CF0"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:padding="8dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+            </LinearLayout>
+        </LinearLayout>
+
         <!-- ═════════════════ DERNIÈRE ACTUALITÉ ═════════════════ -->
         <LinearLayout
             android:layout_width="match_parent"

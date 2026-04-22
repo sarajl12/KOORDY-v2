@@ -4,6 +4,10 @@
         "source": "com.koordy.app-main-53:/drawable/bg_header.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/drawable_bg_checklist_header.xml.flat",
+        "source": "com.koordy.app-main-53:/drawable/bg_checklist_header.xml"
+    },
+    {
         "merged": "com.koordy.app-merged_res-51:/layout_fragment_home_association.xml.flat",
         "source": "com.koordy.app-main-53:/layout/fragment_home_association.xml"
     },
@@ -140,6 +144,10 @@
         "source": "com.koordy.app-main-53:/layout/item_message_received.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/layout_dialog_create_checklist.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/dialog_create_checklist.xml"
+    },
+    {
         "merged": "com.koordy.app-merged_res-51:/drawable_bg_avatar_round.xml.flat",
         "source": "com.koordy.app-main-53:/drawable/bg_avatar_round.xml"
     },
@@ -236,6 +244,10 @@
         "source": "com.koordy.app-main-53:/drawable/bg_hero_btn.xml"
     },
     {
+        "merged": "com.koordy.app-merged_res-51:/layout_dialog_add_checklist_item.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/dialog_add_checklist_item.xml"
+    },
+    {
         "merged": "com.koordy.app-merged_res-51:/drawable_bg_progress_track.xml.flat",
         "source": "com.koordy.app-main-53:/drawable/bg_progress_track.xml"
     },
@@ -262,6 +274,10 @@
     {
         "merged": "com.koordy.app-merged_res-51:/layout_fragment_edit_association.xml.flat",
         "source": "com.koordy.app-main-53:/layout/fragment_edit_association.xml"
+    },
+    {
+        "merged": "com.koordy.app-merged_res-51:/layout_item_checklist_item.xml.flat",
+        "source": "com.koordy.app-main-53:/layout/item_checklist_item.xml"
     },
     {
         "merged": "com.koordy.app-merged_res-51:/layout_item_message_sent.xml.flat",

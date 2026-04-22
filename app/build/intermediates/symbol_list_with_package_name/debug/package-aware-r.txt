@@ -3060,6 +3060,7 @@ drawable bg_button_primary
 drawable bg_calendar_day_selected
 drawable bg_calendar_today
 drawable bg_card
+drawable bg_checklist_header
 drawable bg_choice_card
 drawable bg_dialog_rounded
 drawable bg_event_type_badge
@@ -3325,8 +3326,11 @@ id btnNewChat
 id btnRefuser
 id btnSend
 id btn_accept
+id btn_add
+id btn_add_item
 id btn_approuver
 id btn_back
+id btn_cancel
 id btn_cancel_edit
 id btn_change_role
 id btn_create
@@ -3339,8 +3343,11 @@ id btn_go_to_space
 id btn_login
 id btn_logout
 id btn_modifier_equipe
+id btn_new_checklist
+id btn_next_checklist
 id btn_next_month
 id btn_president_dashboard
+id btn_prev_checklist
 id btn_prev_month
 id btn_publier
 id btn_rechercher
@@ -3349,6 +3356,7 @@ id btn_refuser
 id btn_sauvegarder
 id btn_save
 id btn_save_profile
+id btn_select_date
 id btn_send_annonce
 id btn_suivant
 id btn_supprimer_image
@@ -3358,12 +3366,14 @@ id cache_measures
 id calendarFragment
 id callMeasure
 id cancel_button
+id card_checklist
 id card_creer
 id card_last_news
 id card_next_event
 id card_rechercher
 id carryVelocity
 id cb_equipe_selected
+id cb_item
 id cb_select
 id cb_selected
 id center
@@ -3460,6 +3470,7 @@ id et_adresse
 id et_adresse2
 id et_birthday
 id et_code_postal
+id et_commentaire
 id et_contenu
 id et_date_creation
 id et_description
@@ -3469,8 +3480,11 @@ id et_edit_nom
 id et_edit_prenom
 id et_email
 id et_lieu
+id et_lieu_evenement
 id et_nom
 id et_nom_equipe
+id et_nom_evenement
+id et_nom_item
 id et_password
 id et_password_confirm
 id et_pays
@@ -3564,6 +3578,8 @@ id line3
 id linear
 id listMode
 id list_item
+id ll_checklist_items
+id ll_checklist_nav
 id ll_pending_banner
 id ll_rsvp_buttons
 id ll_statut
@@ -3868,9 +3884,18 @@ id tv_asso_nom
 id tv_asso_sport
 id tv_asso_subtitle
 id tv_asso_ville
+id tv_author
 id tv_avatar
 id tv_avatar_initial
 id tv_badge
+id tv_checked_by
+id tv_checklist_count
+id tv_checklist_date
+id tv_checklist_empty
+id tv_checklist_event_name
+id tv_checklist_lieu
+id tv_checklist_progress
+id tv_comment
 id tv_conseil_empty
 id tv_contenu
 id tv_date
@@ -3897,6 +3922,7 @@ id tv_equipes_count
 id tv_events_empty
 id tv_full_name
 id tv_initiale
+id tv_item_name
 id tv_lieu
 id tv_member_name
 id tv_member_role
@@ -4108,6 +4134,8 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_add_checklist_item
+layout dialog_create_checklist
 layout dialog_unread_messages
 layout fragment_all_news
 layout fragment_calendar
@@ -4131,6 +4159,7 @@ layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout item_association_search
 layout item_calendar_day
+layout item_checklist_item
 layout item_conseil
 layout item_conversation
 layout item_equipe_president

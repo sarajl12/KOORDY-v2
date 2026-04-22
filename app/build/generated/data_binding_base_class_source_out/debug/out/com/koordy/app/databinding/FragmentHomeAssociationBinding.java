@@ -24,10 +24,25 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   private final ScrollView rootView;
 
   @NonNull
+  public final TextView btnAddItem;
+
+  @NonNull
   public final TextView btnEditAsso;
 
   @NonNull
+  public final TextView btnNewChecklist;
+
+  @NonNull
+  public final TextView btnNextChecklist;
+
+  @NonNull
+  public final TextView btnPrevChecklist;
+
+  @NonNull
   public final TextView btnVoirTout;
+
+  @NonNull
+  public final LinearLayout cardChecklist;
 
   @NonNull
   public final LinearLayout cardLastNews;
@@ -45,6 +60,12 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   public final ImageView ivNewsImage;
 
   @NonNull
+  public final LinearLayout llChecklistItems;
+
+  @NonNull
+  public final LinearLayout llChecklistNav;
+
+  @NonNull
   public final ProgressBar progressBar;
 
   @NonNull
@@ -58,6 +79,24 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
 
   @NonNull
   public final TextView tvAssoSubtitle;
+
+  @NonNull
+  public final TextView tvChecklistCount;
+
+  @NonNull
+  public final TextView tvChecklistDate;
+
+  @NonNull
+  public final TextView tvChecklistEmpty;
+
+  @NonNull
+  public final TextView tvChecklistEventName;
+
+  @NonNull
+  public final TextView tvChecklistLieu;
+
+  @NonNull
+  public final TextView tvChecklistProgress;
 
   @NonNull
   public final TextView tvConseilEmpty;
@@ -119,13 +158,19 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
   @NonNull
   public final TextView tvVille;
 
-  private FragmentHomeAssociationBinding(@NonNull ScrollView rootView,
-      @NonNull TextView btnEditAsso, @NonNull TextView btnVoirTout,
+  private FragmentHomeAssociationBinding(@NonNull ScrollView rootView, @NonNull TextView btnAddItem,
+      @NonNull TextView btnEditAsso, @NonNull TextView btnNewChecklist,
+      @NonNull TextView btnNextChecklist, @NonNull TextView btnPrevChecklist,
+      @NonNull TextView btnVoirTout, @NonNull LinearLayout cardChecklist,
       @NonNull LinearLayout cardLastNews, @NonNull LinearLayout cardNextEvent,
       @NonNull ImageView ivAssoAvatar, @NonNull ImageView ivAssoBanner,
-      @NonNull ImageView ivNewsImage, @NonNull ProgressBar progressBar,
+      @NonNull ImageView ivNewsImage, @NonNull LinearLayout llChecklistItems,
+      @NonNull LinearLayout llChecklistNav, @NonNull ProgressBar progressBar,
       @NonNull RecyclerView recyclerConseil, @NonNull TextView tvAdresse,
       @NonNull TextView tvAssoName, @NonNull TextView tvAssoSubtitle,
+      @NonNull TextView tvChecklistCount, @NonNull TextView tvChecklistDate,
+      @NonNull TextView tvChecklistEmpty, @NonNull TextView tvChecklistEventName,
+      @NonNull TextView tvChecklistLieu, @NonNull TextView tvChecklistProgress,
       @NonNull TextView tvConseilEmpty, @NonNull TextView tvDescription,
       @NonNull TextView tvEventsEmpty, @NonNull TextView tvNewsBadge, @NonNull TextView tvNewsDate,
       @NonNull TextView tvNewsEmpty, @NonNull TextView tvNewsExcerpt, @NonNull TextView tvNewsTitle,
@@ -135,18 +180,31 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
       @NonNull TextView tvPays, @NonNull TextView tvStatEvents, @NonNull TextView tvStatMembres,
       @NonNull TextView tvStatNews, @NonNull TextView tvTelephone, @NonNull TextView tvVille) {
     this.rootView = rootView;
+    this.btnAddItem = btnAddItem;
     this.btnEditAsso = btnEditAsso;
+    this.btnNewChecklist = btnNewChecklist;
+    this.btnNextChecklist = btnNextChecklist;
+    this.btnPrevChecklist = btnPrevChecklist;
     this.btnVoirTout = btnVoirTout;
+    this.cardChecklist = cardChecklist;
     this.cardLastNews = cardLastNews;
     this.cardNextEvent = cardNextEvent;
     this.ivAssoAvatar = ivAssoAvatar;
     this.ivAssoBanner = ivAssoBanner;
     this.ivNewsImage = ivNewsImage;
+    this.llChecklistItems = llChecklistItems;
+    this.llChecklistNav = llChecklistNav;
     this.progressBar = progressBar;
     this.recyclerConseil = recyclerConseil;
     this.tvAdresse = tvAdresse;
     this.tvAssoName = tvAssoName;
     this.tvAssoSubtitle = tvAssoSubtitle;
+    this.tvChecklistCount = tvChecklistCount;
+    this.tvChecklistDate = tvChecklistDate;
+    this.tvChecklistEmpty = tvChecklistEmpty;
+    this.tvChecklistEventName = tvChecklistEventName;
+    this.tvChecklistLieu = tvChecklistLieu;
+    this.tvChecklistProgress = tvChecklistProgress;
     this.tvConseilEmpty = tvConseilEmpty;
     this.tvDescription = tvDescription;
     this.tvEventsEmpty = tvEventsEmpty;
@@ -196,15 +254,45 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btn_add_item;
+      TextView btnAddItem = ViewBindings.findChildViewById(rootView, id);
+      if (btnAddItem == null) {
+        break missingId;
+      }
+
       id = R.id.btn_edit_asso;
       TextView btnEditAsso = ViewBindings.findChildViewById(rootView, id);
       if (btnEditAsso == null) {
         break missingId;
       }
 
+      id = R.id.btn_new_checklist;
+      TextView btnNewChecklist = ViewBindings.findChildViewById(rootView, id);
+      if (btnNewChecklist == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_next_checklist;
+      TextView btnNextChecklist = ViewBindings.findChildViewById(rootView, id);
+      if (btnNextChecklist == null) {
+        break missingId;
+      }
+
+      id = R.id.btn_prev_checklist;
+      TextView btnPrevChecklist = ViewBindings.findChildViewById(rootView, id);
+      if (btnPrevChecklist == null) {
+        break missingId;
+      }
+
       id = R.id.btn_voir_tout;
       TextView btnVoirTout = ViewBindings.findChildViewById(rootView, id);
       if (btnVoirTout == null) {
+        break missingId;
+      }
+
+      id = R.id.card_checklist;
+      LinearLayout cardChecklist = ViewBindings.findChildViewById(rootView, id);
+      if (cardChecklist == null) {
         break missingId;
       }
 
@@ -238,6 +326,18 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.ll_checklist_items;
+      LinearLayout llChecklistItems = ViewBindings.findChildViewById(rootView, id);
+      if (llChecklistItems == null) {
+        break missingId;
+      }
+
+      id = R.id.ll_checklist_nav;
+      LinearLayout llChecklistNav = ViewBindings.findChildViewById(rootView, id);
+      if (llChecklistNav == null) {
+        break missingId;
+      }
+
       id = R.id.progress_bar;
       ProgressBar progressBar = ViewBindings.findChildViewById(rootView, id);
       if (progressBar == null) {
@@ -265,6 +365,42 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
       id = R.id.tv_asso_subtitle;
       TextView tvAssoSubtitle = ViewBindings.findChildViewById(rootView, id);
       if (tvAssoSubtitle == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_count;
+      TextView tvChecklistCount = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistCount == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_date;
+      TextView tvChecklistDate = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistDate == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_empty;
+      TextView tvChecklistEmpty = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistEmpty == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_event_name;
+      TextView tvChecklistEventName = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistEventName == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_lieu;
+      TextView tvChecklistLieu = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistLieu == null) {
+        break missingId;
+      }
+
+      id = R.id.tv_checklist_progress;
+      TextView tvChecklistProgress = ViewBindings.findChildViewById(rootView, id);
+      if (tvChecklistProgress == null) {
         break missingId;
       }
 
@@ -388,12 +524,15 @@ public final class FragmentHomeAssociationBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentHomeAssociationBinding((ScrollView) rootView, btnEditAsso, btnVoirTout,
-          cardLastNews, cardNextEvent, ivAssoAvatar, ivAssoBanner, ivNewsImage, progressBar,
-          recyclerConseil, tvAdresse, tvAssoName, tvAssoSubtitle, tvConseilEmpty, tvDescription,
-          tvEventsEmpty, tvNewsBadge, tvNewsDate, tvNewsEmpty, tvNewsExcerpt, tvNewsTitle,
-          tvNextEventDay, tvNextEventLieu, tvNextEventMonth, tvNextEventTime, tvNextEventTitle,
-          tvNextEventType, tvPays, tvStatEvents, tvStatMembres, tvStatNews, tvTelephone, tvVille);
+      return new FragmentHomeAssociationBinding((ScrollView) rootView, btnAddItem, btnEditAsso,
+          btnNewChecklist, btnNextChecklist, btnPrevChecklist, btnVoirTout, cardChecklist,
+          cardLastNews, cardNextEvent, ivAssoAvatar, ivAssoBanner, ivNewsImage, llChecklistItems,
+          llChecklistNav, progressBar, recyclerConseil, tvAdresse, tvAssoName, tvAssoSubtitle,
+          tvChecklistCount, tvChecklistDate, tvChecklistEmpty, tvChecklistEventName,
+          tvChecklistLieu, tvChecklistProgress, tvConseilEmpty, tvDescription, tvEventsEmpty,
+          tvNewsBadge, tvNewsDate, tvNewsEmpty, tvNewsExcerpt, tvNewsTitle, tvNextEventDay,
+          tvNextEventLieu, tvNextEventMonth, tvNextEventTime, tvNextEventTitle, tvNextEventType,
+          tvPays, tvStatEvents, tvStatMembres, tvStatNews, tvTelephone, tvVille);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

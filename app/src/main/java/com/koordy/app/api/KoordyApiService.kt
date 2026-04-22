@@ -181,4 +181,28 @@ interface KoordyApiService {
         @Path("id") idConversation: Int,
         @Body request: MessageRequest
     ): Response<SendMessageResponse>
+
+    // ── Checklist ─────────────────────────────────────────────────────────────
+
+    @GET("api/associations/{id}/checklists")
+    suspend fun getChecklists(@Path("id") idAssociation: Int): Response<List<Checklist>>
+
+    @POST("api/associations/{id}/checklists")
+    suspend fun createChecklist(
+        @Path("id") idAssociation: Int,
+        @Body request: ChecklistRequest
+    ): Response<ChecklistCreateResponse>
+
+    @POST("api/checklists/{id}/items")
+    suspend fun addChecklistItem(
+        @Path("id") idChecklist: Int,
+        @Body request: ChecklistItemRequest
+    ): Response<GenericResponse>
+
+    @PATCH("api/checklists/{id}/items/{idItem}/toggle")
+    suspend fun toggleChecklistItem(
+        @Path("id") idChecklist: Int,
+        @Path("idItem") idItem: Int,
+        @Body request: ToggleItemRequest
+    ): Response<GenericResponse>
 }

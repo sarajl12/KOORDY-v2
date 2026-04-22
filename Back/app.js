@@ -1331,6 +1331,145 @@ app.post("/api/news/upload", uploadNews.single("image"), async (req, res) => {
 
 
 // ===============================
+//  ROUTES CHECKLIST "À NE PAS OUBLIER"
+// ===============================
+
+await db.query(`
+  CREATE TABLE IF NOT EXISTS checklist (
+    id_checklist      SERIAL PRIMARY KEY,
+    id_association    INT NOT NULL,
+    nom_evenement     VARCHAR(255) NOT NULL,
+    date_evenement    VARCHAR(255) DEFAULT '',
+    date_evenement_ts TIMESTAMP,
+    lieu_evenement    VARCHAR(255) DEFAULT '',
+    created_at        TIMESTAMP DEFAULT NOW()
+  )
+`).catch(() => {});
+
+await db.query(`ALTER TABLE checklist ADD COLUMN IF NOT EXISTS date_evenement_ts TIMESTAMP`).catch(() => {});
+
+await db.query(`
+  CREATE TABLE IF NOT EXISTS checklist_item (
+    id_item        SERIAL PRIMARY KEY,
+    id_checklist   INT NOT NULL REFERENCES checklist(id_checklist) ON DELETE CASCADE,
+    id_auteur      INT NOT NULL DEFAULT 0,
+    nom_auteur     VARCHAR(255) NOT NULL DEFAULT '',
+    nom_item       VARCHAR(255) NOT NULL,
+    commentaire    TEXT DEFAULT '',
+    is_checked     BOOLEAN DEFAULT FALSE,
+    checked_by_nom VARCHAR(255),
+    checked_at     TIMESTAMP,
+    created_at     TIMESTAMP DEFAULT NOW()
+  )
+`).catch(() => {});
+
+// GET /api/associations/:id/checklists — liste avec items (events passés exclus)
+app.get("/api/associations/:id/checklists", async (req, res) => {
+  const idAsso = parseInt(req.params.id);
+  try {
+    const clResult = await db.query(
+      `SELECT * FROM checklist
+       WHERE id_association = $1
+         AND (date_evenement_ts IS NULL OR date_evenement_ts >= NOW())
+       ORDER BY date_evenement_ts ASC NULLS LAST, created_at DESC`,
+      [idAsso]
+    );
+    const checklists = clResult.rows;
+    for (const cl of checklists) {
+      const items = await db.query(
+        `SELECT * FROM checklist_item WHERE id_checklist = $1 ORDER BY created_at ASC`,
+        [cl.id_checklist]
+      );
+      cl.items = items.rows;
+    }
+    res.json(checklists);
+  } catch (err) {
+    console.error("Erreur GET checklists :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+// POST /api/associations/:id/checklists — créer une checklist
+app.post("/api/associations/:id/checklists", async (req, res) => {
+  const idAsso = parseInt(req.params.id);
+  const { nom_evenement, date_evenement, date_evenement_ts, lieu_evenement } = req.body;
+  if (!nom_evenement) return res.status(400).json({ message: "Nom de l'événement requis." });
+  try {
+    const result = await db.query(
+      `INSERT INTO checklist (id_association, nom_evenement, date_evenement, date_evenement_ts, lieu_evenement)
+       VALUES ($1, $2, $3, $4, $5) RETURNING id_checklist`,
+      [idAsso, nom_evenement, date_evenement || "", date_evenement_ts || null, lieu_evenement || ""]
+    );
+    res.status(201).json({ success: true, id_checklist: result.rows[0].id_checklist });
+  } catch (err) {
+    console.error("Erreur POST checklist :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+// POST /api/checklists/:id/items — ajouter un élément
+app.post("/api/checklists/:id/items", async (req, res) => {
+  const idChecklist = parseInt(req.params.id);
+  const { id_auteur, nom_auteur, nom_item, commentaire } = req.body;
+  if (!nom_item) return res.status(400).json({ message: "nom_item requis." });
+  try {
+    await db.query(
+      `INSERT INTO checklist_item (id_checklist, id_auteur, nom_auteur, nom_item, commentaire)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [idChecklist, id_auteur || 0, nom_auteur || "", nom_item, commentaire || ""]
+    );
+    res.status(201).json({ success: true });
+  } catch (err) {
+    console.error("Erreur POST item :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+// PATCH /api/checklists/:id/items/:idItem/toggle — cocher/décocher
+app.patch("/api/checklists/:id/items/:idItem/toggle", async (req, res) => {
+  const idChecklist = parseInt(req.params.id);
+  const idItem = parseInt(req.params.idItem);
+  const { nom_membre } = req.body;
+  try {
+    const current = await db.query(
+      `SELECT is_checked FROM checklist_item WHERE id_item = $1 AND id_checklist = $2`,
+      [idItem, idChecklist]
+    );
+    if (current.rows.length === 0) return res.status(404).json({ message: "Item non trouvé." });
+    const newChecked = !current.rows[0].is_checked;
+    await db.query(
+      `UPDATE checklist_item
+       SET is_checked = $1,
+           checked_by_nom = $2,
+           checked_at = CASE WHEN $1 = true THEN NOW() ELSE NULL END
+       WHERE id_item = $3 AND id_checklist = $4`,
+      [newChecked, newChecked ? (nom_membre || "") : null, idItem, idChecklist]
+    );
+    res.json({ success: true, is_checked: newChecked });
+  } catch (err) {
+    console.error("Erreur PATCH toggle :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+// DELETE /api/checklists/:id/items/:idItem — supprimer un élément
+app.delete("/api/checklists/:id/items/:idItem", async (req, res) => {
+  const idChecklist = parseInt(req.params.id);
+  const idItem = parseInt(req.params.idItem);
+  try {
+    await db.query(
+      `DELETE FROM checklist_item WHERE id_item = $1 AND id_checklist = $2`,
+      [idItem, idChecklist]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Erreur DELETE item :", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+});
+
+
+// ===============================
 //  STATIC + LISTEN
 // ===============================
 

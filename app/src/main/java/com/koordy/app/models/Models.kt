@@ -296,3 +296,53 @@ data class UpdateEquipeMembresRequest(
     @SerializedName("id_association") val idAssociation: Int,
     val membres: List<Int>
 )
+
+// ── Checklist "À ne pas oublier" ──────────────────────────────────────────────
+
+data class Checklist(
+    @SerializedName("id_checklist") val idChecklist: Int = 0,
+    @SerializedName("id_association") val idAssociation: Int = 0,
+    @SerializedName("nom_evenement") val nomEvenement: String = "",
+    @SerializedName("date_evenement") val dateEvenement: String? = null,
+    @SerializedName("date_evenement_ts") val dateEvenementTs: String? = null,
+    @SerializedName("lieu_evenement") val lieuEvenement: String? = null,
+    @SerializedName("created_at") val createdAt: String = "",
+    val items: List<ChecklistItem> = emptyList()
+)
+
+data class ChecklistItem(
+    @SerializedName("id_item") val idItem: Int = 0,
+    @SerializedName("id_checklist") val idChecklist: Int = 0,
+    @SerializedName("id_auteur") val idAuteur: Int = 0,
+    @SerializedName("nom_auteur") val nomAuteur: String = "",
+    @SerializedName("nom_item") val nomItem: String = "",
+    val commentaire: String = "",
+    @SerializedName("is_checked") val isChecked: Boolean = false,
+    @SerializedName("checked_by_nom") val checkedByNom: String? = null,
+    @SerializedName("checked_at") val checkedAt: String? = null,
+    @SerializedName("created_at") val createdAt: String = ""
+)
+
+data class ChecklistRequest(
+    @SerializedName("nom_evenement") val nomEvenement: String,
+    @SerializedName("date_evenement") val dateEvenement: String?,
+    @SerializedName("date_evenement_ts") val dateEvenementTs: String?,
+    @SerializedName("lieu_evenement") val lieuEvenement: String?
+)
+
+data class ChecklistCreateResponse(
+    val success: Boolean = false,
+    @SerializedName("id_checklist") val idChecklist: Int = 0
+)
+
+data class ChecklistItemRequest(
+    @SerializedName("id_auteur") val idAuteur: Int,
+    @SerializedName("nom_auteur") val nomAuteur: String,
+    @SerializedName("nom_item") val nomItem: String,
+    val commentaire: String = ""
+)
+
+data class ToggleItemRequest(
+    @SerializedName("id_membre") val idMembre: Int,
+    @SerializedName("nom_membre") val nomMembre: String
+)

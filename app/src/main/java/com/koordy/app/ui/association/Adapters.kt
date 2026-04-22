@@ -9,12 +9,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.koordy.app.R
 import com.koordy.app.utils.Constants
+import com.koordy.app.databinding.ItemChecklistItemBinding
 import com.koordy.app.databinding.ItemEquipeSelectBinding
 import com.koordy.app.databinding.ItemEventBinding
 import com.koordy.app.databinding.ItemEventCalendarBinding
 import com.koordy.app.databinding.ItemNewsBinding
 import com.koordy.app.databinding.ItemConseilBinding
 import com.koordy.app.models.Actualite
+import com.koordy.app.models.ChecklistItem
 import com.koordy.app.models.ConseilMembre
 import com.koordy.app.models.EquipeDetail
 import com.koordy.app.models.Evenement
@@ -38,8 +40,9 @@ class EventsAdapter(private val items: List<Evenement>) :
         val ev = items[position]
         val b = holder.binding
 
-        // Parse date
+        // Parse date (UTC → heure locale de l'appareil)
         val sdfIn = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRENCH)
+            .also { it.timeZone = java.util.TimeZone.getTimeZone("UTC") }
         val sdfDay = SimpleDateFormat("dd", Locale.FRENCH)
         val sdfMonth = SimpleDateFormat("MMM", Locale.FRENCH)
         val sdfTime = SimpleDateFormat("HH:mm", Locale.FRENCH)
@@ -123,6 +126,7 @@ class CalendarEventsAdapter(
 ) : RecyclerView.Adapter<CalendarEventsAdapter.VH>() {
 
     private val sdfIn    = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.FRENCH)
+        .also { it.timeZone = java.util.TimeZone.getTimeZone("UTC") }
     private val sdfDay   = SimpleDateFormat("dd",    Locale.FRENCH)
     private val sdfMonth = SimpleDateFormat("MMM",   Locale.FRENCH)
     private val sdfTime  = SimpleDateFormat("HH:mm", Locale.FRENCH)
@@ -334,6 +338,71 @@ class EquipeSelectAdapter(
     }
 
     fun update(newItems: List<EquipeDetail>) {
+        items = newItems
+        notifyDataSetChanged()
+    }
+}
+
+// ── ChecklistAdapter ──────────────────────────────────────────────────────────
+
+class ChecklistAdapter(
+    private var items: List<ChecklistItem>,
+    private val onToggle: (ChecklistItem) -> Unit
+) : RecyclerView.Adapter<ChecklistAdapter.VH>() {
+
+    private val sdfIn  = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.FRENCH)
+        .also { it.timeZone = java.util.TimeZone.getTimeZone("UTC") }
+    private val sdfOut = SimpleDateFormat("dd/MM à HH:mm", Locale.FRENCH)
+
+    inner class VH(val b: ItemChecklistItemBinding) : RecyclerView.ViewHolder(b.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
+        VH(ItemChecklistItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+
+    override fun getItemCount() = items.size
+
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        val item = items[position]
+        val b = holder.b
+
+        b.cbItem.isChecked = item.isChecked
+
+        if (item.isChecked) {
+            b.tvItemName.paintFlags = b.tvItemName.paintFlags or android.graphics.Paint.STRIKE_THRU_TEXT_FLAG
+            b.tvItemName.alpha = 0.45f
+        } else {
+            b.tvItemName.paintFlags = b.tvItemName.paintFlags and android.graphics.Paint.STRIKE_THRU_TEXT_FLAG.inv()
+            b.tvItemName.alpha = 1f
+        }
+        b.tvItemName.text = item.nomItem
+
+        val timeStr = try { sdfOut.format(sdfIn.parse(item.createdAt.take(19))!!) } catch (_: Exception) { "" }
+        b.tvAuthor.text = if (timeStr.isNotBlank()) "Ajouté par ${item.nomAuteur} · $timeStr"
+                          else "Ajouté par ${item.nomAuteur}"
+
+        if (item.commentaire.isNotBlank()) {
+            b.tvComment.text = "💬 ${item.commentaire}"
+            b.tvComment.visibility = View.VISIBLE
+        } else {
+            b.tvComment.visibility = View.GONE
+        }
+
+        if (item.isChecked && !item.checkedByNom.isNullOrBlank()) {
+            val checkedTime = try {
+                item.checkedAt?.let { sdfOut.format(sdfIn.parse(it.take(19))!!) } ?: ""
+            } catch (_: Exception) { "" }
+            b.tvCheckedBy.text = if (checkedTime.isNotBlank()) "✓ Coché par ${item.checkedByNom} · $checkedTime"
+                                 else "✓ Coché par ${item.checkedByNom}"
+            b.tvCheckedBy.visibility = View.VISIBLE
+        } else {
+            b.tvCheckedBy.visibility = View.GONE
+        }
+
+        b.cbItem.setOnClickListener { onToggle(item) }
+        b.root.setOnClickListener { onToggle(item) }
+    }
+
+    fun update(newItems: List<ChecklistItem>) {
         items = newItems
         notifyDataSetChanged()
     }
