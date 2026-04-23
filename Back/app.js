@@ -1026,8 +1026,16 @@ app.post("/api/conversations", async (req, res) => {
       `, [id_association, nom]);
 
       if (existing.rows.length > 0) {
-        await client.query("ROLLBACK");
-        return res.json({ id_conversation: existing.rows[0].id_conversation, existing: true });
+        const idConv = existing.rows[0].id_conversation;
+        const allParticipants = [Number(id_initiateur), ...(participants || []).map(Number)];
+        for (const idM of allParticipants.filter(Boolean)) {
+          await client.query(
+            `INSERT INTO conversation_membre (id_conversation, id_membre) VALUES ($1, $2) ON CONFLICT DO NOTHING`,
+            [idConv, idM]
+          );
+        }
+        await client.query("COMMIT");
+        return res.json({ id_conversation: idConv, existing: true });
       }
     }
 
