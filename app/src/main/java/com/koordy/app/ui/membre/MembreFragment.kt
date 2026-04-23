@@ -260,7 +260,7 @@ class MembreFragment : Fragment() {
                     val a = res.body()
                     if (a != null && a.nom.isNotEmpty()) {
                         binding.tvAssoNom.text = a.nom
-                        binding.tvAssoSport.text = a.sport.ifEmpty { "Sport" }
+                        binding.tvAssoSport.text = a.sport.ifEmpty { "Lieu" }
                         binding.tvAssoVille.text = a.ville.ifEmpty { "—" }
                     } else {
                         binding.tvAssoNom.text = "Aucune association"
