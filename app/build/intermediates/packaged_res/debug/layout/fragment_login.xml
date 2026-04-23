@@ -96,7 +96,18 @@
                 android:padding="12dp"
                 android:textColor="@color/text"
                 android:textColorHint="@color/muted"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="8dp" />
+
+            <!-- Mot de passe oublié (visuel uniquement) -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mot de passe oublié ?"
+                android:textColor="@color/brand"
+                android:textSize="13sp"
+                android:layout_gravity="end"
+                android:padding="4dp"
+                android:layout_marginBottom="20dp" />
 
             <!-- Progress -->
             <ProgressBar
