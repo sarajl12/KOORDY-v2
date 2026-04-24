@@ -3,7 +3,7 @@
 Aurélie Nass, Kelly Abendjock et Sara Ji-LO G1 A2MSI
 
 
-Application mobile Android pour la plateforme Koordy — gestion d'associations sportives et étudiantes. C'est le portage natif Kotlin d'une application web Express.js + PostgreSQL.
+Application mobile Android pour la plateforme Koordy — gestion d'associations. 
 
 ---
 

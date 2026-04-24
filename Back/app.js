@@ -1025,6 +1025,8 @@ app.post("/api/conversations", async (req, res) => {
         LIMIT 1
       `, [id_association, nom]);
 
+
+  
       if (existing.rows.length > 0) {
         const idConv = existing.rows[0].id_conversation;
         const allParticipants = [Number(id_initiateur), ...(participants || []).map(Number)];
