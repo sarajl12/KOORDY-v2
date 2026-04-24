@@ -1,0 +1,13 @@
+build/
+app/build/
+.gradle/
+captures/
+/local.properties
+.idea/workspace.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+*.iml
+.DS_Store
+Thumbs.db
