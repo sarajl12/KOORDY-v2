@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Koordy" android:textColor="@color/text" android:textSize="22sp" android:textStyle="bold" android:paddingBottom="20dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Inscrire mon association" android:textColor="@color/text" android:textSize="24sp" android:textStyle="bold" android:layout_gravity="center_horizontal" android:paddingBottom="6dp" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Vous êtes sur le point de créer ou rejoindre une association sur Koordy." android:textColor="@color/muted" android:textSize="14sp" android:layout_gravity="center_horizontal" android:gravity="center" android:paddingBottom="20dp" />
+
+        <!-- Steps (1/5) -->
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_gravity="center_horizontal" android:layout_marginBottom="32dp">
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_active" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" android:layout_marginEnd="6dp" />
+            <View android:layout_width="70dp" android:layout_height="6dp" android:background="@drawable/step_inactive" />
+        </LinearLayout>
+
+        <!-- Card Créer -->
+        <LinearLayout
+            android:id="@+id/card_creer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_choice_card"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View android:layout_width="match_parent" android:layout_height="100dp" android:background="#1A3A5C" android:layout_marginBottom="12dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Créer une nouvelle association" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="6dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Démarrez la création d'un espace Koordy dédié à votre association. Inscription 100% gratuite." android:textColor="@color/muted" android:textSize="14sp" />
+        </LinearLayout>
+
+        <!-- Card Rechercher -->
+        <LinearLayout
+            android:id="@+id/card_rechercher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_choice_card"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:clickable="true"
+            android:focusable="true">
+
+            <View android:layout_width="match_parent" android:layout_height="100dp" android:background="#1A3A2C" android:layout_marginBottom="12dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rechercher mon association" android:textColor="@color/text" android:textSize="18sp" android:textStyle="bold" android:paddingBottom="6dp" />
+
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Votre association utilise déjà Koordy ? Recherchez-la pour rejoindre sa plateforme." android:textColor="@color/muted" android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

@@ -272,21 +272,39 @@ class PresidentDashboardFragment : Fragment() {
     private fun sendAnnonce(idAssociation: Int, idMembre: Int, message: String) {
         lifecycleScope.launch {
             try {
-                val participantIds = allMembres.map { it.idMembre }
+                val membresRes = RetrofitClient.api.getMembres(idAssociation)
+                if (!membresRes.isSuccessful) {
+                    Toast.makeText(requireContext(), "Impossible de récupérer les membres.", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                val membres = membresRes.body() ?: emptyList()
+                if (membres.isEmpty()) {
+                    Toast.makeText(requireContext(), "Aucun membre trouvé.", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                val participantIds = membres.map { it.idMembre }
+                val nomConv = "Annonce · ${SimpleDateFormat("dd/MM HH:mm", Locale.FRENCH).format(Calendar.getInstance().time)}"
                 val convReq = ConversationRequest(
                     idAssociation = idAssociation,
                     idInitiateur = idMembre,
                     type = "group",
-                    nom = "Annonce",
+                    nom = nomConv,
                     participants = participantIds
                 )
                 val convRes = RetrofitClient.api.createConversation(convReq)
-                if (convRes.isSuccessful) {
-                    val idConv = convRes.body()!!.idConversation
-                    RetrofitClient.api.sendMessage(idConv, MessageRequest(idAuteur = idMembre, contenu = message))
+                if (!convRes.isSuccessful) {
+                    Toast.makeText(requireContext(), "Erreur lors de la création.", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                val idConv = convRes.body()?.idConversation ?: run {
+                    Toast.makeText(requireContext(), "Réponse invalide du serveur.", Toast.LENGTH_SHORT).show()
+                    return@launch
+                }
+                val msgRes = RetrofitClient.api.sendMessage(idConv, MessageRequest(idAuteur = idMembre, contenu = message))
+                if (msgRes.isSuccessful) {
                     Toast.makeText(requireContext(), "Annonce envoyée à tous les membres !", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(requireContext(), "Erreur lors de l'envoi.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Conversation créée mais message non envoyé.", Toast.LENGTH_SHORT).show()
                 }
             } catch (_: Exception) {
                 Toast.makeText(requireContext(), "Erreur réseau.", Toast.LENGTH_SHORT).show()
